@@ -1,0 +1,278 @@
+function mostrarNuevaFactura() {
+    let contenido = dameContenido("nueva-factura.php");
+    $("body").html(contenido);
+    dameFechaActual("fecha");
+
+    //para la siguiente factura
+    let factura = ejecutarAjax("controladores/factura_cabecera.php",
+            "ultimo_registro=1");
+
+    if (factura === "0") {
+        $("#nro_factura").val("001-001-0000001");
+        $("#timbrado").val("123456");
+    } else {
+        let json_factura = JSON.parse(factura);
+        let nro_sucursal = json_factura['nro_factura'].split("-")[0];
+        let nro_expedicion = json_factura['nro_factura'].split("-")[1];
+        let nro_factura = parseInt(
+                json_factura['nro_factura'].split("-")[2]);
+        nro_factura++;
+        $("#nro_factura").val(nro_sucursal + "-" +
+                nro_expedicion + "-" + nro_factura.toString().padStart(7, '0'));
+
+        $("#timbrado").val(json_factura['timbrado']);
+
+    }
+
+    //carga de cliente
+    cargarListaClientes("#cliente");
+    //carga de productos
+    cargarListaProductos("#producto");
+
+}
+
+//----------------------------------------------------
+//----------------------------------------------------
+//----------------------------------------------------
+$(document).on("change", "#producto", function (evt) {
+    if ($("#producto").val() === "0") {
+        $("#cantidad").val("1");
+        $("#precio").val("0");
+    } else {
+        $("#cantidad").val("1");
+        console.log($("#producto option:selected").html().split(" | ")[1]);
+        $("#precio").val(quitarDecimalesConvertir(
+                $("#producto option:selected").html().split(" | ")[1].replace("Precio: ", "")));
+
+    }
+});
+//---------------------------------------------------------
+//---------------------------------------------------------
+//---------------------------------------------------------
+function agregarProductoFactura() {
+    //validaciones
+    if ($("#producto").val() === "0") {
+        alert("Debes seleccionar un producto");
+        return;
+    }
+
+    if ($("#precio").val().trim().length === 0) {
+        alert("Debes ingresar un precio");
+        return;
+    }
+    if (quitarDecimalesConvertir($("#precio").val()) <= 0) {
+        alert("Debes ingresar un precio mayor a cero");
+        return;
+    }
+
+    if ($("#cantidad").val().trim().length === 0) {
+        alert("Debes ingresar una cantidad");
+        return;
+    }
+    if (quitarDecimalesConvertir($("#cantidad").val()) <= 0) {
+        alert("Debes ingresar una cantidad mayor a cero");
+        return;
+    }
+    //validacion de item repetido
+    let repetido = false;
+
+    $("#datos_tb tr").each(function (evt) {
+        if ($(this).find("td:eq(0)").text() ===
+                $("#producto").val().split("-")[0]) {
+            repetido = true;
+        }
+    });
+
+    if (repetido) {
+        alert("El item ya ha sido agregado anteriormente");
+        return;
+    }
+
+
+    $("#datos_tb").append(`
+    <tr>
+        <td>${$("#producto").val().split("-")[0]}</td>
+        <td>${$("#producto option:selected").html().
+            split(" | ")[0]}</td>
+        <td>${$("#cantidad").val()}</td>
+        <td>${formatearNumero($("#precio").val())}</td>
+    
+        <td>${($("#producto").val().split("-")[1] === "0") ?
+            formatearNumero(quitarDecimalesConvertir(
+                    $("#cantidad").val()) *
+                    quitarDecimalesConvertir(
+                            $("#precio").val())) : "0" }</td>
+        
+        <td>${($("#producto").val().split("-")[1] === "5") ?
+            formatearNumero(quitarDecimalesConvertir(
+                    $("#cantidad").val()) *
+                    quitarDecimalesConvertir(
+                            $("#precio").val())) : "0" }</td>
+        
+        <td>${($("#producto").val().split("-")[1] === "10") ?
+            formatearNumero(quitarDecimalesConvertir(
+                    $("#cantidad").val()) *
+                    quitarDecimalesConvertir(
+                            $("#precio").val())) : "0" }</td>
+           
+           <td><button class="btn btn-danger rem-item">Remover</button></td>
+    </tr>
+`);
+    calcularTotalesFactura();
+
+}
+
+function calcularTotalesFactura() {
+    let total = 0;
+    let total_exenta = 0;
+    let total_iva5 = 0;
+    let total_iva10 = 0;
+    $("#datos_tb tr").each(function (evt) {
+        total_exenta += quitarDecimalesConvertir(
+                $(this).find("td:eq(4)").text());
+        total_iva5 += quitarDecimalesConvertir(
+                $(this).find("td:eq(5)").text());
+        total_iva10 += quitarDecimalesConvertir(
+                $(this).find("td:eq(6)").text());
+    });
+    $("#t_exenta").text(formatearNumero(total_exenta));
+    $("#t_iva5").text(formatearNumero(total_iva5));
+    $("#t_iva10").text(formatearNumero(total_iva10));
+
+    $("#iva5").text(formatearNumero(Math.round(
+            total_iva5 / 21)));
+
+    $("#iva10").text(formatearNumero(Math.round(
+            total_iva10 / 11)));
+
+    $("#t_iva").text(formatearNumero(Math.round(
+            total_iva10 / 11) +
+            Math.round(total_iva5 / 21)));
+}
+//-------------------------------------------------------------
+//-------------------------------------------------------------
+//-------------------------------------------------------------
+$(document).on("click", ".rem-item", function (evt) {
+    $(this).closest("tr").remove();
+    calcularTotalesFactura();
+});
+//-------------------------------------------------------------
+//-------------------------------------------------------------
+//-------------------------------------------------------------
+function guardarFactura() {
+    //validaciones
+    if ($("#cliente").val() === "0") {
+        alert("Debes seleccionar un cliente");
+        return;
+    }
+
+    if ($("#datos_tb").html().trim().length === 0) {
+        alert("No hay productos para la venta");
+        return;
+    }
+    //JSON
+    let cabecera = {
+        'nro_factura': $("#nro_factura").val(),
+        'fecha': $("#fecha").val(),
+        'id_cliente': $("#cliente").val(),
+        'condicion': $("#condicion").val(),
+        'timbrado': $("#timbrado").val(),
+        'estado': 'ACTIVO'
+    };
+    let res = ejecutarAjax("controladores/factura_cabecera.php",
+            "guardar=" + JSON.stringify(cabecera));
+    console.log(res);
+
+    //detalle
+    $("#datos_tb tr").each(function (evt) {
+        let detalle = {
+            "id_producto": $(this).find("td:eq(0)").text(),
+            "cantidad": $(this).find("td:eq(2)").text(),
+            "precio": quitarDecimalesConvertir($(this).find("td:eq(3)").text()),
+        };
+        res = ejecutarAjax("controladores/factura_detalle.php",
+                "guardar=" + JSON.stringify(detalle));
+        console.log(res);
+    });
+
+    alert("Guardado Correctamente");
+
+    location.reload();
+
+}
+//-----------------------------------------------------------
+//-----------------------------------------------------------
+//-----------------------------------------------------------
+function cargarTablaFacturas() {
+    let data = ejecutarAjax("controladores/factura_cabecera.php",
+            "leer=1");
+
+    if (data === "0") {
+
+    } else {
+        let json_data = JSON.parse(data);
+        $("#datos_tb").html("");
+        json_data.map(function (item) {
+
+            $("#datos_tb").append(`
+                    <tr>
+                        <td>${item.id_factura_cabecera}</td>
+                        <td>${item.nro_factura}</td>
+                        <td>${item.fecha}</td>
+                        <td>${item.razon_social}</td>
+                        <td>${item.condicion}</td>
+                        <td>${formatearNumero(item.total)}</td>
+                        <td>${item.estado}</td>
+                        <td>
+                            <button class="btn btn-primary imprimir-factura">Imprimir</button>
+                             ${(item.estado === "ANULADO") ? 
+                             `<button class="btn btn-success activar-factura">Activar</button>`: 
+                             `<button class="btn btn-danger anular-factura">Anular</button>`}
+                            
+                        </td>
+                    </tr>
+                `);
+        });
+    }
+}
+//----------------------------------------------------------------------------
+//----------------------------------------------------------------------------
+//----------------------------------------------------------------------------
+$(document).on("click", ".anular-factura", function (evt) {
+    let id = $(this).closest("tr").find("td:eq(0)").text();
+
+    let res = ejecutarAjax("controladores/factura_cabecera.php",
+            "anular=" + id);
+    cargarTablaFacturas();
+
+    // 3) Esperas un ratito y luego muestras el alert
+    setTimeout(function () {
+        alert("Factura anulada");
+    }, 500);
+
+});
+//----------------------------------------------------------------------------
+//----------------------------------------------------------------------------
+//----------------------------------------------------------------------------
+$(document).on("click", ".activar-factura", function (evt) {
+    let id = $(this).closest("tr").find("td:eq(0)").text();
+
+    let res = ejecutarAjax("controladores/factura_cabecera.php",
+            "activar=" + id);
+    cargarTablaFacturas();
+
+    // 3) Esperas un ratito y luego muestras el alert
+    setTimeout(function () {
+        alert("Factura Activada");
+    }, 500);
+
+});
+//----------------------------------------------------------------------------
+//----------------------------------------------------------------------------
+//----------------------------------------------------------------------------
+$(document).on("click", ".imprimir-factura", function (evt) {
+    let id = $(this).closest("tr").find("td:eq(0)").text();
+
+    window.open("imprimir.php?id="+id);
+
+});
