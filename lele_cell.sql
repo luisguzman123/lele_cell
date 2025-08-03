@@ -355,6 +355,27 @@ INSERT INTO `proveedor` (`id_proveedor`, `nombre_proveedor`, `ruc`, `telefono`, 
 -- --------------------------------------------------------
 
 --
+-- Estructura de tabla para la tabla `tecnico`
+--
+
+CREATE TABLE `tecnico` (
+  `id_tecnico` int(11) NOT NULL,
+  `nombre_tecnico` varchar(100) DEFAULT NULL,
+  `cedula` varchar(45) DEFAULT NULL,
+  `telefono` varchar(45) DEFAULT NULL,
+  `estado` varchar(45) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+
+--
+-- Volcado de datos para la tabla `tecnico`
+--
+
+INSERT INTO `tecnico` (`id_tecnico`, `nombre_tecnico`, `cedula`, `telefono`, `estado`) VALUES
+(1, 'Tecnico Prueba', '1234567', '0981000000', 'ACTIVO');
+
+-- --------------------------------------------------------
+
+--
 -- Estructura de tabla para la tabla `recepcion_cabecera`
 --
 
@@ -543,6 +564,12 @@ ALTER TABLE `proveedor`
   ADD PRIMARY KEY (`id_proveedor`);
 
 --
+-- Indices de la tabla `tecnico`
+--
+ALTER TABLE `tecnico`
+  ADD PRIMARY KEY (`id_tecnico`);
+
+--
 -- Indices de la tabla `recepcion_cabecera`
 --
 ALTER TABLE `recepcion_cabecera`
@@ -653,6 +680,12 @@ ALTER TABLE `producto`
 --
 ALTER TABLE `proveedor`
   MODIFY `id_proveedor` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT de la tabla `tecnico`
+--
+ALTER TABLE `tecnico`
+  MODIFY `id_tecnico` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT de la tabla `recepcion_cabecera`
