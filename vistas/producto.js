@@ -32,7 +32,7 @@ function guardarProducto(){
 
     let data = {
         'nombre': $("#nombre").val(),
-        'precio': $("#precio").val(),
+        'precio': quitarDecimalesConvertir($("#precio").val()),
         'stock': $("#stock").val(),
         'estado': $("#estado").val(),
         'iva': $("#iva").val()
@@ -50,6 +50,10 @@ function guardarProducto(){
     mostrarListarProducto();
 }
 
+
+$(document).on("keyup", "#precio", function (evt) {
+    $(this).val(formatearNumero($(this).val()));
+});
 $(document).on("click", ".eliminar-producto", function(){
     let id = $(this).closest("tr").find("td:eq(0)").text();
     $.ajax({
@@ -91,7 +95,7 @@ function cargarTablaProducto(){
                 <tr>
                     <td>${item.id_producto}</td>
                     <td>${item.nombre}</td>
-                    <td>${item.precio}</td>
+                    <td>${formatearNumero((item.precio))}</td>
                     <td>${item.stock}</td>
                     <td>${item.iva}</td>
                     <td>${item.estado}</td>

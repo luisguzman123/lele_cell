@@ -14,7 +14,7 @@
         </div>
         <div class="col-md-6">
             <label for="precio" class="form-label fs-5">Precio</label>
-            <input type="number" id="precio" class="form-control form-control-lg" placeholder="Ingrese el precio">
+            <input type="text" id="precio" class="form-control form-control-lg" placeholder="Ingrese el precio">
         </div>
         <div class="col-md-6">
             <label for="stock" class="form-label fs-5">Stock</label>
@@ -22,7 +22,12 @@
         </div>
         <div class="col-md-6">
             <label for="iva" class="form-label fs-5">IVA</label>
-            <input type="number" id="iva" class="form-control form-control-lg" placeholder="Ingrese el IVA">
+            <select class="form-control" name="iva" id="iva">
+                <option value="10">I.V.A 10%</option>
+                <option value="5">I.V.A 5%</option>
+                <option value="0">Exenta</option>
+            </select>            
+<!--<input type="number" id="iva" class="form-control form-control-lg" placeholder="Ingrese el IVA">-->
         </div>
         <div class="col-md-6">
             <label for="estado" class="form-label fs-5">Estado</label>
