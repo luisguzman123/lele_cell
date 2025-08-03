@@ -1,6 +1,10 @@
 <?php
 require_once '../conexion/db.php';
-require_once 'auditoria.php';
+// Auditoría opcional: si el archivo existe se carga para registrar acciones,
+// de lo contrario se continúa sin interrumpir el flujo de la aplicación.
+if (file_exists(__DIR__ . '/auditoria.php')) {
+    require_once __DIR__ . '/auditoria.php';
+}
 
 if(isset($_POST['leer'])){
     $conexion = new DB();
