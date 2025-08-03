@@ -1,14 +1,13 @@
 -- phpMyAdmin SQL Dump
--- version 4.7.7
+-- version 5.2.0
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 03-08-2025 a las 22:48:11
--- Versión del servidor: 10.1.30-MariaDB
--- Versión de PHP: 7.2.2
+-- Tiempo de generación: 04-08-2025 a las 01:07:17
+-- Versión del servidor: 10.4.27-MariaDB
+-- Versión de PHP: 8.2.0
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-SET AUTOCOMMIT = 0;
 START TRANSACTION;
 SET time_zone = "+00:00";
 
@@ -30,12 +29,12 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `cliente` (
   `id_cliente` int(11) NOT NULL,
-  `nombre` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
-  `apellido` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
-  `cedula` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
-  `correo` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
-  `telefono` varchar(80) COLLATE utf8_unicode_ci NOT NULL,
-  `estado` varchar(20) COLLATE utf8_unicode_ci NOT NULL
+  `nombre` varchar(100) NOT NULL,
+  `apellido` varchar(100) NOT NULL,
+  `cedula` varchar(50) NOT NULL,
+  `correo` varchar(50) NOT NULL,
+  `telefono` varchar(80) NOT NULL,
+  `estado` varchar(20) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
@@ -66,10 +65,10 @@ CREATE TABLE `cliente_equipo` (
   `id_cliente_equipo` int(11) NOT NULL,
   `id_cliente` int(11) NOT NULL,
   `id_equipo` int(11) NOT NULL,
-  `imei` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
-  `tipo_pass` varchar(80) COLLATE utf8_unicode_ci NOT NULL,
-  `pass` varchar(150) COLLATE utf8_unicode_ci NOT NULL,
-  `estado` varchar(30) COLLATE utf8_unicode_ci NOT NULL
+  `imei` varchar(50) NOT NULL,
+  `tipo_pass` varchar(80) NOT NULL,
+  `pass` varchar(150) NOT NULL,
+  `estado` varchar(30) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
@@ -87,15 +86,60 @@ INSERT INTO `cliente_equipo` (`id_cliente_equipo`, `id_cliente`, `id_equipo`, `i
 -- --------------------------------------------------------
 
 --
+-- Estructura de tabla para la tabla `compra_cabecera`
+--
+
+CREATE TABLE `compra_cabecera` (
+  `id_compra` int(11) NOT NULL,
+  `fecha` date DEFAULT NULL,
+  `observacion` varchar(255) DEFAULT NULL,
+  `id_proveedor` int(11) DEFAULT NULL,
+  `id_orden` int(11) DEFAULT NULL,
+  `total_exenta` int(11) DEFAULT NULL,
+  `total_iva5` int(11) DEFAULT NULL,
+  `total_iva10` int(11) DEFAULT NULL,
+  `total` int(11) DEFAULT NULL,
+  `estado` varchar(45) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `compra_detalle`
+--
+
+CREATE TABLE `compra_detalle` (
+  `id_detalle` int(11) NOT NULL,
+  `id_compra` int(11) NOT NULL,
+  `id_producto` int(11) NOT NULL,
+  `cantidad` int(11) DEFAULT NULL,
+  `precio` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+
+--
+-- Disparadores `compra_detalle`
+--
+DELIMITER $$
+CREATE TRIGGER `trg_compra_detalle_after_insert` AFTER INSERT ON `compra_detalle` FOR EACH ROW BEGIN
+  UPDATE producto
+    SET stock = stock + NEW.cantidad
+  WHERE id_producto = NEW.id_producto;
+END
+$$
+DELIMITER ;
+
+-- --------------------------------------------------------
+
+--
 -- Estructura de tabla para la tabla `equipo`
 --
 
 CREATE TABLE `equipo` (
   `id_equipo` int(11) NOT NULL,
-  `descripcion` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
-  `marca` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
-  `modelo` varchar(80) COLLATE utf8_unicode_ci NOT NULL,
-  `estado` varchar(30) COLLATE utf8_unicode_ci NOT NULL
+  `descripcion` varchar(100) NOT NULL,
+  `marca` varchar(50) NOT NULL,
+  `modelo` varchar(80) NOT NULL,
+  `estado` varchar(30) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
@@ -115,6 +159,158 @@ INSERT INTO `equipo` (`id_equipo`, `descripcion`, `marca`, `modelo`, `estado`) V
 -- --------------------------------------------------------
 
 --
+-- Estructura de tabla para la tabla `marca`
+--
+
+CREATE TABLE `marca` (
+  `id_marca` int(11) NOT NULL,
+  `descripcion` varchar(150) NOT NULL,
+  `estado` varchar(30) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `modelo`
+--
+
+CREATE TABLE `modelo` (
+  `id_modelo` int(11) NOT NULL,
+  `descripcion` varchar(150) NOT NULL,
+  `estado` varchar(30) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `orden_compra_cabecera`
+--
+
+CREATE TABLE `orden_compra_cabecera` (
+  `id_orden` int(11) NOT NULL,
+  `fecha` date DEFAULT NULL,
+  `observacion` varchar(255) DEFAULT NULL,
+  `id_proveedor` int(11) DEFAULT NULL,
+  `total` int(11) DEFAULT NULL,
+  `id_presupuesto` int(11) DEFAULT NULL,
+  `estado` varchar(45) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+
+--
+-- Volcado de datos para la tabla `orden_compra_cabecera`
+--
+
+INSERT INTO `orden_compra_cabecera` (`id_orden`, `fecha`, `observacion`, `id_proveedor`, `total`, `id_presupuesto`, `estado`) VALUES
+(7, '2025-08-03', '', 2, 250000, 8, 'APROBADO');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `orden_compra_detalle`
+--
+
+CREATE TABLE `orden_compra_detalle` (
+  `id_detalle` int(11) NOT NULL,
+  `id_orden` int(11) NOT NULL,
+  `id_producto` int(11) NOT NULL,
+  `cantidad` int(11) DEFAULT NULL,
+  `precio` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+
+--
+-- Volcado de datos para la tabla `orden_compra_detalle`
+--
+
+INSERT INTO `orden_compra_detalle` (`id_detalle`, `id_orden`, `id_producto`, `cantidad`, `precio`) VALUES
+(8, 7, 4, 5, 50000);
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `pedido_proveedor_cabecera`
+--
+
+CREATE TABLE `pedido_proveedor_cabecera` (
+  `id_pedido` int(11) NOT NULL,
+  `fecha` date DEFAULT NULL,
+  `observacion` varchar(255) DEFAULT NULL,
+  `id_proveedor` int(11) DEFAULT NULL,
+  `estado` varchar(45) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+
+--
+-- Volcado de datos para la tabla `pedido_proveedor_cabecera`
+--
+
+INSERT INTO `pedido_proveedor_cabecera` (`id_pedido`, `fecha`, `observacion`, `id_proveedor`, `estado`) VALUES
+(6, '2025-08-03', '', 2, 'UTILIZADO');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `pedido_proveedor_detalle`
+--
+
+CREATE TABLE `pedido_proveedor_detalle` (
+  `id_detalle` int(11) NOT NULL,
+  `id_pedido` int(11) NOT NULL,
+  `id_producto` int(11) NOT NULL,
+  `cantidad` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+
+--
+-- Volcado de datos para la tabla `pedido_proveedor_detalle`
+--
+
+INSERT INTO `pedido_proveedor_detalle` (`id_detalle`, `id_pedido`, `id_producto`, `cantidad`) VALUES
+(7, 6, 4, 5);
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `presupuesto_cabecera`
+--
+
+CREATE TABLE `presupuesto_cabecera` (
+  `id_presupuesto` int(11) NOT NULL,
+  `fecha` date DEFAULT NULL,
+  `observacion` varchar(255) DEFAULT NULL,
+  `id_proveedor` int(11) NOT NULL,
+  `total` int(11) NOT NULL,
+  `estado` varchar(45) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+
+--
+-- Volcado de datos para la tabla `presupuesto_cabecera`
+--
+
+INSERT INTO `presupuesto_cabecera` (`id_presupuesto`, `fecha`, `observacion`, `id_proveedor`, `total`, `estado`) VALUES
+(8, '2025-08-03', '', 2, 250000, 'APROBADO');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `presupuesto_detalle`
+--
+
+CREATE TABLE `presupuesto_detalle` (
+  `id_detalle` int(11) NOT NULL,
+  `id_presupuesto` int(11) NOT NULL,
+  `id_producto` int(11) NOT NULL,
+  `cantidad` int(11) DEFAULT NULL,
+  `precio` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+
+--
+-- Volcado de datos para la tabla `presupuesto_detalle`
+--
+
+INSERT INTO `presupuesto_detalle` (`id_detalle`, `id_presupuesto`, `id_producto`, `cantidad`, `precio`) VALUES
+(9, 8, 4, 5, 50000);
+
+-- --------------------------------------------------------
+
+--
 -- Estructura de tabla para la tabla `producto`
 --
 
@@ -126,6 +322,14 @@ CREATE TABLE `producto` (
   `estado` varchar(30) NOT NULL,
   `iva` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+
+--
+-- Volcado de datos para la tabla `producto`
+--
+
+INSERT INTO `producto` (`id_producto`, `nombre`, `precio`, `stock`, `estado`, `iva`) VALUES
+(4, 'producto', 30000, 6, 'ACTIVO', 10),
+(5, 'A', 60000, 0, 'ACTIVO', 10);
 
 -- --------------------------------------------------------
 
@@ -141,29 +345,12 @@ CREATE TABLE `proveedor` (
   `estado` varchar(45) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
--- --------------------------------------------------------
-
 --
--- Estructura de tabla para la tabla `marca`
+-- Volcado de datos para la tabla `proveedor`
 --
 
-CREATE TABLE `marca` (
-  `id_marca` int(11) NOT NULL,
-  `descripcion` varchar(150) COLLATE utf8_unicode_ci NOT NULL,
-  `estado` varchar(30) COLLATE utf8_unicode_ci NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `modelo`
---
-
-CREATE TABLE `modelo` (
-  `id_modelo` int(11) NOT NULL,
-  `descripcion` varchar(150) COLLATE utf8_unicode_ci NOT NULL,
-  `estado` varchar(30) COLLATE utf8_unicode_ci NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+INSERT INTO `proveedor` (`id_proveedor`, `nombre_proveedor`, `ruc`, `telefono`, `estado`) VALUES
+(2, 'LUCHOCELL', '6959595-8', '0959595', 'ACTIVO');
 
 -- --------------------------------------------------------
 
@@ -176,7 +363,7 @@ CREATE TABLE `recepcion_cabecera` (
   `fecha` date NOT NULL,
   `id_cliente` int(11) NOT NULL,
   `id_equipo` int(11) NOT NULL,
-  `estado` varchar(20) COLLATE utf8_unicode_ci NOT NULL
+  `estado` varchar(20) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
@@ -201,9 +388,9 @@ INSERT INTO `recepcion_cabecera` (`id_recepcion_cabecera`, `fecha`, `id_cliente`
 CREATE TABLE `recepcion_detalle` (
   `id_recepcion_detalle` int(11) NOT NULL,
   `id_recepcion_cabecera` int(11) NOT NULL,
-  `problema` varchar(200) COLLATE utf8_unicode_ci NOT NULL,
-  `obs` varchar(200) COLLATE utf8_unicode_ci NOT NULL,
-  `estado` varchar(20) COLLATE utf8_unicode_ci NOT NULL
+  `problema` varchar(200) NOT NULL,
+  `obs` varchar(200) NOT NULL,
+  `estado` varchar(20) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
@@ -230,8 +417,8 @@ INSERT INTO `recepcion_detalle` (`id_recepcion_detalle`, `id_recepcion_cabecera`
 
 CREATE TABLE `servicio` (
   `id_servicio` int(11) NOT NULL,
-  `descripcion` varchar(150) COLLATE utf8_unicode_ci NOT NULL,
-  `estado` varchar(30) COLLATE utf8_unicode_ci NOT NULL
+  `descripcion` varchar(150) NOT NULL,
+  `estado` varchar(30) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
@@ -242,8 +429,8 @@ CREATE TABLE `servicio` (
 
 CREATE TABLE `usuario` (
   `id_usuario` int(11) NOT NULL,
-  `usuario` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
-  `password` varchar(255) COLLATE utf8_unicode_ci NOT NULL
+  `usuario` varchar(50) NOT NULL,
+  `password` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
@@ -270,22 +457,24 @@ ALTER TABLE `cliente_equipo`
   ADD PRIMARY KEY (`id_cliente_equipo`);
 
 --
+-- Indices de la tabla `compra_cabecera`
+--
+ALTER TABLE `compra_cabecera`
+  ADD PRIMARY KEY (`id_compra`);
+
+--
+-- Indices de la tabla `compra_detalle`
+--
+ALTER TABLE `compra_detalle`
+  ADD PRIMARY KEY (`id_detalle`),
+  ADD KEY `fk_compra_detalle_cabecera` (`id_compra`),
+  ADD KEY `fk_compra_detalle_producto` (`id_producto`);
+
+--
 -- Indices de la tabla `equipo`
 --
 ALTER TABLE `equipo`
   ADD PRIMARY KEY (`id_equipo`);
-
---
--- Indices de la tabla `producto`
---
-ALTER TABLE `producto`
-  ADD PRIMARY KEY (`id_producto`);
-
---
--- Indices de la tabla `proveedor`
---
-ALTER TABLE `proveedor`
-  ADD PRIMARY KEY (`id_proveedor`);
 
 --
 -- Indices de la tabla `marca`
@@ -298,6 +487,60 @@ ALTER TABLE `marca`
 --
 ALTER TABLE `modelo`
   ADD PRIMARY KEY (`id_modelo`);
+
+--
+-- Indices de la tabla `orden_compra_cabecera`
+--
+ALTER TABLE `orden_compra_cabecera`
+  ADD PRIMARY KEY (`id_orden`);
+
+--
+-- Indices de la tabla `orden_compra_detalle`
+--
+ALTER TABLE `orden_compra_detalle`
+  ADD PRIMARY KEY (`id_detalle`);
+
+--
+-- Indices de la tabla `pedido_proveedor_cabecera`
+--
+ALTER TABLE `pedido_proveedor_cabecera`
+  ADD PRIMARY KEY (`id_pedido`),
+  ADD KEY `fk_pedido_proveedor_cabecera_proveedor` (`id_proveedor`);
+
+--
+-- Indices de la tabla `pedido_proveedor_detalle`
+--
+ALTER TABLE `pedido_proveedor_detalle`
+  ADD PRIMARY KEY (`id_detalle`),
+  ADD KEY `fk_pedido_proveedor_detalle_cabecera` (`id_pedido`),
+  ADD KEY `fk_pedido_proveedor_detalle_producto` (`id_producto`);
+
+--
+-- Indices de la tabla `presupuesto_cabecera`
+--
+ALTER TABLE `presupuesto_cabecera`
+  ADD PRIMARY KEY (`id_presupuesto`);
+
+--
+-- Indices de la tabla `presupuesto_detalle`
+--
+ALTER TABLE `presupuesto_detalle`
+  ADD PRIMARY KEY (`id_detalle`),
+  ADD KEY `fk_detalle_presupuesto1` (`id_presupuesto`),
+  ADD KEY `fk_detalle_producto1` (`id_producto`);
+
+--
+-- Indices de la tabla `producto`
+--
+ALTER TABLE `producto`
+  ADD PRIMARY KEY (`id_producto`),
+  ADD KEY `fk_producto_tipo_producto` (`estado`);
+
+--
+-- Indices de la tabla `proveedor`
+--
+ALTER TABLE `proveedor`
+  ADD PRIMARY KEY (`id_proveedor`);
 
 --
 -- Indices de la tabla `recepcion_cabecera`
@@ -318,13 +561,6 @@ ALTER TABLE `servicio`
   ADD PRIMARY KEY (`id_servicio`);
 
 --
--- Indices de la tabla `usuario`
---
-ALTER TABLE `usuario`
-  ADD PRIMARY KEY (`id_usuario`),
-  ADD UNIQUE KEY `usuario` (`usuario`);
-
---
 -- AUTO_INCREMENT de las tablas volcadas
 --
 
@@ -341,22 +577,22 @@ ALTER TABLE `cliente_equipo`
   MODIFY `id_cliente_equipo` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
+-- AUTO_INCREMENT de la tabla `compra_cabecera`
+--
+ALTER TABLE `compra_cabecera`
+  MODIFY `id_compra` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+
+--
+-- AUTO_INCREMENT de la tabla `compra_detalle`
+--
+ALTER TABLE `compra_detalle`
+  MODIFY `id_detalle` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+
+--
 -- AUTO_INCREMENT de la tabla `equipo`
 --
 ALTER TABLE `equipo`
   MODIFY `id_equipo` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
-
---
--- AUTO_INCREMENT de la tabla `producto`
---
-ALTER TABLE `producto`
-  MODIFY `id_producto` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
-
---
--- AUTO_INCREMENT de la tabla `proveedor`
---
-ALTER TABLE `proveedor`
-  MODIFY `id_proveedor` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT de la tabla `marca`
@@ -369,6 +605,54 @@ ALTER TABLE `marca`
 --
 ALTER TABLE `modelo`
   MODIFY `id_modelo` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de la tabla `orden_compra_cabecera`
+--
+ALTER TABLE `orden_compra_cabecera`
+  MODIFY `id_orden` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+
+--
+-- AUTO_INCREMENT de la tabla `orden_compra_detalle`
+--
+ALTER TABLE `orden_compra_detalle`
+  MODIFY `id_detalle` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+
+--
+-- AUTO_INCREMENT de la tabla `pedido_proveedor_cabecera`
+--
+ALTER TABLE `pedido_proveedor_cabecera`
+  MODIFY `id_pedido` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+
+--
+-- AUTO_INCREMENT de la tabla `pedido_proveedor_detalle`
+--
+ALTER TABLE `pedido_proveedor_detalle`
+  MODIFY `id_detalle` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+
+--
+-- AUTO_INCREMENT de la tabla `presupuesto_cabecera`
+--
+ALTER TABLE `presupuesto_cabecera`
+  MODIFY `id_presupuesto` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+
+--
+-- AUTO_INCREMENT de la tabla `presupuesto_detalle`
+--
+ALTER TABLE `presupuesto_detalle`
+  MODIFY `id_detalle` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+
+--
+-- AUTO_INCREMENT de la tabla `producto`
+--
+ALTER TABLE `producto`
+  MODIFY `id_producto` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+
+--
+-- AUTO_INCREMENT de la tabla `proveedor`
+--
+ALTER TABLE `proveedor`
+  MODIFY `id_proveedor` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT de la tabla `recepcion_cabecera`
@@ -387,12 +671,6 @@ ALTER TABLE `recepcion_detalle`
 --
 ALTER TABLE `servicio`
   MODIFY `id_servicio` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT de la tabla `usuario`
---
-ALTER TABLE `usuario`
-  MODIFY `id_usuario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
