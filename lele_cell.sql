@@ -130,6 +130,20 @@ CREATE TABLE `producto` (
 -- --------------------------------------------------------
 
 --
+-- Estructura de tabla para la tabla `proveedor`
+--
+
+CREATE TABLE `proveedor` (
+  `id_proveedor` int(11) NOT NULL,
+  `nombre_proveedor` varchar(100) DEFAULT NULL,
+  `ruc` varchar(45) DEFAULT NULL,
+  `telefono` varchar(45) DEFAULT NULL,
+  `estado` varchar(45) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Estructura de tabla para la tabla `marca`
 --
 
@@ -268,6 +282,12 @@ ALTER TABLE `producto`
   ADD PRIMARY KEY (`id_producto`);
 
 --
+-- Indices de la tabla `proveedor`
+--
+ALTER TABLE `proveedor`
+  ADD PRIMARY KEY (`id_proveedor`);
+
+--
 -- Indices de la tabla `marca`
 --
 ALTER TABLE `marca`
@@ -331,6 +351,12 @@ ALTER TABLE `equipo`
 --
 ALTER TABLE `producto`
   MODIFY `id_producto` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
+-- AUTO_INCREMENT de la tabla `proveedor`
+--
+ALTER TABLE `proveedor`
+  MODIFY `id_proveedor` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT de la tabla `marca`
