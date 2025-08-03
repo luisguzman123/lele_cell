@@ -115,6 +115,21 @@ INSERT INTO `equipo` (`id_equipo`, `descripcion`, `marca`, `modelo`, `estado`) V
 -- --------------------------------------------------------
 
 --
+-- Estructura de tabla para la tabla `producto`
+--
+
+CREATE TABLE `producto` (
+  `id_producto` int(11) NOT NULL,
+  `nombre` varchar(45) DEFAULT NULL,
+  `precio` int(11) NOT NULL,
+  `stock` int(11) DEFAULT NULL,
+  `estado` varchar(30) NOT NULL,
+  `iva` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Estructura de tabla para la tabla `marca`
 --
 
@@ -247,6 +262,12 @@ ALTER TABLE `equipo`
   ADD PRIMARY KEY (`id_equipo`);
 
 --
+-- Indices de la tabla `producto`
+--
+ALTER TABLE `producto`
+  ADD PRIMARY KEY (`id_producto`);
+
+--
 -- Indices de la tabla `marca`
 --
 ALTER TABLE `marca`
@@ -304,6 +325,12 @@ ALTER TABLE `cliente_equipo`
 --
 ALTER TABLE `equipo`
   MODIFY `id_equipo` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+
+--
+-- AUTO_INCREMENT de la tabla `producto`
+--
+ALTER TABLE `producto`
+  MODIFY `id_producto` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT de la tabla `marca`

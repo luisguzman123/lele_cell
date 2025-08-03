@@ -1,0 +1,48 @@
+<?php session_start(); ?>
+<div class="container mt-4 p-4 shadow rounded bg-light" style="max-width: 950px;">
+    <input type="hidden" id="id_producto" value="0">
+
+    <div class="text-center mb-4">
+        <h2 class="fw-bold text-primary">Nuevo Producto</h2>
+        <hr>
+    </div>
+
+    <div class="row g-3">
+        <div class="col-md-6">
+            <label for="nombre" class="form-label fs-5">Nombre</label>
+            <input type="text" id="nombre" class="form-control form-control-lg" placeholder="Ingrese el nombre">
+        </div>
+        <div class="col-md-6">
+            <label for="precio" class="form-label fs-5">Precio</label>
+            <input type="number" id="precio" class="form-control form-control-lg" placeholder="Ingrese el precio">
+        </div>
+        <div class="col-md-6">
+            <label for="stock" class="form-label fs-5">Stock</label>
+            <input type="number" id="stock" class="form-control form-control-lg" placeholder="Ingrese el stock">
+        </div>
+        <div class="col-md-6">
+            <label for="iva" class="form-label fs-5">IVA</label>
+            <input type="number" id="iva" class="form-control form-control-lg" placeholder="Ingrese el IVA">
+        </div>
+        <div class="col-md-6">
+            <label for="estado" class="form-label fs-5">Estado</label>
+            <select id="estado" class="form-select form-select-lg">
+                <option value="ACTIVO">ACTIVO</option>
+                <option value="INACTIVO">INACTIVO</option>
+            </select>
+        </div>
+    </div>
+
+    <div class="row mt-4">
+        <div class="col-md-6">
+            <button class="btn btn-success btn-lg w-100" onclick="guardarProducto();">
+                <i class="bi bi-check-circle"></i> Guardar
+            </button>
+        </div>
+        <div class="col-md-6">
+            <button class="btn btn-outline-danger btn-lg w-100" onclick="mostrarListarProducto();">
+                <i class="bi bi-x-circle"></i> Cancelar
+            </button>
+        </div>
+    </div>
+</div>
