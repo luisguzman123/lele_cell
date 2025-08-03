@@ -19,8 +19,10 @@ session_start();
                     </select>
                 </div>
                 <div class="col-md-3">
-                    <label for="costo_estimado" class="form-label fw-semibold text-dark">Costo Estimado</label>
-                    <input type="number" step="0.01" id="costo_estimado" class="form-control" value="0" />
+                 <label for="recepcion_lst" class="form-label fw-semibold text-dark">Técnico <span class="text-danger">*</span></label>
+                    <select id="tecnico_lst" class="form-select" required>
+                        <option value="0">-- Seleccione un técnico --</option>
+                    </select>
                 </div>
                 <div class="col-md-3">
                     <label for="observaciones" class="form-label fw-semibold text-dark">Observaciones</label>

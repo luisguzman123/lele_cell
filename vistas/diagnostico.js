@@ -82,9 +82,9 @@ function guardarDiagnostico() {
     let data = {
         'id_recepcion_cabecera': $("#recepcion_lst").val(),
         'fecha_diagnostico': $("#fecha").val(),
-        'id_tecnico': null,
-        'costo_estimado': $("#costo_estimado").val(),
-        'estado_diagnostico': "Pendiente",
+        'id_tecnico': $("#tecnico_lst").val(),
+        'costo_estimado': 0,
+        'estado_diagnostico': "PENDIENTE",
         'observaciones': $("#observaciones").val()
     };
     let response = ejecutarAjax("controladores/diagnostico.php", "guardar=" + JSON.stringify(data));
@@ -114,7 +114,7 @@ function cargarTablaDiagnostico() {
             fila += `<td>${item.id_diagnostico}</td>`;
             fila += `<td>${item.id_recepcion_cabecera}</td>`;
             fila += `<td>${item.fecha_diagnostico}</td>`;
-            fila += `<td>${item.costo_estimado}</td>`;
+            fila += `<td>${formatearNumero(item.costo_estimado)}</td>`;
             fila += `<td>${item.estado_diagnostico}</td>`;
             fila += `<td><button class="btn btn-danger anular-diagnostico">Anular</button> <button class="btn btn-primary imprimir-diagnostico">Impresion</button></td>`;
             fila += `</tr>`;
