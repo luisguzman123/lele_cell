@@ -20,6 +20,27 @@ if (isset($_POST['leer_proveedor'])) {
     }
 }
 
+if (isset($_POST['leer'])) {
+    $conexion = new DB();
+    $query = $conexion->conectar()->prepare("SELECT `id_proveedor`, `nombre_proveedor`, `ruc`, `telefono`, `estado` FROM `proveedor` where estado = 'ACTIVO'");
+    $query->execute();
+    if ($query->rowCount()) {
+        print_r(json_encode($query->fetchAll(PDO::FETCH_OBJ)));
+    } else {
+        echo "0";
+    }
+}
+if (isset($_POST['leer_proveedor'])) {
+    $conexion = new DB();
+    $query = $conexion->conectar()->prepare("SELECT `id_proveedor`, `nombre_proveedor`, `ruc`, `telefono`, `estado` FROM `proveedor`");
+    $query->execute();
+    if ($query->rowCount()) {
+        print_r(json_encode($query->fetchAll(PDO::FETCH_OBJ)));
+    } else {
+        echo "0";
+    }
+}
+
 if (isset($_POST['leer_proveedor_id'])) {
     $conexion = new DB();
     $query = $conexion->conectar()->prepare("SELECT `id_proveedor`, `nombre_proveedor`, `ruc`, `telefono`, `estado` FROM `proveedor` WHERE id_proveedor = :id");

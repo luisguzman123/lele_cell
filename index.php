@@ -345,6 +345,44 @@ https://cdn.jsdelivr.net/npm/sweetalert2@11.22.0/dist/sweetalert2.min.css
                                     </li>
                                 </ul>
                             </li>
+                              <li class="nav-item">
+                                    <a href="#" class="nav-link">
+                                        <i class="nav-icon bi bi-cart"></i>
+                                        <p>
+                                            Compra
+                                            <i class="nav-arrow bi bi-chevron-right"></i>
+                                        </p>
+                                    </a>
+                                    <ul class="nav nav-treeview">
+                                        <li class="nav-item">
+                                            <a href="#" onclick="mostrarListaPedidoProveedor();" class="nav-link">
+                                                <i class="nav-icon bi bi-circle"></i>
+                                                <p>Pedido Proveedor</p>
+                                            </a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a href="#" onclick="mostrarListaPresupuesto();" class="nav-link">
+                                                <i class="nav-icon bi bi-circle"></i>
+                                                <p>Presupuesto</p>
+                                            </a>
+                                        </li>
+
+                                        <li class="nav-item">
+                                            <a href="#" onclick="mostrarListaOrdenCompra();" class="nav-link">
+                                                <i class="nav-icon bi bi-circle"></i>
+                                                <p>Orden de Compra</p>
+                                            </a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a href="#" onclick="mostrarListaCompra();" class="nav-link">
+                                                <i class="nav-icon bi bi-circle"></i>
+                                                <p>Factura de Compra</p>
+                                            </a>
+                                        </li>
+
+                                    </ul>
+                                </li>
+                                
                             <li class="nav-item">
                                 <a href="#" class="nav-link">
                                     <i class="nav-icon bi bi-speedometer"></i>
@@ -672,6 +710,10 @@ https://cdn.jsdelivr.net/npm/sweetalert2@11.22.0/dist/sweetalert2.all.min.js
         <script src="vistas/producto.js"></script>
         <script src="vistas/proveedor.js"></script>
         <script src="vistas/recepcion.js"></script>
+        <script src="vistas/pedido_proveedor.js"></script>
+        <script src="vistas/presupuesto.js"></script>
+        <script src="vistas/orden_compra.js"></script>
+        <script src="vistas/compra.js"></script>
         <!--end::Script-->
     </body>
     <!--end::Body-->

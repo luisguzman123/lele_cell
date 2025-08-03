@@ -19,6 +19,16 @@ if (isset($_POST['leer_producto'])) {
         echo "0";
     }
 }
+if (isset($_POST['leer'])) {
+    $conexion = new DB();
+    $query = $conexion->conectar()->prepare("SELECT `id_producto`, `nombre`, `precio`, `stock`, `estado`, `iva` FROM `producto` WHERE estado = 'ACTIVO'");
+    $query->execute();
+    if ($query->rowCount()) {
+        print_r(json_encode($query->fetchAll(PDO::FETCH_OBJ)));
+    } else {
+        echo "0";
+    }
+}
 
 if (isset($_POST['leer_producto_id'])) {
     $conexion = new DB();
