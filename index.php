@@ -343,6 +343,12 @@ https://cdn.jsdelivr.net/npm/sweetalert2@11.22.0/dist/sweetalert2.min.css
                                             <p>Proveedor</p>
                                         </a>
                                     </li>
+                                    <li class="nav-item">
+                                        <a href="#" onclick="mostrarListarTecnico();" class="nav-link">
+                                            <i class="nav-icon bi bi-circle"></i>
+                                            <p>Tecnico</p>
+                                        </a>
+                                    </li>
                                 </ul>
                             </li>
                               <li class="nav-item">
@@ -397,6 +403,12 @@ https://cdn.jsdelivr.net/npm/sweetalert2@11.22.0/dist/sweetalert2.min.css
                                         <a href="#" onclick="mostrarListarRecepcion();" class="nav-link">
                                             <i class="nav-icon bi bi-circle"></i>
                                             <p>Recepción</p>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a href="#" onclick="mostrarListarDiagnostico();" class="nav-link">
+                                            <i class="nav-icon bi bi-circle"></i>
+                                            <p>Diagnóstico</p>
                                         </a>
                                     </li>
                                 </ul>
@@ -709,7 +721,9 @@ https://cdn.jsdelivr.net/npm/sweetalert2@11.22.0/dist/sweetalert2.all.min.js
         <script src="vistas/cliente_equipo.js"></script>
         <script src="vistas/producto.js"></script>
         <script src="vistas/proveedor.js"></script>
+        <script src="vistas/tecnico.js"></script>
         <script src="vistas/recepcion.js"></script>
+        <script src="vistas/diagnostico.js"></script>
         <script src="vistas/pedido_proveedor.js"></script>
         <script src="vistas/presupuesto.js"></script>
         <script src="vistas/orden_compra.js"></script>

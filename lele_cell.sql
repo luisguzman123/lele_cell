@@ -355,6 +355,27 @@ INSERT INTO `proveedor` (`id_proveedor`, `nombre_proveedor`, `ruc`, `telefono`, 
 -- --------------------------------------------------------
 
 --
+-- Estructura de tabla para la tabla `tecnico`
+--
+
+CREATE TABLE `tecnico` (
+  `id_tecnico` int(11) NOT NULL,
+  `nombre_tecnico` varchar(100) DEFAULT NULL,
+  `cedula` varchar(45) DEFAULT NULL,
+  `telefono` varchar(45) DEFAULT NULL,
+  `estado` varchar(45) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+
+--
+-- Volcado de datos para la tabla `tecnico`
+--
+
+INSERT INTO `tecnico` (`id_tecnico`, `nombre_tecnico`, `cedula`, `telefono`, `estado`) VALUES
+(1, 'Tecnico Prueba', '1234567', '0981000000', 'ACTIVO');
+
+-- --------------------------------------------------------
+
+--
 -- Estructura de tabla para la tabla `recepcion_cabecera`
 --
 
@@ -543,6 +564,12 @@ ALTER TABLE `proveedor`
   ADD PRIMARY KEY (`id_proveedor`);
 
 --
+-- Indices de la tabla `tecnico`
+--
+ALTER TABLE `tecnico`
+  ADD PRIMARY KEY (`id_tecnico`);
+
+--
 -- Indices de la tabla `recepcion_cabecera`
 --
 ALTER TABLE `recepcion_cabecera`
@@ -655,6 +682,12 @@ ALTER TABLE `proveedor`
   MODIFY `id_proveedor` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
+-- AUTO_INCREMENT de la tabla `tecnico`
+--
+ALTER TABLE `tecnico`
+  MODIFY `id_tecnico` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
 -- AUTO_INCREMENT de la tabla `recepcion_cabecera`
 --
 ALTER TABLE `recepcion_cabecera`
@@ -665,6 +698,54 @@ ALTER TABLE `recepcion_cabecera`
 --
 ALTER TABLE `recepcion_detalle`
   MODIFY `id_recepcion_detalle` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+
+--
+-- Estructura de tabla para la tabla `diagnostico_cabecera`
+--
+CREATE TABLE `diagnostico_cabecera` (
+  `id_diagnostico` int(11) NOT NULL,
+  `id_recepcion_cabecera` int(11) NOT NULL,
+  `fecha_diagnostico` datetime NOT NULL,
+  `id_tecnico` int(11) DEFAULT NULL,
+  `costo_estimado` decimal(10,2) DEFAULT 0,
+  `estado_diagnostico` varchar(20) DEFAULT 'Pendiente',
+  `observaciones` text
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Estructura de tabla para la tabla `diagnostico_detalle`
+--
+CREATE TABLE `diagnostico_detalle` (
+  `id_diagnostico_detalle` int(11) NOT NULL,
+  `id_diagnostico` int(11) NOT NULL,
+  `descripcion_prueba` varchar(200) DEFAULT NULL,
+  `resultado` varchar(100) DEFAULT NULL,
+  `observaciones` text
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Indices de la tabla `diagnostico_cabecera`
+--
+ALTER TABLE `diagnostico_cabecera`
+  ADD PRIMARY KEY (`id_diagnostico`);
+
+--
+-- Indices de la tabla `diagnostico_detalle`
+--
+ALTER TABLE `diagnostico_detalle`
+  ADD PRIMARY KEY (`id_diagnostico_detalle`);
+
+--
+-- AUTO_INCREMENT de la tabla `diagnostico_cabecera`
+--
+ALTER TABLE `diagnostico_cabecera`
+  MODIFY `id_diagnostico` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de la tabla `diagnostico_detalle`
+--
+ALTER TABLE `diagnostico_detalle`
+  MODIFY `id_diagnostico_detalle` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de la tabla `servicio`
