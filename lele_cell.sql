@@ -667,6 +667,54 @@ ALTER TABLE `recepcion_detalle`
   MODIFY `id_recepcion_detalle` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
+-- Estructura de tabla para la tabla `diagnostico_cabecera`
+--
+CREATE TABLE `diagnostico_cabecera` (
+  `id_diagnostico` int(11) NOT NULL,
+  `id_recepcion_cabecera` int(11) NOT NULL,
+  `fecha_diagnostico` datetime NOT NULL,
+  `id_tecnico` int(11) DEFAULT NULL,
+  `costo_estimado` decimal(10,2) DEFAULT 0,
+  `estado_diagnostico` varchar(20) DEFAULT 'Pendiente',
+  `observaciones` text
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Estructura de tabla para la tabla `diagnostico_detalle`
+--
+CREATE TABLE `diagnostico_detalle` (
+  `id_diagnostico_detalle` int(11) NOT NULL,
+  `id_diagnostico` int(11) NOT NULL,
+  `descripcion_prueba` varchar(200) DEFAULT NULL,
+  `resultado` varchar(100) DEFAULT NULL,
+  `observaciones` text
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Indices de la tabla `diagnostico_cabecera`
+--
+ALTER TABLE `diagnostico_cabecera`
+  ADD PRIMARY KEY (`id_diagnostico`);
+
+--
+-- Indices de la tabla `diagnostico_detalle`
+--
+ALTER TABLE `diagnostico_detalle`
+  ADD PRIMARY KEY (`id_diagnostico_detalle`);
+
+--
+-- AUTO_INCREMENT de la tabla `diagnostico_cabecera`
+--
+ALTER TABLE `diagnostico_cabecera`
+  MODIFY `id_diagnostico` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de la tabla `diagnostico_detalle`
+--
+ALTER TABLE `diagnostico_detalle`
+  MODIFY `id_diagnostico_detalle` int(11) NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT de la tabla `servicio`
 --
 ALTER TABLE `servicio`
