@@ -10,7 +10,7 @@ if (!isset($_SESSION['usuario'])) {
     <!--begin::Head-->
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-        <title>AdminLTE v4 | Dashboard</title>
+        <title>LR Cell  | Inicio</title>
         <!--begin::Primary Meta Tags-->
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <meta name="title" content="AdminLTE v4 | Dashboard" />
@@ -80,7 +80,7 @@ https://cdn.jsdelivr.net/npm/sweetalert2@11.22.0/dist/sweetalert2.min.css
                 <!--begin::Container-->
                 <div class="container-fluid">
                     <!--begin::Start Navbar Links-->
-                    <ul class="navbar-nav">
+<!--                    <ul class="navbar-nav">
                         <li class="nav-item">
                             <a class="nav-link" data-lte-toggle="sidebar" href="#" role="button">
                                 <i class="bi bi-list"></i>
@@ -88,26 +88,26 @@ https://cdn.jsdelivr.net/npm/sweetalert2@11.22.0/dist/sweetalert2.min.css
                         </li>
                         <li class="nav-item d-none d-md-block"><a href="#" class="nav-link">Home</a></li>
                         <li class="nav-item d-none d-md-block"><a href="#" class="nav-link">Contact</a></li>
-                    </ul>
+                    </ul>-->
                     <!--end::Start Navbar Links-->
                     <!--begin::End Navbar Links-->
                     <ul class="navbar-nav ms-auto">
                         <!--begin::Navbar Search-->
-                        <li class="nav-item">
+<!--                        <li class="nav-item">
                             <a class="nav-link" data-widget="navbar-search" href="#" role="button">
                                 <i class="bi bi-search"></i>
                             </a>
-                        </li>
+                        </li>-->
                         <!--end::Navbar Search-->
                         <!--begin::Messages Dropdown Menu-->
-                        <li class="nav-item dropdown">
+<!--                        <li class="nav-item dropdown">
                             <a class="nav-link" data-bs-toggle="dropdown" href="#">
                                 <i class="bi bi-chat-text"></i>
                                 <span class="navbar-badge badge text-bg-danger">3</span>
                             </a>
                             <div class="dropdown-menu dropdown-menu-lg dropdown-menu-end">
                                 <a href="#" class="dropdown-item">
-                                    <!--begin::Message-->
+                                    begin::Message
                                     <div class="d-flex">
                                         <div class="flex-shrink-0">
                                             <img
@@ -129,11 +129,11 @@ https://cdn.jsdelivr.net/npm/sweetalert2@11.22.0/dist/sweetalert2.min.css
                                             </p>
                                         </div>
                                     </div>
-                                    <!--end::Message-->
+                                    end::Message
                                 </a>
                                 <div class="dropdown-divider"></div>
                                 <a href="#" class="dropdown-item">
-                                    <!--begin::Message-->
+                                    begin::Message
                                     <div class="d-flex">
                                         <div class="flex-shrink-0">
                                             <img
@@ -155,11 +155,11 @@ https://cdn.jsdelivr.net/npm/sweetalert2@11.22.0/dist/sweetalert2.min.css
                                             </p>
                                         </div>
                                     </div>
-                                    <!--end::Message-->
+                                    end::Message
                                 </a>
                                 <div class="dropdown-divider"></div>
                                 <a href="#" class="dropdown-item">
-                                    <!--begin::Message-->
+                                    begin::Message
                                     <div class="d-flex">
                                         <div class="flex-shrink-0">
                                             <img
@@ -181,15 +181,15 @@ https://cdn.jsdelivr.net/npm/sweetalert2@11.22.0/dist/sweetalert2.min.css
                                             </p>
                                         </div>
                                     </div>
-                                    <!--end::Message-->
+                                    end::Message
                                 </a>
                                 <div class="dropdown-divider"></div>
                                 <a href="#" class="dropdown-item dropdown-footer">See All Messages</a>
                             </div>
-                        </li>
+                        </li>-->
                         <!--end::Messages Dropdown Menu-->
                         <!--begin::Notifications Dropdown Menu-->
-                        <li class="nav-item dropdown">
+<!--                        <li class="nav-item dropdown">
                             <a class="nav-link" data-bs-toggle="dropdown" href="#">
                                 <i class="bi bi-bell-fill"></i>
                                 <span class="navbar-badge badge text-bg-warning">15</span>
@@ -214,7 +214,7 @@ https://cdn.jsdelivr.net/npm/sweetalert2@11.22.0/dist/sweetalert2.min.css
                                 <div class="dropdown-divider"></div>
                                 <a href="#" class="dropdown-item dropdown-footer"> See All Notifications </a>
                             </div>
-                        </li>
+                        </li>-->
                         <!--end::Notifications Dropdown Menu-->
                         <!--begin::Fullscreen Toggle-->
                         <li class="nav-item">
@@ -227,16 +227,16 @@ https://cdn.jsdelivr.net/npm/sweetalert2@11.22.0/dist/sweetalert2.min.css
                         <!--begin::User Menu Dropdown-->
                         <li class="nav-item dropdown user-menu">
                             <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
-                                <img
+<!--                                <img
                                     src="dist/assets/img/user2-160x160.jpg"
                                     class="user-image rounded-circle shadow"
                                     alt="User Image"
-                                    />
+                                    />-->
                                 <span class="d-none d-md-inline">Alexander Pierce</span>
                             </a>
                             <ul class="dropdown-menu dropdown-menu-lg dropdown-menu-end">
                                 <!--begin::User Image-->
-                                <li class="user-header text-bg-primary">
+<!--                                <li class="user-header text-bg-primary">
                                     <img
                                         src="dist/assets/img/user2-160x160.jpg"
                                         class="rounded-circle shadow"
@@ -246,23 +246,23 @@ https://cdn.jsdelivr.net/npm/sweetalert2@11.22.0/dist/sweetalert2.min.css
                                         Alexander Pierce - Web Developer
                                         <small>Member since Nov. 2023</small>
                                     </p>
-                                </li>
+                                </li>-->
                                 <!--end::User Image-->
                                 <!--begin::Menu Body-->
-                                <li class="user-body">
-                                    <!--begin::Row-->
+<!--                                <li class="user-body">
+                                    begin::Row
                                     <div class="row">
                                         <div class="col-4 text-center"><a href="#">Followers</a></div>
                                         <div class="col-4 text-center"><a href="#">Sales</a></div>
                                         <div class="col-4 text-center"><a href="#">Friends</a></div>
                                     </div>
-                                    <!--end::Row-->
-                                </li>
+                                    end::Row
+                                </li>-->
                                 <!--end::Menu Body-->
                                 <!--begin::Menu Footer-->
                                 <li class="user-footer">
-                                    <a href="#" class="btn btn-default btn-flat">Profile</a>
-                                    <a href="controladores/cerrarSesion.php" class="btn btn-default btn-flat float-end">Sign out</a>
+                                    <!--<a href="#" class="btn btn-default btn-flat">Profile</a>-->
+                                    <a href="controladores/cerrarSesion.php" class="btn btn-default btn-flat">Cerrar sesion</a>
                                 </li>
                                 <!--end::Menu Footer-->
                             </ul>
@@ -384,13 +384,13 @@ https://cdn.jsdelivr.net/npm/sweetalert2@11.22.0/dist/sweetalert2.min.css
                     <div class="container-fluid">
                         <!--begin::Row-->
                         <div class="row">
-                            <div class="col-sm-6"><h3 class="mb-0">Dashboard</h3></div>
-                            <div class="col-sm-6">
+                            <!--<div class="col-sm-6"><h3 class="mb-0">Dashboard</h3></div>-->
+<!--                            <div class="col-sm-6">
                                 <ol class="breadcrumb float-sm-end">
                                     <li class="breadcrumb-item"><a href="#">Home</a></li>
                                     <li class="breadcrumb-item active" aria-current="page">Dashboard</li>
                                 </ol>
-                            </div>
+                            </div>-->
                         </div>
                         <!--end::Row-->
                     </div>
@@ -409,14 +409,14 @@ https://cdn.jsdelivr.net/npm/sweetalert2@11.22.0/dist/sweetalert2.min.css
             <!--begin::Footer-->
             <footer class="app-footer">
                 <!--begin::To the end-->
-                <div class="float-end d-none d-sm-inline">Anything you want</div>
+                <!--<div class="float-end d-none d-sm-inline">Anything you want</div>-->
                 <!--end::To the end-->
                 <!--begin::Copyright-->
                 <strong>
-                    Copyright &copy; 2014-2024&nbsp;
-                    <a href="https://adminlte.io" class="text-decoration-none">AdminLTE.io</a>.
+                    Leandro Rodriguez &copy; 2025&nbsp;
+                    <!--<a href="https://adminlte.io" class="text-decoration-none">AdminLTE.io</a>.-->
                 </strong>
-                All rights reserved.
+                Todos los derechos reservados.
                 <!--end::Copyright-->
             </footer>
             <!--end::Footer-->
