@@ -50,7 +50,7 @@ function filtrarOrdenCompra(texto=""){
                             <option value="ANULADO" ${item.estado === 'ANULADO' ? 'selected' : ''}>ANULADO</option>
                         </select>
                     </td>
-                    <td class="btn-group" role="group">
+                    <td>
                         <button class="btn btn-danger anular-orden-compra">Anular</button>
                         <button class="btn btn-primary imprimir-orden-compra">Imprimir</button>
                     </td>

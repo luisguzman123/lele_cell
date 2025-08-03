@@ -51,7 +51,7 @@ function filtrarPresupuesto(texto = "") {
                             <option value="ANULADO">ANULADO</option>
                         </select>
                     </td>
-                    <td class="btn-group" role="group">
+                    <td>
                         <button class="btn btn-danger anular-presupuesto">Anular</button>
                         <button class="btn btn-primary imprimir-presupuesto">Imprimir</button>
                     </td>

@@ -42,7 +42,7 @@ function filtrarPedidoProveedor(texto = "") {
                     <td>${item.fecha}</td>
                     <td>${item.nombre_proveedor}</td>
                     <td>${item.estado}</td>
-                    <td class="btn-group" role="group">
+                    <td>
                         <button class="btn btn-danger anular-pedido-proveedor">Anular</button>
                         <button class="btn btn-primary imprimir-pedido-proveedor">Imprimir</button>
                     </td>

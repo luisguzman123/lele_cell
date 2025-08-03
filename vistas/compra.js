@@ -44,7 +44,7 @@ function filtrarCompra(texto=""){
                     <td>${item.nombre_proveedor || ''}</td>
                     <td>${formatearNumero(item.total)}</td>
                     <td>${item.estado}</td>
-                    <td class="btn-group" role="group">
+                    <td>
                         <button class="btn btn-danger anular-compra">Anular</button>
                         <button class="btn btn-primary imprimir-compra">Imprimir</button>
                     </td>
