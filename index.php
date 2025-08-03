@@ -262,7 +262,7 @@ https://cdn.jsdelivr.net/npm/sweetalert2@11.22.0/dist/sweetalert2.min.css
                                 <!--begin::Menu Footer-->
                                 <li class="user-footer">
                                     <a href="#" class="btn btn-default btn-flat">Profile</a>
-                                    <a href="#" class="btn btn-default btn-flat float-end">Sign out</a>
+                                    <a href="controladores/cerrarSesion.php" class="btn btn-default btn-flat float-end">Sign out</a>
                                 </li>
                                 <!--end::Menu Footer-->
                             </ul>
