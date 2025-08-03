@@ -337,6 +337,12 @@ https://cdn.jsdelivr.net/npm/sweetalert2@11.22.0/dist/sweetalert2.min.css
                                             <p>Producto</p>
                                         </a>
                                     </li>
+                                    <li class="nav-item">
+                                        <a href="#" onclick="mostrarListarProveedor();" class="nav-link">
+                                            <i class="nav-icon bi bi-circle"></i>
+                                            <p>Proveedor</p>
+                                        </a>
+                                    </li>
                                 </ul>
                             </li>
                             <li class="nav-item menu-open">
@@ -664,6 +670,7 @@ https://cdn.jsdelivr.net/npm/sweetalert2@11.22.0/dist/sweetalert2.all.min.js
         <script src="vistas/equipo.js"></script>
         <script src="vistas/cliente_equipo.js"></script>
         <script src="vistas/producto.js"></script>
+        <script src="vistas/proveedor.js"></script>
         <script src="vistas/recepcion.js"></script>
         <!--end::Script-->
     </body>
