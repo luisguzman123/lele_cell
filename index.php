@@ -304,8 +304,8 @@ https://cdn.jsdelivr.net/npm/sweetalert2@11.22.0/dist/sweetalert2.min.css
                             role="menu"
                             data-accordion="false"
                             >
-                            <li class="nav-item menu-open">
-                                <a href="#" class="nav-link active">
+                            <li class="nav-item">
+                                <a href="#" class="nav-link">
                                     <i class="nav-icon bi bi-speedometer"></i>
                                     <p>
                                         Referencial
@@ -314,7 +314,7 @@ https://cdn.jsdelivr.net/npm/sweetalert2@11.22.0/dist/sweetalert2.min.css
                                 </a>
                                 <ul class="nav nav-treeview">
                                     <li class="nav-item">
-                                        <a href="#" onclick="mostrarListarCliente();" class="nav-link active">
+                                        <a href="#" onclick="mostrarListarCliente();" class="nav-link">
                                             <i class="nav-icon bi bi-circle"></i>
                                             <p>Cliente</p>
                                         </a>
@@ -345,8 +345,8 @@ https://cdn.jsdelivr.net/npm/sweetalert2@11.22.0/dist/sweetalert2.min.css
                                     </li>
                                 </ul>
                             </li>
-                            <li class="nav-item menu-open">
-                                <a href="#" class="nav-link active">
+                            <li class="nav-item">
+                                <a href="#" class="nav-link">
                                     <i class="nav-icon bi bi-speedometer"></i>
                                     <p>
                                         Servicios
@@ -356,7 +356,7 @@ https://cdn.jsdelivr.net/npm/sweetalert2@11.22.0/dist/sweetalert2.min.css
                                 
                                 <ul class="nav nav-treeview">
                                     <li class="nav-item">
-                                        <a href="#" onclick="mostrarListarRecepcion();" class="nav-link active">
+                                        <a href="#" onclick="mostrarListarRecepcion();" class="nav-link">
                                             <i class="nav-icon bi bi-circle"></i>
                                             <p>Recepción</p>
                                         </a>
