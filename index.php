@@ -410,6 +410,12 @@ https://cdn.jsdelivr.net/npm/sweetalert2@11.22.0/dist/sweetalert2.min.css
                                                 <p>Facturacion</p>
                                             </a>
                                         </li>
+                                        <li class="nav-item">
+                                            <a href="#" onclick="mostrarListarPresupuestoVenta();" class="nav-link">
+                                                <i class="nav-icon bi bi-circle"></i>
+                                                <p>Presupuesto</p>
+                                            </a>
+                                        </li>
                                     </ul>
                                 </li>
 
@@ -786,6 +792,7 @@ https://cdn.jsdelivr.net/npm/sweetalert2@11.22.0/dist/sweetalert2.all.min.js
         <script src="vistas/orden_compra.js"></script>
         <script src="vistas/compra.js"></script>
         <script src="vistas/factura.js"></script>
+        <script src="vistas/presupuesto_venta.js"></script>
         <!--end::Script-->
     </body>
     <!--end::Body-->
