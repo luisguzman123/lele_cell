@@ -8,25 +8,29 @@ session_start();
 
         <form id="formDiagnostico" onsubmit="return false;">
             <div class="row g-4 mb-4">
-                <div class="col-md-3">
+                <div class="col-md-4">
                     <label for="fecha" class="form-label fw-semibold text-dark">Fecha <span class="text-danger">*</span></label>
                     <input type="date" id="fecha" class="form-control" required />
                 </div>
-                <div class="col-md-3">
+                <div class="col-md-4">
                     <label for="recepcion_lst" class="form-label fw-semibold text-dark">Recepción <span class="text-danger">*</span></label>
                     <select id="recepcion_lst" class="form-select" required>
                         <option value="0">-- Seleccione una recepción --</option>
                     </select>
                 </div>
-                <div class="col-md-3">
+                <div class="col-md-4">
                  <label for="recepcion_lst" class="form-label fw-semibold text-dark">Técnico <span class="text-danger">*</span></label>
                     <select id="tecnico_lst" class="form-select" required>
                         <option value="0">-- Seleccione un técnico --</option>
                     </select>
                 </div>
-                <div class="col-md-3">
+                <div class="col-md-6">
                     <label for="observaciones" class="form-label fw-semibold text-dark">Observaciones</label>
                     <input type="text" id="observaciones" class="form-control" />
+                </div>
+                 <div class="col-md-6">
+                    <label for="observaciones" class="form-label fw-semibold text-dark">Costo</label>
+                    <input type="text" id="costo" class="form-control" value="0" />
                 </div>
             </div>
 

@@ -9,6 +9,7 @@ function mostrarAgregarDiagnostico() {
     $("#contenido-principal").html(contenido);
     dameFechaActual("fecha");
     cargarListaRecepcion("#recepcion_lst");
+    cargarListaTecnicos("#tecnico_lst");
 }
 
 function cargarListaRecepcion(componente) {
@@ -24,6 +25,20 @@ function cargarListaRecepcion(componente) {
         });
     }
     $(componente).html(option);
+}
+
+function cargarListaTecnicos(componente){
+    let data  = ejecutarAjax("controladores/tecnico.php","leer_activo=1");
+    console.log(data);
+    if(data === "0"){
+        $(componente).html("");
+    }else{
+        let json_data = JSON.parse(data);
+        $(componente).html("<option value='0'>Selecciona un Producto</option>");
+        json_data.map(function(item){
+            $(componente).append(`<option value="${item.id_tecnico}">${item.nombre_tecnico}</option>`);
+        });
+    }
 }
 
 function agregarDetalleDiagnostico() {
@@ -83,7 +98,7 @@ function guardarDiagnostico() {
         'id_recepcion_cabecera': $("#recepcion_lst").val(),
         'fecha_diagnostico': $("#fecha").val(),
         'id_tecnico': $("#tecnico_lst").val(),
-        'costo_estimado': 0,
+        'costo_estimado': $("#costo").val(),
         'estado_diagnostico': "PENDIENTE",
         'observaciones': $("#observaciones").val()
     };

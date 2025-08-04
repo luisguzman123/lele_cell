@@ -21,7 +21,7 @@ if (isset($_POST['leer_tecnico'])) {
 
 if (isset($_POST['leer'])) {
     $conexion = new DB();
-    $query = $conexion->conectar()->prepare("SELECT `id_tecnico`, `nombre_tecnico`, `cedula`, `telefono`, `estado` FROM `tecnico` where estado = 'ACTIVO'");
+    $query = $conexion->conectar()->prepare("SELECT `id_tecnico`, `nombre_tecnico`, `cedula`, `telefono`, `estado` FROM `tecnico` WHERE estado = 'ACTIVO'");
     $query->execute();
     if ($query->rowCount()) {
         print_r(json_encode($query->fetchAll(PDO::FETCH_OBJ)));
@@ -29,6 +29,17 @@ if (isset($_POST['leer'])) {
         echo "0";
     }
 }
+if (isset($_POST['leer_activo'])) {
+    $conexion = new DB();
+    $query = $conexion->conectar()->prepare("SELECT `id_tecnico`, `nombre_tecnico`, `cedula`, `telefono`, `estado` FROM `tecnico` WHERE estado = 'ACTIVO'");
+    $query->execute();
+    if ($query->rowCount()) {
+        print_r(json_encode($query->fetchAll(PDO::FETCH_OBJ)));
+    } else {
+        echo "0";
+    }
+}
+
 
 if (isset($_POST['leer_tecnico_id'])) {
     $conexion = new DB();
