@@ -1054,6 +1054,23 @@ CREATE TABLE servicio_entrega_pago (
       ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+-- --------------------------------------------------------
+--
+-- Estructura de tabla para la tabla `caja_registro`
+--
+CREATE TABLE `caja_registro` (
+  `id_registro` int(11) NOT NULL AUTO_INCREMENT,
+  `id_caja` int(11) NOT NULL,
+  `fecha` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `monto_apertura` decimal(10,2) NOT NULL DEFAULT 0,
+  `efectivo` decimal(10,2) NOT NULL DEFAULT 0,
+  `tarjeta` decimal(10,2) NOT NULL DEFAULT 0,
+  `transferencia` decimal(10,2) NOT NULL DEFAULT 0,
+  `total` decimal(10,2) NOT NULL DEFAULT 0,
+  `accion` varchar(20) NOT NULL,
+  PRIMARY KEY (`id_registro`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
 --
 -- AUTO_INCREMENT de la tabla `servicio`
 --
