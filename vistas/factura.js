@@ -42,6 +42,16 @@ function mostrarNuevaFactura() {
 //----------------------------------------------------
 //----------------------------------------------------
 //----------------------------------------------------
+$(document).on("change", "#condicion", function () {
+    if ($(this).val() === "CREDITO") {
+        let modal = new bootstrap.Modal(document.getElementById('modal-plan'));
+        modal.show();
+    }
+});
+
+//----------------------------------------------------
+//----------------------------------------------------
+//----------------------------------------------------
 $(document).on("change", "#producto", function () {
     let selected = $("#producto option:selected");
 
@@ -53,6 +63,33 @@ $(document).on("change", "#producto", function () {
         let precio = selected.data("precio"); // ✅ obtenemos el precio desde el atributo data-precio
         $("#precio").val(quitarDecimalesConvertir(precio));
     }
+});
+
+//---------------------------------------------------------
+//---------------------------------------------------------
+//---------------------------------------------------------
+$(document).on("click", "#pp-agregar", function () {
+    if ($("#pp-fecha").val().trim().length === 0 || $("#pp-monto").val().trim().length === 0) {
+        mensaje_dialogo_info_ERROR("Debes completar fecha y monto");
+        return;
+    }
+    $("#pp-detalle").append(`
+        <tr>
+            <td>${$("#pp-detalle tr").length + 1}</td>
+            <td>${$("#pp-fecha").val()}</td>
+            <td>${formatearNumero($("#pp-monto").val())}</td>
+            <td><button class="btn btn-danger rem-cuota">Remover</button></td>
+        </tr>
+    `);
+    $("#pp-fecha").val("");
+    $("#pp-monto").val("");
+});
+
+$(document).on("click", ".rem-cuota", function (evt) {
+    $(this).closest("tr").remove();
+    $("#pp-detalle tr").each(function (index) {
+        $(this).find("td:eq(0)").text(index + 1);
+    });
 });
 
 //---------------------------------------------------------
@@ -263,6 +300,28 @@ function guardarFactura() {
                 "guardar=" + JSON.stringify(detalle));
         console.log(res);
     });
+
+    if ($("#condicion").val() === "CREDITO") {
+        let totalPlan = 0;
+        $("#pp-detalle tr").each(function () {
+            totalPlan += quitarDecimalesConvertir($(this).find("td:eq(2)").text());
+        });
+        let cabeceraPlan = {
+            "total": totalPlan
+        };
+        res = ejecutarAjax("controladores/plan_pago.php",
+                "guardar_cabecera=" + JSON.stringify(cabeceraPlan));
+
+        $("#pp-detalle tr").each(function (index) {
+            let cuota = {
+                "nro_cuota": index + 1,
+                "fecha_vencimiento": $(this).find("td:eq(1)").text(),
+                "monto_cuota": quitarDecimalesConvertir($(this).find("td:eq(2)").text())
+            };
+            res = ejecutarAjax("controladores/plan_pago.php",
+                    "guardar_detalle=" + JSON.stringify(cuota));
+        });
+    }
 
     mensaje_dialogo_info("Guardado Correctamente");
 
