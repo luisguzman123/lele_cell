@@ -355,9 +355,24 @@ function guardarFactura() {
 //-----------------------------------------------------------
 //-----------------------------------------------------------
 //-----------------------------------------------------------
-function cargarTablaFacturas() {
+function cargarTablaFacturas(filtrar = false) {
+    let params = "leer=1";
+
+    if (filtrar) {
+        if ($("#desde").val()) {
+            params += "&desde=" + encodeURIComponent($("#desde").val());
+        }
+        if ($("#hasta").val()) {
+            params += "&hasta=" + encodeURIComponent($("#hasta").val());
+        }
+        let nro = $("#nro_factura_busqueda").val().trim();
+        if (nro.length > 0) {
+            params += "&nro_factura=" + encodeURIComponent(nro);
+        }
+    }
+
     let data = ejecutarAjax("controladores/factura_cabecera.php",
-            "leer=1");
+            params);
 
     if (data === "0") {
 
@@ -388,6 +403,12 @@ function cargarTablaFacturas() {
         });
     }
 }
+//----------------------------------------------------------------------------
+//----------------------------------------------------------------------------
+//----------------------------------------------------------------------------
+$(document).on("click", "#buscar-factura", function () {
+    cargarTablaFacturas(true);
+});
 //----------------------------------------------------------------------------
 //----------------------------------------------------------------------------
 //----------------------------------------------------------------------------

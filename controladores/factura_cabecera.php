@@ -75,7 +75,8 @@ if (isset($_POST['activar'])) {
 
 if (isset($_POST['leer'])) {
     $conexion = new DB();
-    $query = $conexion->conectar()->prepare("SELECT
+
+    $sql = "SELECT
         fc.id_factura_cabecera,
         fc.fecha,
         fc.nro_factura,
@@ -86,14 +87,42 @@ if (isset($_POST['leer'])) {
         fc.tipo_pago,
         SUM(fd.cantidad * fd.precio) as total
         FROM factura_cabecera fc
-        JOIN cliente c 
+        JOIN cliente c
         ON c.id_cliente = fc.id_cliente
-        JOIN factura_detalle fd 
-        ON fd.id_factura_cabecera =  fc.id_factura_cabecera
-        GROUP by fc.id_factura_cabecera
-        order by fc.id_factura_cabecera DESC");
+        JOIN factura_detalle fd
+        ON fd.id_factura_cabecera =  fc.id_factura_cabecera";
 
-    $query->execute();
+    $where = [];
+    $params = [];
+
+    if (!empty($_POST['desde']) && !empty($_POST['hasta'])) {
+        $where[] = "fc.fecha BETWEEN :desde AND :hasta";
+        $params['desde'] = $_POST['desde'];
+        $params['hasta'] = $_POST['hasta'];
+    } else {
+        if (!empty($_POST['desde'])) {
+            $where[] = "fc.fecha >= :desde";
+            $params['desde'] = $_POST['desde'];
+        }
+        if (!empty($_POST['hasta'])) {
+            $where[] = "fc.fecha <= :hasta";
+            $params['hasta'] = $_POST['hasta'];
+        }
+    }
+
+    if (!empty($_POST['nro_factura'])) {
+        $where[] = "fc.nro_factura LIKE :nro_factura";
+        $params['nro_factura'] = "%" . $_POST['nro_factura'] . "%";
+    }
+
+    if (count($where) > 0) {
+        $sql .= " WHERE " . implode(" AND ", $where);
+    }
+
+    $sql .= " GROUP by fc.id_factura_cabecera order by fc.id_factura_cabecera DESC";
+
+    $query = $conexion->conectar()->prepare($sql);
+    $query->execute($params);
 
     if ($query->rowCount()) {
         print_r(json_encode($query->fetchAll(PDO::FETCH_OBJ)));
