@@ -74,8 +74,13 @@ function cerrarCaja() {
 }
 
 function generarArqueoCaja() {
-    let data = "accion=arqueo&caja=" + $("#caja").val();
-    let res = ejecutarAjax("controladores/caja.php", data);
-    mensaje_dialogo_info(res, "CORRECTO");
-    window.open("paginas/movimientos/ventas/apertura_cierre/imprimir.php?caja=" + $("#caja").val());
+    let params = new URLSearchParams({
+        caja: $("#caja").val(),
+        monto_apertura: quitarDecimalesConvertir($("#monto_apertura").val()),
+        efectivo: quitarDecimalesConvertir($("#efectivo").val()),
+        tarjeta: quitarDecimalesConvertir($("#tarjeta").val()),
+        transferencia: quitarDecimalesConvertir($("#transferencia").val()),
+        total: quitarDecimalesConvertir($("#total_general").val())
+    });
+    window.open("paginas/movimientos/ventas/apertura_cierre/imprimir.php?" + params.toString());
 }
