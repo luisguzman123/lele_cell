@@ -30,6 +30,10 @@
         <label for="precio_presupuesto" class="form-label fw-semibold text-dark">Precio Presupuesto</label>
         <input type="number" id="precio_presupuesto" class="form-control" value="0" readonly />
       </div>
+      <div class="col-md-6">
+        <label for="total_general" class="form-label fw-semibold text-dark">Total General</label>
+        <input type="number" id="total_general" class="form-control" value="0" readonly />
+      </div>
     </div>
 
     <div class="row g-4 mb-4">
@@ -126,7 +130,7 @@
       </div>
       <div class="col-md-4">
         <label class="fw-semibold text-dark">Total General:</label>
-        <p id="total_general" class="fw-bold">0</p>
+        <p id="total_general_lbl" class="fw-bold">0</p>
       </div>
     </div>
 

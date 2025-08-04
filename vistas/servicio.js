@@ -19,7 +19,7 @@ function cargarTablaServicio(){
     let data = ejecutarAjax("controladores/servicio.php","leer=1");
     $("#servicio_tb").html("");
     if(data === "0"){
-        $("#servicio_tb").html("<tr><td colspan='8'>NO HAY REGISTRO</td></tr>");
+        $("#servicio_tb").html("<tr><td colspan='9'>NO HAY REGISTRO</td></tr>");
     }else{
         let json = JSON.parse(data);
         json.map(function(item){
@@ -31,6 +31,7 @@ function cargarTablaServicio(){
                     <td>${item.fecha_inicio}</td>
                     <td>${item.fecha_fin || ''}</td>
                     <td>${item.estado}</td>
+                    <td>${formatearNumero(item.total_general)}</td>
                     <td>${item.observaciones || ''}</td>
                     <td>
                         <button class='btn btn-danger anular-servicio'>Anular</button>
@@ -200,13 +201,15 @@ function guardarServicio(){
         mensaje_dialogo_info_ERROR("Agregue detalle");
         return;
     }
+    let total_general = parseFloat($("#total_general").val()) || 0;
     let cab = {
         id_presupuesto: $("#presupuesto_lst").val(),
         id_tecnico: $("#tecnico_lst").val(),
         fecha_inicio: $("#fecha_inicio").val(),
         fecha_fin: $("#fecha_fin").val(),
         estado: 'En Proceso',
-        observaciones: $("#observaciones").val()
+        observaciones: $("#observaciones").val(),
+        total_general: total_general
     };
     ejecutarAjax("controladores/servicio.php","guardar="+encodeURIComponent(JSON.stringify(cab)));
     let id = ejecutarAjax("controladores/servicio.php","dameUltimoId=1");
@@ -247,5 +250,7 @@ function calcularTotales(){
     let presupuesto = parseFloat($("#precio_presupuesto").val()) || 0;
     $("#total_presupuesto").text(formatearNumero(presupuesto));
     $("#total_repuesto").text(formatearNumero(total_repuesto));
-    $("#total_general").text(formatearNumero(total_repuesto + presupuesto));
+    let total_general = total_repuesto + presupuesto;
+    $("#total_general").val(total_general);
+    $("#total_general_lbl").text(formatearNumero(total_general));
 }
