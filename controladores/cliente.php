@@ -5,9 +5,9 @@ require_once '../conexion/db.php';
 if (isset($_POST['leer'])) {
     $conexion = new DB();
     $query = $conexion->conectar()->prepare("SELECT `id_cliente`, 
-`razon_social`, `ruc`,
+CONCAT(nombre, ' ', apellido) as razon_social, `cedula` as ruc,
 `telefono`, `estado`
-FROM `clientes` 
+FROM `cliente` 
 WHERE estado = 'ACTIVO'");
 
     $query->execute();

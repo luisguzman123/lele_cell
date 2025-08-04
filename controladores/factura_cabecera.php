@@ -76,11 +76,11 @@ if (isset($_POST['leer'])) {
         fc.nro_factura,
         fc.id_cliente,
         fc.estado,
-        c.razon_social,
+        CONCAT(c.nombre, ' ', c.apellido) as razon_social,
         fc.condicion,
         SUM(fd.cantidad * fd.precio) as total
         FROM factura_cabecera fc
-        JOIN clientes c 
+        JOIN cliente c 
         ON c.id_cliente = fc.id_cliente
         JOIN factura_detalle fd 
         ON fd.id_factura_cabecera =  fc.id_factura_cabecera

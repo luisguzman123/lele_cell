@@ -2,6 +2,8 @@ function mostrarListarFactura() {
     let contenido = dameContenido("paginas/movimientos/ventas/facturacion/listar.php");
     $("#contenido-principal").html(contenido);
     cargarTablaFacturas();
+    dameFechaActual("desde");
+    dameFechaActual("hasta");
 }
 
 function mostrarNuevaFactura() {
@@ -33,100 +35,161 @@ function mostrarNuevaFactura() {
     //carga de cliente
     cargarListaClientes("#cliente");
     //carga de productos
-    cargarListaProductos("#producto");
+    cargarListaProductoCompra("#producto");
 
 }
 
 //----------------------------------------------------
 //----------------------------------------------------
 //----------------------------------------------------
-$(document).on("change", "#producto", function (evt) {
-    if ($("#producto").val() === "0") {
+$(document).on("change", "#producto", function () {
+    let selected = $("#producto option:selected");
+
+    if (selected.val() === "0") {
         $("#cantidad").val("1");
         $("#precio").val("0");
     } else {
         $("#cantidad").val("1");
-        console.log($("#producto option:selected").html().split(" | ")[1]);
-        $("#precio").val(quitarDecimalesConvertir(
-                $("#producto option:selected").html().split(" | ")[1].replace("Precio: ", "")));
-
+        let precio = selected.data("precio"); // ✅ obtenemos el precio desde el atributo data-precio
+        $("#precio").val(quitarDecimalesConvertir(precio));
     }
 });
+
 //---------------------------------------------------------
 //---------------------------------------------------------
 //---------------------------------------------------------
 function agregarProductoFactura() {
-    //validaciones
+    // validaciones
     if ($("#producto").val() === "0") {
-        alert("Debes seleccionar un producto");
+        mensaje_dialogo_info_ERROR("Debes seleccionar un producto");
         return;
     }
 
-    if ($("#precio").val().trim().length === 0) {
-        alert("Debes ingresar un precio");
-        return;
-    }
-    if (quitarDecimalesConvertir($("#precio").val()) <= 0) {
-        alert("Debes ingresar un precio mayor a cero");
+    if ($("#precio").val().trim().length === 0 || quitarDecimalesConvertir($("#precio").val()) <= 0) {
+        mensaje_dialogo_info_ERROR("Debes ingresar un precio válido");
         return;
     }
 
-    if ($("#cantidad").val().trim().length === 0) {
-        alert("Debes ingresar una cantidad");
+    if ($("#cantidad").val().trim().length === 0 || quitarDecimalesConvertir($("#cantidad").val()) <= 0) {
+        mensaje_dialogo_info_ERROR("Debes ingresar una cantidad válida");
         return;
     }
-    if (quitarDecimalesConvertir($("#cantidad").val()) <= 0) {
-        alert("Debes ingresar una cantidad mayor a cero");
-        return;
-    }
-    //validacion de item repetido
+
+    // validación de item repetido
     let repetido = false;
-
-    $("#datos_tb tr").each(function (evt) {
-        if ($(this).find("td:eq(0)").text() ===
-                $("#producto").val().split("-")[0]) {
+    $("#datos_tb tr").each(function () {
+        if ($(this).find("td:eq(0)").text() === $("#producto").val()) {
             repetido = true;
         }
     });
 
     if (repetido) {
-        alert("El item ya ha sido agregado anteriormente");
+        mensaje_dialogo_info_ERROR("El item ya ha sido agregado anteriormente");
         return;
     }
 
+    // obtener datos
+    const id = $("#producto").val();
+    const nombre = $("#producto option:selected").text();
+    const precio = quitarDecimalesConvertir($("#precio").val());
+    const cantidad = quitarDecimalesConvertir($("#cantidad").val());
+    const iva = parseInt($("#producto option:selected").data("iva"));
+
+    const subtotal = precio * cantidad;
+    let exentas = 0, iva5 = 0, iva10 = 0;
+
+    if (iva === 0) exentas = subtotal;
+    else if (iva === 5) iva5 = subtotal;
+    else if (iva === 10) iva10 = subtotal;
 
     $("#datos_tb").append(`
-    <tr>
-        <td>${$("#producto").val().split("-")[0]}</td>
-        <td>${$("#producto option:selected").html().
-            split(" | ")[0]}</td>
-        <td>${$("#cantidad").val()}</td>
-        <td>${formatearNumero($("#precio").val())}</td>
-    
-        <td>${($("#producto").val().split("-")[1] === "0") ?
-            formatearNumero(quitarDecimalesConvertir(
-                    $("#cantidad").val()) *
-                    quitarDecimalesConvertir(
-                            $("#precio").val())) : "0" }</td>
-        
-        <td>${($("#producto").val().split("-")[1] === "5") ?
-            formatearNumero(quitarDecimalesConvertir(
-                    $("#cantidad").val()) *
-                    quitarDecimalesConvertir(
-                            $("#precio").val())) : "0" }</td>
-        
-        <td>${($("#producto").val().split("-")[1] === "10") ?
-            formatearNumero(quitarDecimalesConvertir(
-                    $("#cantidad").val()) *
-                    quitarDecimalesConvertir(
-                            $("#precio").val())) : "0" }</td>
-           
-           <td><button class="btn btn-danger rem-item">Remover</button></td>
-    </tr>
-`);
-    calcularTotalesFactura();
+        <tr>
+            <td>${id}</td>
+            <td>${nombre}</td>
+            <td>${cantidad}</td>
+            <td>${formatearNumero(precio)}</td>
+            <td>${formatearNumero(exentas)}</td>
+            <td>${formatearNumero(iva5)}</td>
+            <td>${formatearNumero(iva10)}</td>
+            <td><button class="btn btn-danger rem-item">Remover</button></td>
+        </tr>
+    `);
 
+    calcularTotalesFactura();
 }
+
+//function agregarProductoFactura() {
+//    //validaciones
+//    if ($("#producto").val() === "0") {
+//        mensaje_dialogo_info_ERROR("Debes seleccionar un producto");
+//        return;
+//    }
+//
+//    if ($("#precio").val().trim().length === 0) {
+//        mensaje_dialogo_info_ERROR("Debes ingresar un precio");
+//        return;
+//    }
+//    if (quitarDecimalesConvertir($("#precio").val()) <= 0) {
+//        mensaje_dialogo_info_ERROR("Debes ingresar un precio mayor a cero");
+//        return;
+//    }
+//
+//    if ($("#cantidad").val().trim().length === 0) {
+//        mensaje_dialogo_info_ERROR("Debes ingresar una cantidad");
+//        return;
+//    }
+//    if (quitarDecimalesConvertir($("#cantidad").val()) <= 0) {
+//        mensaje_dialogo_info_ERROR("Debes ingresar una cantidad mayor a cero");
+//        return;
+//    }
+//    //validacion de item repetido
+//    let repetido = false;
+//
+//    $("#datos_tb tr").each(function (evt) {
+//        if ($(this).find("td:eq(0)").text() ===
+//                $("#producto").val().split("-")[0]) {
+//            repetido = true;
+//        }
+//    });
+//
+//    if (repetido) {
+//        mensaje_dialogo_info_ERROR("El item ya ha sido agregado anteriormente");
+//        return;
+//    }
+//
+//
+//    $("#datos_tb").append(`
+//    <tr>
+//        <td>${$("#producto").val().split("-")[0]}</td>
+//        <td>${$("#producto option:selected").html().
+//            split(" | ")[0]}</td>
+//        <td>${$("#cantidad").val()}</td>
+//        <td>${formatearNumero($("#precio").val())}</td>
+//    
+//        <td>${($("#producto").val().split("-")[1] === "0") ?
+//            formatearNumero(quitarDecimalesConvertir(
+//                    $("#cantidad").val()) *
+//                    quitarDecimalesConvertir(
+//                            $("#precio").val())) : "0" }</td>
+//        
+//        <td>${($("#producto").val().split("-")[1] === "5") ?
+//            formatearNumero(quitarDecimalesConvertir(
+//                    $("#cantidad").val()) *
+//                    quitarDecimalesConvertir(
+//                            $("#precio").val())) : "0" }</td>
+//        
+//        <td>${($("#producto").val().split("-")[1] === "10") ?
+//            formatearNumero(quitarDecimalesConvertir(
+//                    $("#cantidad").val()) *
+//                    quitarDecimalesConvertir(
+//                            $("#precio").val())) : "0" }</td>
+//           
+//           <td><button class="btn btn-danger rem-item">Remover</button></td>
+//    </tr>
+//`);
+//    calcularTotalesFactura();
+//
+//}
 
 function calcularTotalesFactura() {
     let total = 0;
@@ -168,12 +231,12 @@ $(document).on("click", ".rem-item", function (evt) {
 function guardarFactura() {
     //validaciones
     if ($("#cliente").val() === "0") {
-        alert("Debes seleccionar un cliente");
+        mensaje_dialogo_info_ERROR("Debes seleccionar un cliente");
         return;
     }
 
     if ($("#datos_tb").html().trim().length === 0) {
-        alert("No hay productos para la venta");
+        mensaje_dialogo_info_ERROR("No hay productos para la venta");
         return;
     }
     //JSON
@@ -201,7 +264,7 @@ function guardarFactura() {
         console.log(res);
     });
 
-    alert("Guardado Correctamente");
+    mensaje_dialogo_info("Guardado Correctamente");
 
     mostrarListarFactura();
 

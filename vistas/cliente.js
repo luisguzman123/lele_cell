@@ -19,6 +19,7 @@ function mostrarAgregarCliente() {
 function cargarListaClientes(componente){
     let data  = ejecutarAjax("controladores/cliente.php",
     "leer=1");
+    console.log(data);
     
     if(data === "0"){
         $(componente).html("");
