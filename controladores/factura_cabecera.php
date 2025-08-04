@@ -1,5 +1,5 @@
 <?php
-
+session_start();
 require_once '../conexion/db.php';
 
 if (isset($_POST['ultimo_registro'])) {
@@ -24,16 +24,17 @@ limit 1");
 //--------------------------------------------------------------------------------
 if (isset($_POST['guardar'])) {
     $json_datos = json_decode($_POST['guardar'], true);
+    $json_datos['id_registro'] = $_SESSION['id_apertura'] ?? null;
     $conexion = new DB();
     $query = $conexion->conectar()->prepare("INSERT INTO factura_cabecera"
             . "( nro_factura, fecha, id_cliente, condicion, tipo_pago,"
-            . " timbrado, estado)"
+            . " timbrado, estado, id_registro)"
             . " VALUES (:nro_factura, :fecha, :id_cliente,"
-            . " :condicion, :tipo_pago, :timbrado, :estado)");
+            . " :condicion, :tipo_pago, :timbrado, :estado, :id_registro)");
 
     $query->execute($json_datos);
 
-   
+
 }
 //--------------------------------------------------------------------------------
 //--------------------------------------------------------------------------------
