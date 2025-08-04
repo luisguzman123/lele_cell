@@ -431,6 +431,33 @@ DELIMITER ;
 -- --------------------------------------------------------
 
 --
+-- Estructura de tabla para la tabla `plan_pago_cabecera`
+--
+
+CREATE TABLE `plan_pago_cabecera` (
+  `id_plan` int(11) NOT NULL,
+  `id_factura_cabecera` int(11) NOT NULL,
+  `total` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `plan_pago_detalle`
+--
+
+CREATE TABLE `plan_pago_detalle` (
+  `id_plan_detalle` int(11) NOT NULL,
+  `id_plan` int(11) NOT NULL,
+  `nro_cuota` int(11) NOT NULL,
+  `fecha_vencimiento` date NOT NULL,
+  `monto_cuota` int(11) NOT NULL,
+  `estado` varchar(20) DEFAULT 'PENDIENTE'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Estructura de tabla para la tabla `tecnico`
 --
 
@@ -665,6 +692,20 @@ ALTER TABLE `factura_detalle`
   ADD KEY `fk_factura_detalle_producto` (`id_producto`);
 
 --
+-- Indices de la tabla `plan_pago_cabecera`
+--
+ALTER TABLE `plan_pago_cabecera`
+  ADD PRIMARY KEY (`id_plan`),
+  ADD KEY `fk_plan_factura` (`id_factura_cabecera`);
+
+--
+-- Indices de la tabla `plan_pago_detalle`
+--
+ALTER TABLE `plan_pago_detalle`
+  ADD PRIMARY KEY (`id_plan_detalle`),
+  ADD KEY `fk_plan_detalle_cabecera` (`id_plan`);
+
+--
 -- Indices de la tabla `tecnico`
 --
 ALTER TABLE `tecnico`
@@ -817,6 +858,18 @@ ALTER TABLE `factura_cabecera`
 --
 ALTER TABLE `factura_detalle`
   MODIFY `id_factura_detalle` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de la tabla `plan_pago_cabecera`
+--
+ALTER TABLE `plan_pago_cabecera`
+  MODIFY `id_plan` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de la tabla `plan_pago_detalle`
+--
+ALTER TABLE `plan_pago_detalle`
+  MODIFY `id_plan_detalle` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- Estructura de tabla para la tabla `diagnostico_cabecera`

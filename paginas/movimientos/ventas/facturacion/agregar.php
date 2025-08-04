@@ -89,3 +89,43 @@
     </div>
 </div>
 
+<div class="modal fade" id="modal-plan" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Plan de Pago</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-6">
+                        <label>Fecha Venc.</label>
+                        <input type="date" id="pp-fecha" class="form-control">
+                    </div>
+                    <div class="col-6">
+                        <label>Monto</label>
+                        <input type="number" id="pp-monto" class="form-control">
+                    </div>
+                    <div class="col-12 mt-2">
+                        <button class="btn btn-primary" id="pp-agregar">Agregar cuota</button>
+                    </div>
+                </div>
+                <table class="table table-bordered mt-3">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Vencimiento</th>
+                            <th>Monto</th>
+                            <th>Operaciones</th>
+                        </tr>
+                    </thead>
+                    <tbody id="pp-detalle"></tbody>
+                </table>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
