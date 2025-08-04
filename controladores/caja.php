@@ -43,6 +43,12 @@ switch ($accion) {
         $stmt->execute(['id_caja' => $idCaja]);
         echo json_encode($stmt->fetchAll(PDO::FETCH_OBJ));
         break;
+    case 'estado':
+        $stmt = $pdo->prepare("SELECT monto_apertura, efectivo, tarjeta, transferencia, total, accion FROM caja_registro WHERE id_caja = :id_caja ORDER BY fecha DESC LIMIT 1");
+        $stmt->execute(['id_caja' => $idCaja]);
+        $res = $stmt->fetch(PDO::FETCH_ASSOC);
+        echo json_encode($res ?: []);
+        break;
     default:
         echo 'Acción no reconocida';
         break;

@@ -36,10 +36,10 @@
 
     <div class="row mt-4 g-3">
         <div class="col-md-4">
-            <button class="btn btn-success w-100" onclick="abrirCaja();">Abrir Caja</button>
+            <button id="abrir-btn" class="btn btn-success w-100" onclick="abrirCaja();">Abrir Caja</button>
         </div>
         <div class="col-md-4">
-            <button class="btn btn-danger w-100" onclick="cerrarCaja();">Cerrar Caja</button>
+            <button id="cerrar-btn" class="btn btn-danger w-100" onclick="cerrarCaja();">Cerrar Caja</button>
         </div>
         <div class="col-md-4">
             <button class="btn btn-secondary w-100" onclick="generarArqueoCaja();">Arqueo de Caja</button>
