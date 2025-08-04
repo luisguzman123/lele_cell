@@ -18,6 +18,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if ($user) {
         $_SESSION['usuario'] = $user['usuario'];
         $_SESSION['id_usuario'] = $user['id_usuario'];
+        $_SESSION['id_cargo'] = $user['id_cargo'];
         header('Location: index.php');
         exit;
     } else {

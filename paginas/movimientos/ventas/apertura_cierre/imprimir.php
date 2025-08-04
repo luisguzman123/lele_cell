@@ -1,4 +1,5 @@
 <?php
+session_start();
 require_once '../../../../conexion/db.php';
 
 $caja = isset($_GET['caja']) ? intval($_GET['caja']) : 0;
@@ -10,11 +11,27 @@ $hasInputs = isset(
     $_GET['total']
 );
 
+$db = new DB();
+$pdo = $db->conectar();
+
+if (!isset($_SESSION['id_usuario'])) {
+    if (isset($_SESSION['usuario'])) {
+        $stmt = $pdo->prepare("SELECT id_usuario FROM usuario WHERE usuario = :usuario");
+        $stmt->execute(['usuario' => $_SESSION['usuario']]);
+        $user = $stmt->fetch(PDO::FETCH_ASSOC);
+        if ($user) {
+            $_SESSION['id_usuario'] = $user['id_usuario'];
+        }
+    }
+}
+$idUsuario = $_SESSION['id_usuario'] ?? 0;
+
 if ($hasInputs) {
     $registros = [
         (object) [
             'fecha' => date('Y-m-d H:i:s'),
             'accion' => 'ARQUEO',
+            'usuario' => $_SESSION['usuario'] ?? '',
             'monto_apertura' => intval($_GET['monto_apertura']),
             'efectivo' => intval($_GET['efectivo']),
             'tarjeta' => intval($_GET['tarjeta']),
@@ -23,10 +40,11 @@ if ($hasInputs) {
         ]
     ];
 } else {
-    $db = new DB();
-    $pdo = $db->conectar();
-    $stmt = $pdo->prepare("SELECT fecha, accion, monto_apertura, efectivo, tarjeta, transferencia, total FROM caja_registro WHERE id_caja = :id_caja ORDER BY fecha DESC");
-    $stmt->execute(['id_caja' => $caja]);
+    $stmt = $pdo->prepare("SELECT cr.fecha, cr.accion, cr.monto_apertura, cr.efectivo, cr.tarjeta, cr.transferencia, cr.total, u.usuario FROM caja_registro cr JOIN usuario u ON u.id_usuario = cr.id_usuario WHERE cr.id_caja = :id_caja AND cr.id_usuario = :id_usuario ORDER BY cr.fecha DESC");
+    $stmt->execute([
+        'id_caja' => $caja,
+        'id_usuario' => $idUsuario
+    ]);
     $registros = $stmt->fetchAll(PDO::FETCH_OBJ);
 }
 ?>
@@ -45,6 +63,7 @@ if ($hasInputs) {
             <tr>
                 <th>Fecha</th>
                 <th>Acción</th>
+                <th>Usuario</th>
                 <th>Monto Apertura</th>
                 <th>Efectivo</th>
                 <th>Tarjeta</th>
@@ -54,12 +73,13 @@ if ($hasInputs) {
         </thead>
         <tbody>
         <?php if (count($registros) === 0): ?>
-            <tr><td colspan="7" class="text-center">Sin registros</td></tr>
+            <tr><td colspan="8" class="text-center">Sin registros</td></tr>
         <?php else: ?>
             <?php foreach ($registros as $r): ?>
             <tr>
                 <td><?= htmlspecialchars($r->fecha) ?></td>
                 <td><?= htmlspecialchars($r->accion) ?></td>
+                <td><?= htmlspecialchars($r->usuario ?? '') ?></td>
                 <td class="text-end"><?= number_format($r->monto_apertura, 0, ',', '.') ?></td>
                 <td class="text-end"><?= number_format($r->efectivo, 0, ',', '.') ?></td>
                 <td class="text-end"><?= number_format($r->tarjeta, 0, ',', '.') ?></td>

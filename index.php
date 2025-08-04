@@ -4,6 +4,7 @@ if (!isset($_SESSION['usuario'])) {
     header('Location: login.php');
     exit;
 }
+$idCargo = $_SESSION['id_cargo'] ?? null;
 ?>
 <!doctype html>
 <html lang="en">
@@ -304,6 +305,7 @@ https://cdn.jsdelivr.net/npm/sweetalert2@11.22.0/dist/sweetalert2.min.css
                             role="menu"
                             data-accordion="false"
                             >
+                            <?php if ($idCargo == 1): ?>
                             <li class="nav-item">
                                 <a href="#" class="nav-link">
                                     <i class="nav-icon bi bi-speedometer"></i>
@@ -357,6 +359,7 @@ https://cdn.jsdelivr.net/npm/sweetalert2@11.22.0/dist/sweetalert2.min.css
                                     </li>
                                 </ul>
                             </li>
+                            <?php endif; ?>
                               <li class="nav-item">
                                     <a href="#" class="nav-link">
                                         <i class="nav-icon bi bi-cart"></i>
