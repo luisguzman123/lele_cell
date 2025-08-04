@@ -130,7 +130,7 @@ function guardarPedidoProveedor(){
         'proveedor': $("#proveedor").val(),
         'estado':'PENDIENTE'
     };
-    ejecutarAjax("controladores/pedido_proveedor.php","guardar="+JSON.stringify(cabecera));
+    let g = ejecutarAjax("controladores/pedido_proveedor.php","guardar="+JSON.stringify(cabecera));
     let id = ejecutarAjax("controladores/pedido_proveedor.php","dameUltimoId=1");
     $("#detalle_tb tr").each(function(){
         let detalle = {
