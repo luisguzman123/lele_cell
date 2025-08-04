@@ -5,6 +5,7 @@ if (!isset($_SESSION['usuario'])) {
     exit;
 }
 $idCargo = $_SESSION['id_permiso'] ?? null;
+$nombre = $_SESSION['usuario'] ?? null;
 ?>
 <!doctype html>
 <html lang="en">
@@ -67,9 +68,9 @@ $idCargo = $_SESSION['id_permiso'] ?? null;
             crossorigin="anonymous"
             />
 
-       <link href="
-https://cdn.jsdelivr.net/npm/sweetalert2@11.22.0/dist/sweetalert2.min.css
-" rel="stylesheet">
+        <link href="
+              https://cdn.jsdelivr.net/npm/sweetalert2@11.22.0/dist/sweetalert2.min.css
+              " rel="stylesheet">
     </head>
     <!--end::Head-->
     <!--begin::Body-->
@@ -81,141 +82,141 @@ https://cdn.jsdelivr.net/npm/sweetalert2@11.22.0/dist/sweetalert2.min.css
                 <!--begin::Container-->
                 <div class="container-fluid">
                     <!--begin::Start Navbar Links-->
-<!--                    <ul class="navbar-nav">
-                        <li class="nav-item">
-                            <a class="nav-link" data-lte-toggle="sidebar" href="#" role="button">
-                                <i class="bi bi-list"></i>
-                            </a>
-                        </li>
-                        <li class="nav-item d-none d-md-block"><a href="#" class="nav-link">Home</a></li>
-                        <li class="nav-item d-none d-md-block"><a href="#" class="nav-link">Contact</a></li>
-                    </ul>-->
+                    <!--                    <ul class="navbar-nav">
+                                            <li class="nav-item">
+                                                <a class="nav-link" data-lte-toggle="sidebar" href="#" role="button">
+                                                    <i class="bi bi-list"></i>
+                                                </a>
+                                            </li>
+                                            <li class="nav-item d-none d-md-block"><a href="#" class="nav-link">Home</a></li>
+                                            <li class="nav-item d-none d-md-block"><a href="#" class="nav-link">Contact</a></li>
+                                        </ul>-->
                     <!--end::Start Navbar Links-->
                     <!--begin::End Navbar Links-->
                     <ul class="navbar-nav ms-auto">
                         <!--begin::Navbar Search-->
-<!--                        <li class="nav-item">
-                            <a class="nav-link" data-widget="navbar-search" href="#" role="button">
-                                <i class="bi bi-search"></i>
-                            </a>
-                        </li>-->
+                        <!--                        <li class="nav-item">
+                                                    <a class="nav-link" data-widget="navbar-search" href="#" role="button">
+                                                        <i class="bi bi-search"></i>
+                                                    </a>
+                                                </li>-->
                         <!--end::Navbar Search-->
                         <!--begin::Messages Dropdown Menu-->
-<!--                        <li class="nav-item dropdown">
-                            <a class="nav-link" data-bs-toggle="dropdown" href="#">
-                                <i class="bi bi-chat-text"></i>
-                                <span class="navbar-badge badge text-bg-danger">3</span>
-                            </a>
-                            <div class="dropdown-menu dropdown-menu-lg dropdown-menu-end">
-                                <a href="#" class="dropdown-item">
-                                    begin::Message
-                                    <div class="d-flex">
-                                        <div class="flex-shrink-0">
-                                            <img
-                                                src="dist/assets/img/user1-128x128.jpg"
-                                                alt="User Avatar"
-                                                class="img-size-50 rounded-circle me-3"
-                                                />
-                                        </div>
-                                        <div class="flex-grow-1">
-                                            <h3 class="dropdown-item-title">
-                                                Brad Diesel
-                                                <span class="float-end fs-7 text-danger"
-                                                      ><i class="bi bi-star-fill"></i
-                                                    ></span>
-                                            </h3>
-                                            <p class="fs-7">Call me whenever you can...</p>
-                                            <p class="fs-7 text-secondary">
-                                                <i class="bi bi-clock-fill me-1"></i> 4 Hours Ago
-                                            </p>
-                                        </div>
-                                    </div>
-                                    end::Message
-                                </a>
-                                <div class="dropdown-divider"></div>
-                                <a href="#" class="dropdown-item">
-                                    begin::Message
-                                    <div class="d-flex">
-                                        <div class="flex-shrink-0">
-                                            <img
-                                                src="dist/assets/img/user8-128x128.jpg"
-                                                alt="User Avatar"
-                                                class="img-size-50 rounded-circle me-3"
-                                                />
-                                        </div>
-                                        <div class="flex-grow-1">
-                                            <h3 class="dropdown-item-title">
-                                                John Pierce
-                                                <span class="float-end fs-7 text-secondary">
-                                                    <i class="bi bi-star-fill"></i>
-                                                </span>
-                                            </h3>
-                                            <p class="fs-7">I got your message bro</p>
-                                            <p class="fs-7 text-secondary">
-                                                <i class="bi bi-clock-fill me-1"></i> 4 Hours Ago
-                                            </p>
-                                        </div>
-                                    </div>
-                                    end::Message
-                                </a>
-                                <div class="dropdown-divider"></div>
-                                <a href="#" class="dropdown-item">
-                                    begin::Message
-                                    <div class="d-flex">
-                                        <div class="flex-shrink-0">
-                                            <img
-                                                src="dist/assets/img/user3-128x128.jpg"
-                                                alt="User Avatar"
-                                                class="img-size-50 rounded-circle me-3"
-                                                />
-                                        </div>
-                                        <div class="flex-grow-1">
-                                            <h3 class="dropdown-item-title">
-                                                Nora Silvester
-                                                <span class="float-end fs-7 text-warning">
-                                                    <i class="bi bi-star-fill"></i>
-                                                </span>
-                                            </h3>
-                                            <p class="fs-7">The subject goes here</p>
-                                            <p class="fs-7 text-secondary">
-                                                <i class="bi bi-clock-fill me-1"></i> 4 Hours Ago
-                                            </p>
-                                        </div>
-                                    </div>
-                                    end::Message
-                                </a>
-                                <div class="dropdown-divider"></div>
-                                <a href="#" class="dropdown-item dropdown-footer">See All Messages</a>
-                            </div>
-                        </li>-->
+                        <!--                        <li class="nav-item dropdown">
+                                                    <a class="nav-link" data-bs-toggle="dropdown" href="#">
+                                                        <i class="bi bi-chat-text"></i>
+                                                        <span class="navbar-badge badge text-bg-danger">3</span>
+                                                    </a>
+                                                    <div class="dropdown-menu dropdown-menu-lg dropdown-menu-end">
+                                                        <a href="#" class="dropdown-item">
+                                                            begin::Message
+                                                            <div class="d-flex">
+                                                                <div class="flex-shrink-0">
+                                                                    <img
+                                                                        src="dist/assets/img/user1-128x128.jpg"
+                                                                        alt="User Avatar"
+                                                                        class="img-size-50 rounded-circle me-3"
+                                                                        />
+                                                                </div>
+                                                                <div class="flex-grow-1">
+                                                                    <h3 class="dropdown-item-title">
+                                                                        Brad Diesel
+                                                                        <span class="float-end fs-7 text-danger"
+                                                                              ><i class="bi bi-star-fill"></i
+                                                                            ></span>
+                                                                    </h3>
+                                                                    <p class="fs-7">Call me whenever you can...</p>
+                                                                    <p class="fs-7 text-secondary">
+                                                                        <i class="bi bi-clock-fill me-1"></i> 4 Hours Ago
+                                                                    </p>
+                                                                </div>
+                                                            </div>
+                                                            end::Message
+                                                        </a>
+                                                        <div class="dropdown-divider"></div>
+                                                        <a href="#" class="dropdown-item">
+                                                            begin::Message
+                                                            <div class="d-flex">
+                                                                <div class="flex-shrink-0">
+                                                                    <img
+                                                                        src="dist/assets/img/user8-128x128.jpg"
+                                                                        alt="User Avatar"
+                                                                        class="img-size-50 rounded-circle me-3"
+                                                                        />
+                                                                </div>
+                                                                <div class="flex-grow-1">
+                                                                    <h3 class="dropdown-item-title">
+                                                                        John Pierce
+                                                                        <span class="float-end fs-7 text-secondary">
+                                                                            <i class="bi bi-star-fill"></i>
+                                                                        </span>
+                                                                    </h3>
+                                                                    <p class="fs-7">I got your message bro</p>
+                                                                    <p class="fs-7 text-secondary">
+                                                                        <i class="bi bi-clock-fill me-1"></i> 4 Hours Ago
+                                                                    </p>
+                                                                </div>
+                                                            </div>
+                                                            end::Message
+                                                        </a>
+                                                        <div class="dropdown-divider"></div>
+                                                        <a href="#" class="dropdown-item">
+                                                            begin::Message
+                                                            <div class="d-flex">
+                                                                <div class="flex-shrink-0">
+                                                                    <img
+                                                                        src="dist/assets/img/user3-128x128.jpg"
+                                                                        alt="User Avatar"
+                                                                        class="img-size-50 rounded-circle me-3"
+                                                                        />
+                                                                </div>
+                                                                <div class="flex-grow-1">
+                                                                    <h3 class="dropdown-item-title">
+                                                                        Nora Silvester
+                                                                        <span class="float-end fs-7 text-warning">
+                                                                            <i class="bi bi-star-fill"></i>
+                                                                        </span>
+                                                                    </h3>
+                                                                    <p class="fs-7">The subject goes here</p>
+                                                                    <p class="fs-7 text-secondary">
+                                                                        <i class="bi bi-clock-fill me-1"></i> 4 Hours Ago
+                                                                    </p>
+                                                                </div>
+                                                            </div>
+                                                            end::Message
+                                                        </a>
+                                                        <div class="dropdown-divider"></div>
+                                                        <a href="#" class="dropdown-item dropdown-footer">See All Messages</a>
+                                                    </div>
+                                                </li>-->
                         <!--end::Messages Dropdown Menu-->
                         <!--begin::Notifications Dropdown Menu-->
-<!--                        <li class="nav-item dropdown">
-                            <a class="nav-link" data-bs-toggle="dropdown" href="#">
-                                <i class="bi bi-bell-fill"></i>
-                                <span class="navbar-badge badge text-bg-warning">15</span>
-                            </a>
-                            <div class="dropdown-menu dropdown-menu-lg dropdown-menu-end">
-                                <span class="dropdown-item dropdown-header">15 Notifications</span>
-                                <div class="dropdown-divider"></div>
-                                <a href="#" class="dropdown-item">
-                                    <i class="bi bi-envelope me-2"></i> 4 new messages
-                                    <span class="float-end text-secondary fs-7">3 mins</span>
-                                </a>
-                                <div class="dropdown-divider"></div>
-                                <a href="#" class="dropdown-item">
-                                    <i class="bi bi-people-fill me-2"></i> 8 friend requests
-                                    <span class="float-end text-secondary fs-7">12 hours</span>
-                                </a>
-                                <div class="dropdown-divider"></div>
-                                <a href="#" class="dropdown-item">
-                                    <i class="bi bi-file-earmark-fill me-2"></i> 3 new reports
-                                    <span class="float-end text-secondary fs-7">2 days</span>
-                                </a>
-                                <div class="dropdown-divider"></div>
-                                <a href="#" class="dropdown-item dropdown-footer"> See All Notifications </a>
-                            </div>
-                        </li>-->
+                        <!--                        <li class="nav-item dropdown">
+                                                    <a class="nav-link" data-bs-toggle="dropdown" href="#">
+                                                        <i class="bi bi-bell-fill"></i>
+                                                        <span class="navbar-badge badge text-bg-warning">15</span>
+                                                    </a>
+                                                    <div class="dropdown-menu dropdown-menu-lg dropdown-menu-end">
+                                                        <span class="dropdown-item dropdown-header">15 Notifications</span>
+                                                        <div class="dropdown-divider"></div>
+                                                        <a href="#" class="dropdown-item">
+                                                            <i class="bi bi-envelope me-2"></i> 4 new messages
+                                                            <span class="float-end text-secondary fs-7">3 mins</span>
+                                                        </a>
+                                                        <div class="dropdown-divider"></div>
+                                                        <a href="#" class="dropdown-item">
+                                                            <i class="bi bi-people-fill me-2"></i> 8 friend requests
+                                                            <span class="float-end text-secondary fs-7">12 hours</span>
+                                                        </a>
+                                                        <div class="dropdown-divider"></div>
+                                                        <a href="#" class="dropdown-item">
+                                                            <i class="bi bi-file-earmark-fill me-2"></i> 3 new reports
+                                                            <span class="float-end text-secondary fs-7">2 days</span>
+                                                        </a>
+                                                        <div class="dropdown-divider"></div>
+                                                        <a href="#" class="dropdown-item dropdown-footer"> See All Notifications </a>
+                                                    </div>
+                                                </li>-->
                         <!--end::Notifications Dropdown Menu-->
                         <!--begin::Fullscreen Toggle-->
                         <li class="nav-item">
@@ -233,32 +234,33 @@ https://cdn.jsdelivr.net/npm/sweetalert2@11.22.0/dist/sweetalert2.min.css
                                     class="user-image rounded-circle shadow"
                                     alt="User Image"
                                     />-->
-                                <span class="d-none d-md-inline">Alexander Pierce</span>
+                                <span class="d-none d-md-inline"><?php echo htmlspecialchars($nombre); ?></span>
+
                             </a>
                             <ul class="dropdown-menu dropdown-menu-lg dropdown-menu-end">
                                 <!--begin::User Image-->
-<!--                                <li class="user-header text-bg-primary">
-                                    <img
-                                        src="dist/assets/img/user2-160x160.jpg"
-                                        class="rounded-circle shadow"
-                                        alt="User Image"
-                                        />
-                                    <p>
-                                        Alexander Pierce - Web Developer
-                                        <small>Member since Nov. 2023</small>
-                                    </p>
-                                </li>-->
+                                <!--                                <li class="user-header text-bg-primary">
+                                                                    <img
+                                                                        src="dist/assets/img/user2-160x160.jpg"
+                                                                        class="rounded-circle shadow"
+                                                                        alt="User Image"
+                                                                        />
+                                                                    <p>
+                                                                        Alexander Pierce - Web Developer
+                                                                        <small>Member since Nov. 2023</small>
+                                                                    </p>
+                                                                </li>-->
                                 <!--end::User Image-->
                                 <!--begin::Menu Body-->
-<!--                                <li class="user-body">
-                                    begin::Row
-                                    <div class="row">
-                                        <div class="col-4 text-center"><a href="#">Followers</a></div>
-                                        <div class="col-4 text-center"><a href="#">Sales</a></div>
-                                        <div class="col-4 text-center"><a href="#">Friends</a></div>
-                                    </div>
-                                    end::Row
-                                </li>-->
+                                <!--                                <li class="user-body">
+                                                                    begin::Row
+                                                                    <div class="row">
+                                                                        <div class="col-4 text-center"><a href="#">Followers</a></div>
+                                                                        <div class="col-4 text-center"><a href="#">Sales</a></div>
+                                                                        <div class="col-4 text-center"><a href="#">Friends</a></div>
+                                                                    </div>
+                                                                    end::Row
+                                                                </li>-->
                                 <!--end::Menu Body-->
                                 <!--begin::Menu Footer-->
                                 <li class="user-footer">
@@ -293,557 +295,564 @@ https://cdn.jsdelivr.net/npm/sweetalert2@11.22.0/dist/sweetalert2.min.css
                         <!--end::Brand Text-->
                         <!--end::Brand Link-->
 
-                </div>
-                <!--end::Sidebar Brand-->
-                <!--begin::Sidebar Wrapper-->
-                <div class="sidebar-wrapper">
-                    <nav class="mt-2">
-                        <!--begin::Sidebar Menu-->
-                        <ul
-                            class="nav sidebar-menu flex-column"
-                            data-lte-toggle="treeview"
-                            role="menu"
-                            data-accordion="false"
-                            >
-                            <?php if ($idCargo == 1): ?>
-                            <li class="nav-item">
-                                <a href="#" class="nav-link">
-                                    <i class="nav-icon bi bi-speedometer"></i>
-                                    <p>
-                                        Referencial
-                                        <i class="nav-arrow bi bi-chevron-right"></i>
-                                    </p>
-                                </a>
-                                <ul class="nav nav-treeview">
-                                    <li class="nav-item">
-                                        <a href="#" onclick="mostrarListarCliente();" class="nav-link">
-                                            <i class="nav-icon bi bi-circle"></i>
-                                            <p>Cliente</p>
-                                        </a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a href="#" onclick="mostrarListarEquipo();" class="nav-link">
-                                            <i class="nav-icon bi bi-circle"></i>
-                                            <p>Equipo</p>
-                                        </a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a href="#" onclick="mostrarListarClienteEquipo();" class="nav-link">
-                                            <i class="nav-icon bi bi-circle"></i>
-                                            <p>Equipo cliente</p>
-                                        </a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a href="#" onclick="mostrarListarProducto();" class="nav-link">
-                                            <i class="nav-icon bi bi-circle"></i>
-                                            <p>Producto</p>
-                                        </a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a href="#" onclick="mostrarListarProveedor();" class="nav-link">
-                                            <i class="nav-icon bi bi-circle"></i>
-                                            <p>Proveedor</p>
-                                        </a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a href="#" onclick="mostrarListarRepuesto();" class="nav-link">
-                                            <i class="nav-icon bi bi-circle"></i>
-                                            <p>Repuesto</p>
-                                        </a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a href="#" onclick="mostrarListarTecnico();" class="nav-link">
-                                            <i class="nav-icon bi bi-circle"></i>
-                                            <p>Tecnico</p>
-                                        </a>
-                                    </li>
-                                </ul>
-                            </li>
-                            <?php endif; ?>
-                              <li class="nav-item">
-                                    <a href="#" class="nav-link">
-                                        <i class="nav-icon bi bi-cart"></i>
-                                        <p>
-                                            Compra
-                                            <i class="nav-arrow bi bi-chevron-right"></i>
-                                        </p>
-                                    </a>
-                                    <ul class="nav nav-treeview">
-                                        <li class="nav-item">
-                                            <a href="#" onclick="mostrarListaPedidoProveedor();" class="nav-link">
-                                                <i class="nav-icon bi bi-circle"></i>
-                                                <p>Pedido Proveedor</p>
-                                            </a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a href="#" onclick="mostrarListaPresupuesto();" class="nav-link">
-                                                <i class="nav-icon bi bi-circle"></i>
-                                                <p>Presupuesto</p>
-                                            </a>
-                                        </li>
-
-                                        <li class="nav-item">
-                                            <a href="#" onclick="mostrarListaOrdenCompra();" class="nav-link">
-                                                <i class="nav-icon bi bi-circle"></i>
-                                                <p>Orden de Compra</p>
-                                            </a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a href="#" onclick="mostrarListaCompra();" class="nav-link">
-                                                <i class="nav-icon bi bi-circle"></i>
-                                                <p>Factura de Compra</p>
-                                            </a>
-                                        </li>
-
-                                    </ul>
-                                </li>
-
-                                <li class="nav-item">
-                                    <a href="#" class="nav-link">
-                                        <i class="nav-icon bi bi-cash-stack"></i>
-                                        <p>
-                                            Ventas
-                                            <i class="nav-arrow bi bi-chevron-right"></i>
-                                        </p>
-                                    </a>
-                                    <ul class="nav nav-treeview">
-                                        <li class="nav-item">
-                                            <a href="#" onclick="mostrarAperturaCierre();" class="nav-link">
-                                                <i class="nav-icon bi bi-circle"></i>
-                                                <p>Apertura Cierre</p>
-                                            </a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a href="#" onclick="mostrarListarFactura();" class="nav-link">
-                                                <i class="nav-icon bi bi-circle"></i>
-                                                <p>Facturacion</p>
-                                            </a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a href="#" onclick="mostrarListarPresupuestoVenta();" class="nav-link">
-                                                <i class="nav-icon bi bi-circle"></i>
-                                                <p>Presupuesto</p>
-                                            </a>
-                                        </li>
-                                    </ul>
-                                </li>
-
-                            <li class="nav-item">
-                                <a href="#" class="nav-link">
-                                    <i class="nav-icon bi bi-speedometer"></i>
-                                    <p>
-                                        Servicios
-                                        <i class="nav-arrow bi bi-chevron-right"></i>
-                                    </p>
-                                </a>
-                                
-                                <ul class="nav nav-treeview">
-                                    <li class="nav-item">
-                                        <a href="#" onclick="mostrarListarRecepcion();" class="nav-link">
-                                            <i class="nav-icon bi bi-circle"></i>
-                                            <p>Recepción</p>
-                                        </a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a href="#" onclick="mostrarListarDiagnostico();" class="nav-link">
-                                            <i class="nav-icon bi bi-circle"></i>
-                                            <p>Diagnóstico</p>
-                                        </a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a href="#" onclick="mostrarListarPresupuestoServicio();" class="nav-link">
-                                            <i class="nav-icon bi bi-circle"></i>
-                                            <p>Presupuesto Servicio</p>
-                                        </a>
-                                    </li>
-                                    
-                                    <li class="nav-item">
-                                        <a href="#" onclick="mostrarListarServicio();" class="nav-link">
-                                            <i class="nav-icon bi bi-circle"></i>
-                                            <p>Servicio</p>
-                                        </a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a href="#" onclick="mostrarListarEntrega();" class="nav-link">
-                                            <i class="nav-icon bi bi-circle"></i>
-                                            <p>Entrega</p>
-                                        </a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a href="#" onclick="mostrarListarGarantia();" class="nav-link">
-                                            <i class="nav-icon bi bi-circle"></i>
-                                            <p>Garantia</p>
-                                        </a>
-                                    </li>
-                                </ul>
-                            </li>
-
-                            <li class="nav-item">
-                                <a href="#" class="nav-link">
-                                    <i class="nav-icon bi bi-lock"></i>
-                                    <p>
-                                        Seguridad
-                                        <i class="nav-arrow bi bi-chevron-right"></i>
-                                    </p>
-                                </a>
-                                <ul class="nav nav-treeview">
-                                    <li class="nav-item">
-                                        <a href="#" onclick="mostrarListarCargo();" class="nav-link">
-                                            <i class="nav-icon bi bi-circle"></i>
-                                            <p>Cargo</p>
-                                        </a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a href="#" onclick="mostrarListarPermiso();" class="nav-link">
-                                            <i class="nav-icon bi bi-circle"></i>
-                                            <p>Permiso</p>
-                                        </a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a href="#" onclick="mostrarListarUsuario();" class="nav-link">
-                                            <i class="nav-icon bi bi-circle"></i>
-                                            <p>Usuario</p>
-                                        </a>
-                                    </li>
-                                </ul>
-                            </li>
-                            <li class="nav-item">
-                                <a href="#" onclick="mostrarFormReportes();" class="nav-link">
-                                    <i class="nav-icon bi bi-file-earmark-text"></i>
-                                    <p>Reportes</p>
-                                </a>
-                            </li>
-
-
-
-
-
-
-                        </ul>
-                        <!--end::Sidebar Menu-->
-                    </nav>
-                </div>
-                <!--end::Sidebar Wrapper-->
-            </aside>
-            <!--end::Sidebar-->
-            <!--begin::App Main-->
-            <main class="app-main">
-                <!--begin::App Content Header-->
-                <div class="app-content-header">
-                    <!--begin::Container-->
-                    <div class="container-fluid">
-                        <!--begin::Row-->
-                        <div class="row">
-                            <!--<div class="col-sm-6"><h3 class="mb-0">Dashboard</h3></div>-->
-<!--                            <div class="col-sm-6">
-                                <ol class="breadcrumb float-sm-end">
-                                    <li class="breadcrumb-item"><a href="#">Home</a></li>
-                                    <li class="breadcrumb-item active" aria-current="page">Dashboard</li>
-                                </ol>
-                            </div>-->
                         </div>
-                        <!--end::Row-->
-                    </div>
-                    <!--end::Container-->
+                        <!--end::Sidebar Brand-->
+                        <!--begin::Sidebar Wrapper-->
+                        <div class="sidebar-wrapper">
+                            <nav class="mt-2">
+                                <!--begin::Sidebar Menu-->
+                                <ul
+                                    class="nav sidebar-menu flex-column"
+                                    data-lte-toggle="treeview"
+                                    role="menu"
+                                    data-accordion="false"
+                                    >
+                                        <?php if ($idCargo == 1): ?>
+                                        <li class="nav-item">
+                                            <a href="#" class="nav-link">
+                                                <i class="nav-icon bi bi-speedometer"></i>
+                                                <p>
+                                                    Referencial
+                                                    <i class="nav-arrow bi bi-chevron-right"></i>
+                                                </p>
+                                            </a>
+                                            <ul class="nav nav-treeview">
+                                                <li class="nav-item">
+                                                    <a href="#" onclick="mostrarListarCliente();" class="nav-link">
+                                                        <i class="nav-icon bi bi-circle"></i>
+                                                        <p>Cliente</p>
+                                                    </a>
+                                                </li>
+                                                <li class="nav-item">
+                                                    <a href="#" onclick="mostrarListarEquipo();" class="nav-link">
+                                                        <i class="nav-icon bi bi-circle"></i>
+                                                        <p>Equipo</p>
+                                                    </a>
+                                                </li>
+                                                <li class="nav-item">
+                                                    <a href="#" onclick="mostrarListarClienteEquipo();" class="nav-link">
+                                                        <i class="nav-icon bi bi-circle"></i>
+                                                        <p>Equipo cliente</p>
+                                                    </a>
+                                                </li>
+                                                <li class="nav-item">
+                                                    <a href="#" onclick="mostrarListarProducto();" class="nav-link">
+                                                        <i class="nav-icon bi bi-circle"></i>
+                                                        <p>Producto</p>
+                                                    </a>
+                                                </li>
+                                                <li class="nav-item">
+                                                    <a href="#" onclick="mostrarListarProveedor();" class="nav-link">
+                                                        <i class="nav-icon bi bi-circle"></i>
+                                                        <p>Proveedor</p>
+                                                    </a>
+                                                </li>
+                                                <li class="nav-item">
+                                                    <a href="#" onclick="mostrarListarRepuesto();" class="nav-link">
+                                                        <i class="nav-icon bi bi-circle"></i>
+                                                        <p>Repuesto</p>
+                                                    </a>
+                                                </li>
+                                                <li class="nav-item">
+                                                    <a href="#" onclick="mostrarListarTecnico();" class="nav-link">
+                                                        <i class="nav-icon bi bi-circle"></i>
+                                                        <p>Tecnico</p>
+                                                    </a>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                    <?php endif; ?>
+                                    <?php if ($idCargo == 2 || $idCargo == 1): ?>
+                                        <li class="nav-item">
+                                            <a href="#" class="nav-link">
+                                                <i class="nav-icon bi bi-cart"></i>
+                                                <p>
+                                                    Compra
+                                                    <i class="nav-arrow bi bi-chevron-right"></i>
+                                                </p>
+                                            </a>
+                                            <ul class="nav nav-treeview">
+                                                <li class="nav-item">
+                                                    <a href="#" onclick="mostrarListaPedidoProveedor();" class="nav-link">
+                                                        <i class="nav-icon bi bi-circle"></i>
+                                                        <p>Pedido Proveedor</p>
+                                                    </a>
+                                                </li>
+                                                <li class="nav-item">
+                                                    <a href="#" onclick="mostrarListaPresupuesto();" class="nav-link">
+                                                        <i class="nav-icon bi bi-circle"></i>
+                                                        <p>Presupuesto</p>
+                                                    </a>
+                                                </li>
+
+                                                <li class="nav-item">
+                                                    <a href="#" onclick="mostrarListaOrdenCompra();" class="nav-link">
+                                                        <i class="nav-icon bi bi-circle"></i>
+                                                        <p>Orden de Compra</p>
+                                                    </a>
+                                                </li>
+                                                <li class="nav-item">
+                                                    <a href="#" onclick="mostrarListaCompra();" class="nav-link">
+                                                        <i class="nav-icon bi bi-circle"></i>
+                                                        <p>Factura de Compra</p>
+                                                    </a>
+                                                </li>
+
+                                            </ul>
+                                        </li>
+                                    <?php endif; ?>
+                                    <?php if ($idCargo == 2 || $idCargo == 1): ?>
+                                        <li class="nav-item">
+                                            <a href="#" class="nav-link">
+                                                <i class="nav-icon bi bi-cash-stack"></i>
+                                                <p>
+                                                    Ventas
+                                                    <i class="nav-arrow bi bi-chevron-right"></i>
+                                                </p>
+                                            </a>
+                                            <ul class="nav nav-treeview">
+                                                <li class="nav-item">
+                                                    <a href="#" onclick="mostrarAperturaCierre();" class="nav-link">
+                                                        <i class="nav-icon bi bi-circle"></i>
+                                                        <p>Apertura Cierre</p>
+                                                    </a>
+                                                </li>
+                                                <li class="nav-item">
+                                                    <a href="#" onclick="mostrarListarFactura();" class="nav-link">
+                                                        <i class="nav-icon bi bi-circle"></i>
+                                                        <p>Facturacion</p>
+                                                    </a>
+                                                </li>
+                                                <li class="nav-item">
+                                                    <a href="#" onclick="mostrarListarPresupuestoVenta();" class="nav-link">
+                                                        <i class="nav-icon bi bi-circle"></i>
+                                                        <p>Presupuesto</p>
+                                                    </a>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                    <?php endif; ?>
+                                         <?php if ($idCargo == 2 || $idCargo == 1): ?>
+                                    <li class="nav-item">
+                                        <a href="#" class="nav-link">
+                                            <i class="nav-icon bi bi-speedometer"></i>
+                                            <p>
+                                                Servicios
+                                                <i class="nav-arrow bi bi-chevron-right"></i>
+                                            </p>
+                                        </a>
+
+                                        <ul class="nav nav-treeview">
+                                            <li class="nav-item">
+                                                <a href="#" onclick="mostrarListarRecepcion();" class="nav-link">
+                                                    <i class="nav-icon bi bi-circle"></i>
+                                                    <p>Recepción</p>
+                                                </a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a href="#" onclick="mostrarListarDiagnostico();" class="nav-link">
+                                                    <i class="nav-icon bi bi-circle"></i>
+                                                    <p>Diagnóstico</p>
+                                                </a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a href="#" onclick="mostrarListarPresupuestoServicio();" class="nav-link">
+                                                    <i class="nav-icon bi bi-circle"></i>
+                                                    <p>Presupuesto Servicio</p>
+                                                </a>
+                                            </li>
+
+                                            <li class="nav-item">
+                                                <a href="#" onclick="mostrarListarServicio();" class="nav-link">
+                                                    <i class="nav-icon bi bi-circle"></i>
+                                                    <p>Servicio</p>
+                                                </a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a href="#" onclick="mostrarListarEntrega();" class="nav-link">
+                                                    <i class="nav-icon bi bi-circle"></i>
+                                                    <p>Entrega</p>
+                                                </a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a href="#" onclick="mostrarListarGarantia();" class="nav-link">
+                                                    <i class="nav-icon bi bi-circle"></i>
+                                                    <p>Garantia</p>
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </li>
+<?php endif; ?>
+                                     <?php if ($idCargo == 1): ?>
+                                    <li class="nav-item">
+                                        <a href="#" class="nav-link">
+                                            <i class="nav-icon bi bi-lock"></i>
+                                            <p>
+                                                Seguridad
+                                                <i class="nav-arrow bi bi-chevron-right"></i>
+                                            </p>
+                                        </a>
+                                        <ul class="nav nav-treeview">
+                                            <li class="nav-item">
+                                                <a href="#" onclick="mostrarListarCargo();" class="nav-link">
+                                                    <i class="nav-icon bi bi-circle"></i>
+                                                    <p>Cargo</p>
+                                                </a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a href="#" onclick="mostrarListarPermiso();" class="nav-link">
+                                                    <i class="nav-icon bi bi-circle"></i>
+                                                    <p>Permiso</p>
+                                                </a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a href="#" onclick="mostrarListarUsuario();" class="nav-link">
+                                                    <i class="nav-icon bi bi-circle"></i>
+                                                    <p>Usuario</p>
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <?php endif; ?>
+                                    <?php if ($idCargo == 1): ?>
+                                    <li class="nav-item">
+                                        <a href="#" onclick="mostrarFormReportes();" class="nav-link">
+                                            <i class="nav-icon bi bi-file-earmark-text"></i>
+                                            <p>Reportes</p>
+                                        </a>
+                                    </li>
+                                    <?php endif; ?>
+
+
+
+
+
+
+                                </ul>
+                                <!--end::Sidebar Menu-->
+                            </nav>
+                        </div>
+                        <!--end::Sidebar Wrapper-->
+                        </aside>
+                        <!--end::Sidebar-->
+                        <!--begin::App Main-->
+                        <main class="app-main">
+                            <!--begin::App Content Header-->
+                            <div class="app-content-header">
+                                <!--begin::Container-->
+                                <div class="container-fluid">
+                                    <!--begin::Row-->
+                                    <div class="row">
+                                        <!--<div class="col-sm-6"><h3 class="mb-0">Dashboard</h3></div>-->
+                                        <!--                            <div class="col-sm-6">
+                                                                        <ol class="breadcrumb float-sm-end">
+                                                                            <li class="breadcrumb-item"><a href="#">Home</a></li>
+                                                                            <li class="breadcrumb-item active" aria-current="page">Dashboard</li>
+                                                                        </ol>
+                                                                    </div>-->
+                                    </div>
+                                    <!--end::Row-->
+                                </div>
+                                <!--end::Container-->
+                            </div>
+                            <!--end::App Content Header-->
+                            <!--begin::App Content-->
+                            <div class="app-content" id="contenido-principal">
+                                <!--begin::Container-->
+
+                                <!--end::Container-->
+                            </div>
+                            <!--end::App Content-->
+                        </main>
+                        <!--end::App Main-->
+                        <!--begin::Footer-->
+                        <footer class="app-footer">
+                            <!--begin::To the end-->
+                            <!--<div class="float-end d-none d-sm-inline">Anything you want</div>-->
+                            <!--end::To the end-->
+                            <!--begin::Copyright-->
+                            <strong>
+                                Leandro Rodriguez &copy; 2025&nbsp;
+                                <!--<a href="https://adminlte.io" class="text-decoration-none">AdminLTE.io</a>.-->
+                            </strong>
+                            Todos los derechos reservados.
+                            <!--end::Copyright-->
+                        </footer>
+                        <!--end::Footer-->
                 </div>
-                <!--end::App Content Header-->
-                <!--begin::App Content-->
-                <div class="app-content" id="contenido-principal">
-                    <!--begin::Container-->
+                <!--end::App Wrapper-->
+                <!--begin::Script-->
+                <!--begin::Third Party Plugin(OverlayScrollbars)-->
+                <script
+                    src="https://cdn.jsdelivr.net/npm/overlayscrollbars@2.10.1/browser/overlayscrollbars.browser.es6.min.js"
+                    integrity="sha256-dghWARbRe2eLlIJ56wNB+b760ywulqK3DzZYEpsg2fQ="
+                    crossorigin="anonymous"
+                ></script>
+                <!--end::Third Party Plugin(OverlayScrollbars)--><!--begin::Required Plugin(popperjs for Bootstrap 5)-->
+                <script
+                    src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
+                    integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
+                    crossorigin="anonymous"
+                ></script>
+                <!--end::Required Plugin(popperjs for Bootstrap 5)--><!--begin::Required Plugin(Bootstrap 5)-->
+                <script
+                    src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js"
+                    integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy"
+                    crossorigin="anonymous"
+                ></script>
+                <!--end::Required Plugin(Bootstrap 5)--><!--begin::Required Plugin(AdminLTE)-->
+                <script src="dist/js/adminlte.js"></script>
+                <!--end::Required Plugin(AdminLTE)--><!--begin::OverlayScrollbars Configure-->
+                <script>
+                                            const SELECTOR_SIDEBAR_WRAPPER = '.sidebar-wrapper';
+                                            const Default = {
+                                                scrollbarTheme: 'os-theme-light',
+                                                scrollbarAutoHide: 'leave',
+                                                scrollbarClickScroll: true,
+                                            };
+                                            document.addEventListener('DOMContentLoaded', function () {
+                                                const sidebarWrapper = document.querySelector(SELECTOR_SIDEBAR_WRAPPER);
+                                                if (sidebarWrapper && typeof OverlayScrollbarsGlobal?.OverlayScrollbars !== 'undefined') {
+                                                    OverlayScrollbarsGlobal.OverlayScrollbars(sidebarWrapper, {
+                                                        scrollbars: {
+                                                            theme: Default.scrollbarTheme,
+                                                            autoHide: Default.scrollbarAutoHide,
+                                                            clickScroll: Default.scrollbarClickScroll,
+                                                        },
+                                                    });
+                                                }
+                                            });
+                </script>
+                <!--end::OverlayScrollbars Configure-->
+                <!-- OPTIONAL SCRIPTS -->
+                <!-- sortablejs -->
+                <script src="
+                        https://cdn.jsdelivr.net/npm/sweetalert2@11.22.0/dist/sweetalert2.all.min.js
+                "></script>
+                <script
+                    src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.0/Sortable.min.js"
+                    integrity="sha256-ipiJrswvAR4VAx/th+6zWsdeYmVae0iJuiR+6OqHJHQ="
+                    crossorigin="anonymous"
+                ></script>
+                <!-- sortablejs -->
+                <script>
+                                            const connectedSortables = document.querySelectorAll('.connectedSortable');
+                                            connectedSortables.forEach((connectedSortable) => {
+                                                let sortable = new Sortable(connectedSortable, {
+                                                    group: 'shared',
+                                                    handle: '.card-header',
+                                                });
+                                            });
+                                            const cardHeaders = document.querySelectorAll('.connectedSortable .card-header');
+                                            cardHeaders.forEach((cardHeader) => {
+                                                cardHeader.style.cursor = 'move';
+                                            });
+                </script>
+                <!-- apexcharts -->
+                <script
+                    src="https://cdn.jsdelivr.net/npm/apexcharts@3.37.1/dist/apexcharts.min.js"
+                    integrity="sha256-+vh8GkaU7C9/wbSLIcwq82tQ2wTf44aOHA8HlBMwRI8="
+                    crossorigin="anonymous"
+                ></script>
+                <!-- ChartJS -->
+                <script>
+                                            // NOTICE!! DO NOT USE ANY OF THIS JAVASCRIPT
+                                            // IT'S ALL JUST JUNK FOR DEMO
+                                            // ++++++++++++++++++++++++++++++++++++++++++
 
-                    <!--end::Container-->
-                </div>
-                <!--end::App Content-->
-            </main>
-            <!--end::App Main-->
-            <!--begin::Footer-->
-            <footer class="app-footer">
-                <!--begin::To the end-->
-                <!--<div class="float-end d-none d-sm-inline">Anything you want</div>-->
-                <!--end::To the end-->
-                <!--begin::Copyright-->
-                <strong>
-                    Leandro Rodriguez &copy; 2025&nbsp;
-                    <!--<a href="https://adminlte.io" class="text-decoration-none">AdminLTE.io</a>.-->
-                </strong>
-                Todos los derechos reservados.
-                <!--end::Copyright-->
-            </footer>
-            <!--end::Footer-->
-        </div>
-        <!--end::App Wrapper-->
-        <!--begin::Script-->
-        <!--begin::Third Party Plugin(OverlayScrollbars)-->
-        <script
-            src="https://cdn.jsdelivr.net/npm/overlayscrollbars@2.10.1/browser/overlayscrollbars.browser.es6.min.js"
-            integrity="sha256-dghWARbRe2eLlIJ56wNB+b760ywulqK3DzZYEpsg2fQ="
-            crossorigin="anonymous"
-        ></script>
-        <!--end::Third Party Plugin(OverlayScrollbars)--><!--begin::Required Plugin(popperjs for Bootstrap 5)-->
-        <script
-            src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
-            integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
-            crossorigin="anonymous"
-        ></script>
-        <!--end::Required Plugin(popperjs for Bootstrap 5)--><!--begin::Required Plugin(Bootstrap 5)-->
-        <script
-            src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js"
-            integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy"
-            crossorigin="anonymous"
-        ></script>
-        <!--end::Required Plugin(Bootstrap 5)--><!--begin::Required Plugin(AdminLTE)-->
-        <script src="dist/js/adminlte.js"></script>
-        <!--end::Required Plugin(AdminLTE)--><!--begin::OverlayScrollbars Configure-->
-        <script>
-                              const SELECTOR_SIDEBAR_WRAPPER = '.sidebar-wrapper';
-                              const Default = {
-                              scrollbarTheme: 'os-theme-light',
-                                      scrollbarAutoHide: 'leave',
-                                      scrollbarClickScroll: true,
-                              };
-                              document.addEventListener('DOMContentLoaded', function () {
-                              const sidebarWrapper = document.querySelector(SELECTOR_SIDEBAR_WRAPPER);
-                              if (sidebarWrapper && typeof OverlayScrollbarsGlobal?.OverlayScrollbars !== 'undefined') {
-                              OverlayScrollbarsGlobal.OverlayScrollbars(sidebarWrapper, {
-                              scrollbars: {
-                              theme: Default.scrollbarTheme,
-                                      autoHide: Default.scrollbarAutoHide,
-                                      clickScroll: Default.scrollbarClickScroll,
-                              },
-                              });
-                              }
-                              });
-        </script>
-        <!--end::OverlayScrollbars Configure-->
-        <!-- OPTIONAL SCRIPTS -->
-        <!-- sortablejs -->
-        <script src="
-https://cdn.jsdelivr.net/npm/sweetalert2@11.22.0/dist/sweetalert2.all.min.js
-"></script>
-        <script
-            src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.0/Sortable.min.js"
-            integrity="sha256-ipiJrswvAR4VAx/th+6zWsdeYmVae0iJuiR+6OqHJHQ="
-            crossorigin="anonymous"
-        ></script>
-        <!-- sortablejs -->
-        <script>
-                              const connectedSortables = document.querySelectorAll('.connectedSortable');
-                              connectedSortables.forEach((connectedSortable) => {
-                              let sortable = new Sortable(connectedSortable, {
-                              group: 'shared',
-                                      handle: '.card-header',
-                              });
-                              });
-                              const cardHeaders = document.querySelectorAll('.connectedSortable .card-header');
-                              cardHeaders.forEach((cardHeader) => {
-                              cardHeader.style.cursor = 'move';
-                              });
-        </script>
-        <!-- apexcharts -->
-        <script
-            src="https://cdn.jsdelivr.net/npm/apexcharts@3.37.1/dist/apexcharts.min.js"
-            integrity="sha256-+vh8GkaU7C9/wbSLIcwq82tQ2wTf44aOHA8HlBMwRI8="
-            crossorigin="anonymous"
-        ></script>
-        <!-- ChartJS -->
-        <script>
-                              // NOTICE!! DO NOT USE ANY OF THIS JAVASCRIPT
-                              // IT'S ALL JUST JUNK FOR DEMO
-                              // ++++++++++++++++++++++++++++++++++++++++++
+                                            const sales_chart_options = {
+                                                series: [
+                                                    {
+                                                        name: 'Digital Goods',
+                                                        data: [28, 48, 40, 19, 86, 27, 90],
+                                                    },
+                                                    {
+                                                        name: 'Electronics',
+                                                        data: [65, 59, 80, 81, 56, 55, 40],
+                                                    },
+                                                ],
+                                                chart: {
+                                                    height: 300,
+                                                    type: 'area',
+                                                    toolbar: {
+                                                        show: false,
+                                                    },
+                                                },
+                                                legend: {
+                                                    show: false,
+                                                },
+                                                colors: ['#0d6efd', '#20c997'],
+                                                dataLabels: {
+                                                    enabled: false,
+                                                },
+                                                stroke: {
+                                                    curve: 'smooth',
+                                                },
+                                                xaxis: {
+                                                    type: 'datetime',
+                                                    categories: [
+                                                        '2023-01-01',
+                                                        '2023-02-01',
+                                                        '2023-03-01',
+                                                        '2023-04-01',
+                                                        '2023-05-01',
+                                                        '2023-06-01',
+                                                        '2023-07-01',
+                                                    ],
+                                                },
+                                                tooltip: {
+                                                    x: {
+                                                        format: 'MMMM yyyy',
+                                                    },
+                                                },
+                                            };
+                                            const sales_chart = new ApexCharts(
+                                                    document.querySelector('#revenue-chart'),
+                                                    sales_chart_options,
+                                                    );
+                                            sales_chart.render();
+                </script>
+                <!-- jsvectormap -->
+                <script
+                    src="https://cdn.jsdelivr.net/npm/jsvectormap@1.5.3/dist/js/jsvectormap.min.js"
+                    integrity="sha256-/t1nN2956BT869E6H4V1dnt0X5pAQHPytli+1nTZm2Y="
+                    crossorigin="anonymous"
+                ></script>
+                <script
+                    src="https://cdn.jsdelivr.net/npm/jsvectormap@1.5.3/dist/maps/world.js"
+                    integrity="sha256-XPpPaZlU8S/HWf7FZLAncLg2SAkP8ScUTII89x9D3lY="
+                    crossorigin="anonymous"
+                ></script>
+                <!-- jsvectormap -->
+                <script>
+                                            const visitorsData = {
+                                                US: 398, // USA
+                                                SA: 400, // Saudi Arabia
+                                                CA: 1000, // Canada
+                                                DE: 500, // Germany
+                                                FR: 760, // France
+                                                CN: 300, // China
+                                                AU: 700, // Australia
+                                                BR: 600, // Brazil
+                                                IN: 800, // India
+                                                GB: 320, // Great Britain
+                                                RU: 3000, // Russia
+                                            };
+                                            // World map by jsVectorMap
+                                            const map = new jsVectorMap({
+                                                selector: '#world-map',
+                                                map: 'world',
+                                            });
+                                            // Sparkline charts
+                                            const option_sparkline1 = {
+                                                series: [
+                                                    {
+                                                        data: [1000, 1200, 920, 927, 931, 1027, 819, 930, 1021],
+                                                    },
+                                                ],
+                                                chart: {
+                                                    type: 'area',
+                                                    height: 50,
+                                                    sparkline: {
+                                                        enabled: true,
+                                                    },
+                                                },
+                                                stroke: {
+                                                    curve: 'straight',
+                                                },
+                                                fill: {
+                                                    opacity: 0.3,
+                                                },
+                                                yaxis: {
+                                                    min: 0,
+                                                },
+                                                colors: ['#DCE6EC'],
+                                            };
+                                            const sparkline1 = new ApexCharts(document.querySelector('#sparkline-1'), option_sparkline1);
+                                            sparkline1.render();
+                                            const option_sparkline2 = {
+                                                series: [
+                                                    {
+                                                        data: [515, 519, 520, 522, 652, 810, 370, 627, 319, 630, 921],
+                                                    },
+                                                ],
+                                                chart: {
+                                                    type: 'area',
+                                                    height: 50,
+                                                    sparkline: {
+                                                        enabled: true,
+                                                    },
+                                                },
+                                                stroke: {
+                                                    curve: 'straight',
+                                                },
+                                                fill: {
+                                                    opacity: 0.3,
+                                                },
+                                                yaxis: {
+                                                    min: 0,
+                                                },
+                                                colors: ['#DCE6EC'],
+                                            };
+                                            const sparkline2 = new ApexCharts(document.querySelector('#sparkline-2'), option_sparkline2);
+                                            sparkline2.render();
+                                            const option_sparkline3 = {
+                                                series: [
+                                                    {
+                                                        data: [15, 19, 20, 22, 33, 27, 31, 27, 19, 30, 21],
+                                                    },
+                                                ],
+                                                chart: {
+                                                    type: 'area',
+                                                    height: 50,
+                                                    sparkline: {
+                                                        enabled: true,
+                                                    },
+                                                },
+                                                stroke: {
+                                                    curve: 'straight',
+                                                },
+                                                fill: {
+                                                    opacity: 0.3,
+                                                },
+                                                yaxis: {
+                                                    min: 0,
+                                                },
+                                                colors: ['#DCE6EC'],
+                                            };
+                                            const sparkline3 = new ApexCharts(document.querySelector('#sparkline-3'), option_sparkline3);
+                                            sparkline3.render();
+                </script>
+                <script src="jquery-3.7.1.min.js"></script>
+                <script src="vistas/util.js"></script>
+                <script src="vistas/cliente.js"></script>
+                <script src="vistas/equipo.js"></script>
+                <script src="vistas/cliente_equipo.js"></script>
+                <script src="vistas/producto.js"></script>
+                <script src="vistas/proveedor.js"></script>
+                <script src="vistas/cargo.js"></script>
+                <script src="vistas/permiso.js"></script>
+                <script src="vistas/usuario.js"></script>
+                <script src="vistas/tecnico.js"></script>
+                <script src="vistas/repuesto.js"></script>
+                <script src="vistas/recepcion.js"></script>
+                <script src="vistas/diagnostico.js"></script>
+                <script src="vistas/presupuesto_servicio.js"></script>
+                <script src="vistas/servicio.js"></script>
 
-                              const sales_chart_options = {
-                              series: [
-                              {
-                              name: 'Digital Goods',
-                                      data: [28, 48, 40, 19, 86, 27, 90],
-                              },
-                              {
-                              name: 'Electronics',
-                                      data: [65, 59, 80, 81, 56, 55, 40],
-                              },
-                              ],
-                                      chart: {
-                                      height: 300,
-                                              type: 'area',
-                                              toolbar: {
-                                              show: false,
-                                              },
-                                      },
-                                      legend: {
-                                      show: false,
-                                      },
-                                      colors: ['#0d6efd', '#20c997'],
-                                      dataLabels: {
-                                      enabled: false,
-                                      },
-                                      stroke: {
-                                      curve: 'smooth',
-                                      },
-                                      xaxis: {
-                                      type: 'datetime',
-                                              categories: [
-                                                      '2023-01-01',
-                                                      '2023-02-01',
-                                                      '2023-03-01',
-                                                      '2023-04-01',
-                                                      '2023-05-01',
-                                                      '2023-06-01',
-                                                      '2023-07-01',
-                                              ],
-                                      },
-                                      tooltip: {
-                                      x: {
-                                      format: 'MMMM yyyy',
-                                      },
-                                      },
-                              };
-                              const sales_chart = new ApexCharts(
-                                      document.querySelector('#revenue-chart'),
-                                      sales_chart_options,
-                                      );
-                              sales_chart.render();
-        </script>
-        <!-- jsvectormap -->
-        <script
-            src="https://cdn.jsdelivr.net/npm/jsvectormap@1.5.3/dist/js/jsvectormap.min.js"
-            integrity="sha256-/t1nN2956BT869E6H4V1dnt0X5pAQHPytli+1nTZm2Y="
-            crossorigin="anonymous"
-        ></script>
-        <script
-            src="https://cdn.jsdelivr.net/npm/jsvectormap@1.5.3/dist/maps/world.js"
-            integrity="sha256-XPpPaZlU8S/HWf7FZLAncLg2SAkP8ScUTII89x9D3lY="
-            crossorigin="anonymous"
-        ></script>
-        <!-- jsvectormap -->
-        <script>
-                              const visitorsData = {
-                              US: 398, // USA
-                                      SA: 400, // Saudi Arabia
-                                      CA: 1000, // Canada
-                                      DE: 500, // Germany
-                                      FR: 760, // France
-                                      CN: 300, // China
-                                      AU: 700, // Australia
-                                      BR: 600, // Brazil
-                                      IN: 800, // India
-                                      GB: 320, // Great Britain
-                                      RU: 3000, // Russia
-                              };
-                              // World map by jsVectorMap
-                              const map = new jsVectorMap({
-                              selector: '#world-map',
-                                      map: 'world',
-                              });
-                              // Sparkline charts
-                              const option_sparkline1 = {
-                              series: [
-                              {
-                              data: [1000, 1200, 920, 927, 931, 1027, 819, 930, 1021],
-                              },
-                              ],
-                                      chart: {
-                                      type: 'area',
-                                              height: 50,
-                                              sparkline: {
-                                              enabled: true,
-                                              },
-                                      },
-                                      stroke: {
-                                      curve: 'straight',
-                                      },
-                                      fill: {
-                                      opacity: 0.3,
-                                      },
-                                      yaxis: {
-                                      min: 0,
-                                      },
-                                      colors: ['#DCE6EC'],
-                              };
-                              const sparkline1 = new ApexCharts(document.querySelector('#sparkline-1'), option_sparkline1);
-                              sparkline1.render();
-                              const option_sparkline2 = {
-                              series: [
-                              {
-                              data: [515, 519, 520, 522, 652, 810, 370, 627, 319, 630, 921],
-                              },
-                              ],
-                                      chart: {
-                                      type: 'area',
-                                              height: 50,
-                                              sparkline: {
-                                              enabled: true,
-                                              },
-                                      },
-                                      stroke: {
-                                      curve: 'straight',
-                                      },
-                                      fill: {
-                                      opacity: 0.3,
-                                      },
-                                      yaxis: {
-                                      min: 0,
-                                      },
-                                      colors: ['#DCE6EC'],
-                              };
-                              const sparkline2 = new ApexCharts(document.querySelector('#sparkline-2'), option_sparkline2);
-                              sparkline2.render();
-                              const option_sparkline3 = {
-                              series: [
-                              {
-                              data: [15, 19, 20, 22, 33, 27, 31, 27, 19, 30, 21],
-                              },
-                              ],
-                                      chart: {
-                                      type: 'area',
-                                              height: 50,
-                                              sparkline: {
-                                              enabled: true,
-                                              },
-                                      },
-                                      stroke: {
-                                      curve: 'straight',
-                                      },
-                                      fill: {
-                                      opacity: 0.3,
-                                      },
-                                      yaxis: {
-                                      min: 0,
-                                      },
-                                      colors: ['#DCE6EC'],
-                              };
-                              const sparkline3 = new ApexCharts(document.querySelector('#sparkline-3'), option_sparkline3);
-                              sparkline3.render();
-        </script>
-        <script src="jquery-3.7.1.min.js"></script>
-        <script src="vistas/util.js"></script>
-        <script src="vistas/cliente.js"></script>
-        <script src="vistas/equipo.js"></script>
-        <script src="vistas/cliente_equipo.js"></script>
-        <script src="vistas/producto.js"></script>
-        <script src="vistas/proveedor.js"></script>
-        <script src="vistas/cargo.js"></script>
-        <script src="vistas/permiso.js"></script>
-        <script src="vistas/usuario.js"></script>
-        <script src="vistas/tecnico.js"></script>
-        <script src="vistas/repuesto.js"></script>
-        <script src="vistas/recepcion.js"></script>
-        <script src="vistas/diagnostico.js"></script>
-        <script src="vistas/presupuesto_servicio.js"></script>
-        <script src="vistas/servicio.js"></script>
+                <script src="vistas/servicio_garantia.js"></script>
 
-        <script src="vistas/servicio_garantia.js"></script>
+                <script src="vistas/entrega.js"></script>
 
-        <script src="vistas/entrega.js"></script>
-
-        <script src="vistas/pedido_proveedor.js"></script>
-        <script src="vistas/presupuesto.js"></script>
-        <script src="vistas/orden_compra.js"></script>
-        <script src="vistas/compra.js"></script>
-        <script src="vistas/apertura_cierre.js"></script>
-        <script src="vistas/factura.js"></script>
-        <script src="vistas/presupuesto_venta.js"></script>
-        <script src="vistas/reporte.js"></script>
-        <!--end::Script-->
-    </body>
-    <!--end::Body-->
-</html>
+                <script src="vistas/pedido_proveedor.js"></script>
+                <script src="vistas/presupuesto.js"></script>
+                <script src="vistas/orden_compra.js"></script>
+                <script src="vistas/compra.js"></script>
+                <script src="vistas/apertura_cierre.js"></script>
+                <script src="vistas/factura.js"></script>
+                <script src="vistas/presupuesto_venta.js"></script>
+                <script src="vistas/reporte.js"></script>
+                <!--end::Script-->
+                </body>
+                <!--end::Body-->
+                </html>

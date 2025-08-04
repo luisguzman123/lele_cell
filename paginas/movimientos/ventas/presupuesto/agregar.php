@@ -1,86 +1,108 @@
-<div class="row" style="padding: 40px;">
-    <div class="col-12">
-        <h3>Nuevo Presupuesto</h3>
-    </div>
-    <div class="col-12">
-        <hr>
-    </div>
-    <div class="col-3">
-        <label>Fecha Emisión</label>
-        <input type="date" class="form-control" id="fecha_emision">
-    </div>
-    <div class="col-3">
-        <label>Fecha Vencimiento</label>
-        <input type="date" class="form-control" id="fecha_vencimiento">
-    </div>
-    <div class="col-3">
-        <label>Nro Presupuesto</label>
-        <input type="text" class="form-control" id="nro_presupuesto">
-    </div>
-    <div class="col-3">
-        <label>Condición</label>
-        <select id="condicion" class="form-control">
+<div class="container my-4 nuevo-presupuesto-section">
+  <div class="card shadow">
+    <div class="card-body">
+      <h3 class="text-primary fw-bold mb-3"><i class="bi bi-file-earmark-text me-2"></i>Nuevo Presupuesto</h3>
+      <hr>
+
+      <!-- Datos principales -->
+      <div class="row g-3">
+        <div class="col-md-3">
+          <label class="form-label">Fecha Emisión</label>
+          <input type="date" class="form-control" id="fecha_emision">
+        </div>
+        <div class="col-md-3">
+          <label class="form-label">Fecha Vencimiento</label>
+          <input type="date" class="form-control" id="fecha_vencimiento">
+        </div>
+        <div class="col-md-3">
+          <label class="form-label">Nro Presupuesto</label>
+          <input type="text" class="form-control" id="nro_presupuesto">
+        </div>
+        <div class="col-md-3">
+          <label class="form-label">Condición</label>
+          <select id="condicion" class="form-select">
             <option value="CONTADO">CONTADO</option>
-            <option value="CREDITO">CREDITO</option>
-        </select>
-    </div>
-    <div class="col-12">
-        <label>Cliente</label>
-        <select id="cliente" class="form-control"></select>
-    </div>
-    <div class="col-12">
-        <hr>
-    </div>
-    <div class="col-5">
-        <label>Producto</label>
-        <select id="producto" class="form-control"></select>
-    </div>
-    <div class="col-2">
-        <label>Cantidad</label>
-        <input type="number" class="form-control" id="cantidad">
-    </div>
-    <div class="col-2">
-        <label>Precio</label>
-        <input type="number" readonly class="form-control" id="precio">
-    </div>
-    <div class="col-3" style="margin-top: 25px;">
-        <button onclick="agregarProductoPresupuestoVenta(); return false;" class="btn btn-primary form-control">Agregar</button>
-    </div>
-    <div class="col-12">
-        <table class="table table-bordered">
-            <thead>
-                <tr>
-                    <th>#</th>
-                    <th>Descripción</th>
-                    <th>Cantidad</th>
-                    <th>Precio</th>
-                    <th>EXENTA</th>
-                    <th>I.V.A. 5%</th>
-                    <th>I.V.A. 10%</th>
-                    <th>Operaciones</th>
-                </tr>
-            </thead>
-            <tbody id="datos_tb"></tbody>
-            <tfoot>
-                <tr>
-                    <th colspan="4">Total</th>
-                    <th id="t_exenta">0</th>
-                    <th id="t_iva5">0</th>
-                    <th id="t_iva10">0</th>
-                </tr>
-                <tr>
-                    <th>Total de I.V.A.</th>
-                    <th><span id="iva5">0</span> (I.V.A 5%)</th>
-                    <th><span id="iva10">0</span> (I.V.A 10%)</th>
-                    <th id="t_iva">0</th>
-                </tr>
-            </tfoot>
+            <option value="CREDITO">CRÉDITO</option>
+          </select>
+        </div>
+
+        <div class="col-md-12">
+          <label class="form-label">Cliente</label>
+          <select id="cliente" class="form-select"></select>
+        </div>
+      </div>
+
+      <hr class="my-4">
+
+      <!-- Agregar producto -->
+      <div class="row g-3">
+        <div class="col-md-5">
+          <label class="form-label">Producto</label>
+          <select id="producto" class="form-select"></select>
+        </div>
+        <div class="col-md-2">
+          <label class="form-label">Cantidad</label>
+          <input type="number" class="form-control" id="cantidad">
+        </div>
+        <div class="col-md-2">
+          <label class="form-label">Precio</label>
+          <input type="number" class="form-control" id="precio" readonly>
+        </div>
+        <div class="col-md-3 d-flex align-items-end">
+          <button onclick="agregarProductoPresupuestoVenta(); return false;" class="btn btn-primary w-100">
+            <i class="bi bi-plus-circle me-1"></i>Agregar
+          </button>
+        </div>
+      </div>
+
+      <!-- Tabla de productos -->
+      <div class="table-responsive mt-4">
+        <table class="table table-bordered table-hover align-middle text-center">
+          <thead class="table-dark">
+            <tr>
+              <th>#</th>
+              <th>Descripción</th>
+              <th>Cantidad</th>
+              <th>Precio</th>
+              <th>EXENTA</th>
+              <th>IVA 5%</th>
+              <th>IVA 10%</th>
+              <th>Operaciones</th>
+            </tr>
+          </thead>
+          <tbody id="datos_tb"></tbody>
+          <tfoot class="table-light">
+            <tr>
+              <th colspan="4" class="text-end">Total</th>
+              <th id="t_exenta">0</th>
+              <th id="t_iva5">0</th>
+              <th id="t_iva10">0</th>
+              <th></th>
+            </tr>
+            <tr>
+              <th colspan="2">Total IVA</th>
+              <th><span id="iva5">0</span> (5%)</th>
+              <th><span id="iva10">0</span> (10%)</th>
+              <th colspan="2" id="t_iva">0</th>
+              <th colspan="2"></th>
+            </tr>
+          </tfoot>
         </table>
+      </div>
+
+      <!-- Botones -->
+      <div class="row mt-4">
+        <div class="col-md-6">
+          <button class="btn btn-success w-100" onclick="guardarPresupuestoVenta(); return false;">
+            <i class="bi bi-check-circle me-1"></i>Guardar
+          </button>
+        </div>
+        <div class="col-md-6">
+          <button class="btn btn-danger w-100">
+            <i class="bi bi-x-circle me-1"></i>Cancelar
+          </button>
+        </div>
+      </div>
     </div>
-    <div class="col-6">
-        <button class="btn btn-success form-control" onclick="guardarPresupuestoVenta(); return false;">Guardar</button>
-    </div>
-    <div class="col-6">
-        <button class="btn btn-danger form-control">Cancelar</button>
-    </div>
+  </div>
 </div>
