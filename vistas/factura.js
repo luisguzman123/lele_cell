@@ -52,6 +52,13 @@ $(document).on("change", "#condicion", function () {
 //----------------------------------------------------
 //----------------------------------------------------
 //----------------------------------------------------
+$(document).on("click", "#pp-confirmar", function () {
+    guardarFactura();
+});
+
+//----------------------------------------------------
+//----------------------------------------------------
+//----------------------------------------------------
 $(document).on("change", "#producto", function () {
     let selected = $("#producto option:selected");
 
@@ -274,6 +281,10 @@ function guardarFactura() {
 
     if ($("#datos_tb").html().trim().length === 0) {
         mensaje_dialogo_info_ERROR("No hay productos para la venta");
+        return;
+    }
+    if ($("#condicion").val() === "CREDITO" && $("#pp-detalle tr").length === 0) {
+        mensaje_dialogo_info_ERROR("Debes configurar un plan de pago");
         return;
     }
     //JSON
