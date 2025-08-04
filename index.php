@@ -344,6 +344,12 @@ https://cdn.jsdelivr.net/npm/sweetalert2@11.22.0/dist/sweetalert2.min.css
                                         </a>
                                     </li>
                                     <li class="nav-item">
+                                        <a href="#" onclick="mostrarListarRepuesto();" class="nav-link">
+                                            <i class="nav-icon bi bi-circle"></i>
+                                            <p>Repuesto</p>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
                                         <a href="#" onclick="mostrarListarTecnico();" class="nav-link">
                                             <i class="nav-icon bi bi-circle"></i>
                                             <p>Tecnico</p>
@@ -746,6 +752,7 @@ https://cdn.jsdelivr.net/npm/sweetalert2@11.22.0/dist/sweetalert2.all.min.js
         <script src="vistas/producto.js"></script>
         <script src="vistas/proveedor.js"></script>
         <script src="vistas/tecnico.js"></script>
+        <script src="vistas/repuesto.js"></script>
         <script src="vistas/recepcion.js"></script>
         <script src="vistas/diagnostico.js"></script>
         <script src="vistas/presupuesto_servicio.js"></script>

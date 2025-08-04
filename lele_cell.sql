@@ -355,6 +355,23 @@ INSERT INTO `proveedor` (`id_proveedor`, `nombre_proveedor`, `ruc`, `telefono`, 
 -- --------------------------------------------------------
 
 --
+-- Estructura de tabla para la tabla `repuesto`
+--
+
+CREATE TABLE `repuesto` (
+  `id_repuesto` int(11) NOT NULL,
+  `nombre_repuesto` varchar(100) DEFAULT NULL,
+  `precio` double DEFAULT NULL,
+  `estado` varchar(45) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+
+--
+-- Volcado de datos para la tabla `repuesto`
+--
+
+-- --------------------------------------------------------
+
+--
 -- Estructura de tabla para la tabla `tecnico`
 --
 
@@ -564,6 +581,12 @@ ALTER TABLE `proveedor`
   ADD PRIMARY KEY (`id_proveedor`);
 
 --
+-- Indices de la tabla `repuesto`
+--
+ALTER TABLE `repuesto`
+  ADD PRIMARY KEY (`id_repuesto`);
+
+--
 -- Indices de la tabla `tecnico`
 --
 ALTER TABLE `tecnico`
@@ -680,6 +703,12 @@ ALTER TABLE `producto`
 --
 ALTER TABLE `proveedor`
   MODIFY `id_proveedor` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT de la tabla `repuesto`
+--
+ALTER TABLE `repuesto`
+  MODIFY `id_repuesto` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de la tabla `tecnico`
