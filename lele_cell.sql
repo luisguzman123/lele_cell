@@ -132,6 +132,34 @@ DELIMITER ;
 -- --------------------------------------------------------
 
 --
+-- Estructura de tabla para la tabla `presupuesto_venta_cabecera`
+--
+
+CREATE TABLE `presupuesto_venta_cabecera` (
+  `id_presupuesto_venta` int(11) NOT NULL,
+  `nro_presupuesto` varchar(20) DEFAULT NULL,
+  `fecha_emision` date DEFAULT NULL,
+  `fecha_vencimiento` date DEFAULT NULL,
+  `id_cliente` int(11) NOT NULL,
+  `condicion` varchar(20) DEFAULT NULL,
+  `estado` varchar(20) DEFAULT 'ACTIVO'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Estructura de tabla para la tabla `presupuesto_venta_detalle`
+--
+
+CREATE TABLE `presupuesto_venta_detalle` (
+  `id_presupuesto_venta_detalle` int(11) NOT NULL,
+  `id_presupuesto_venta` int(11) NOT NULL,
+  `id_producto` int(11) NOT NULL,
+  `cantidad` int(11) NOT NULL,
+  `precio` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Estructura de tabla para la tabla `equipo`
 --
 
@@ -665,6 +693,21 @@ ALTER TABLE `factura_detalle`
   ADD KEY `fk_factura_detalle_producto` (`id_producto`);
 
 --
+-- Indices de la tabla `presupuesto_venta_cabecera`
+--
+ALTER TABLE `presupuesto_venta_cabecera`
+  ADD PRIMARY KEY (`id_presupuesto_venta`),
+  ADD KEY `fk_presupuesto_venta_cliente` (`id_cliente`);
+
+--
+-- Indices de la tabla `presupuesto_venta_detalle`
+--
+ALTER TABLE `presupuesto_venta_detalle`
+  ADD PRIMARY KEY (`id_presupuesto_venta_detalle`),
+  ADD KEY `fk_presupuesto_venta_cabecera` (`id_presupuesto_venta`),
+  ADD KEY `fk_presupuesto_venta_producto` (`id_producto`);
+
+--
 -- Indices de la tabla `tecnico`
 --
 ALTER TABLE `tecnico`
@@ -817,6 +860,18 @@ ALTER TABLE `factura_cabecera`
 --
 ALTER TABLE `factura_detalle`
   MODIFY `id_factura_detalle` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de la tabla `presupuesto_venta_cabecera`
+--
+ALTER TABLE `presupuesto_venta_cabecera`
+  MODIFY `id_presupuesto_venta` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de la tabla `presupuesto_venta_detalle`
+--
+ALTER TABLE `presupuesto_venta_detalle`
+  MODIFY `id_presupuesto_venta_detalle` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- Estructura de tabla para la tabla `diagnostico_cabecera`
