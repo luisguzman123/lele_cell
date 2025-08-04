@@ -56,7 +56,11 @@ function cargarModulos(){
     modulo.innerHTML='';
     opciones[tipo.value].forEach(m => {
         const opt=document.createElement('option');
-        opt.value=m.toLowerCase().replace(/ /g,'_');
+        opt.value=m
+            .toLowerCase()
+            .normalize('NFD')
+            .replace(/[\u0300-\u036f]/g,'')
+            .replace(/ /g,'_');
         opt.textContent=m;
         modulo.appendChild(opt);
     });

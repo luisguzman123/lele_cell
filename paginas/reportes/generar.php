@@ -1,8 +1,123 @@
 <?php
+require_once '../../conexion/db.php';
+
 $tipo = $_GET['tipo'] ?? '';
 $modulo = $_GET['modulo'] ?? '';
 $desde = $_GET['desde'] ?? '';
 $hasta = $_GET['hasta'] ?? '';
+
+$config = [
+    'compras' => [
+        'pedido_proveedor' => [
+            'header' => 'pedido_proveedor_cabecera',
+            'detail' => 'pedido_proveedor_detalle',
+            'id' => 'id_pedido',
+            'date' => 'fecha'
+        ],
+        'presupuesto' => [
+            'header' => 'presupuesto_cabecera',
+            'detail' => 'presupuesto_detalle',
+            'id' => 'id_presupuesto',
+            'date' => 'fecha'
+        ],
+        'orden_de_compra' => [
+            'header' => 'orden_compra_cabecera',
+            'detail' => 'orden_compra_detalle',
+            'id' => 'id_orden',
+            'date' => 'fecha'
+        ],
+        'factura_de_compra' => [
+            'header' => 'compra_cabecera',
+            'detail' => 'compra_detalle',
+            'id' => 'id_compra',
+            'date' => 'fecha'
+        ],
+    ],
+    'ventas' => [
+        'apertura_cierre' => [
+            'header' => 'caja_registro',
+            'detail' => null,
+            'id' => 'id_registro',
+            'date' => 'fecha'
+        ],
+        'facturacion' => [
+            'header' => 'factura_cabecera',
+            'detail' => 'factura_detalle',
+            'id' => 'id_factura_cabecera',
+            'date' => 'fecha'
+        ],
+        'presupuesto' => [
+            'header' => 'presupuesto_venta_cabecera',
+            'detail' => 'presupuesto_venta_detalle',
+            'id' => 'id_presupuesto_venta',
+            'date' => 'fecha_emision'
+        ],
+    ],
+    'servicios' => [
+        'recepcion' => [
+            'header' => 'recepcion_cabecera',
+            'detail' => 'recepcion_detalle',
+            'id' => 'id_recepcion_cabecera',
+            'date' => 'fecha'
+        ],
+        'diagnostico' => [
+            'header' => 'diagnostico_cabecera',
+            'detail' => 'diagnostico_detalle',
+            'id' => 'id_diagnostico',
+            'date' => 'fecha_diagnostico'
+        ],
+        'presupuesto_servicio' => [
+            'header' => 'presupuesto_servicio_cabecera',
+            'detail' => 'presupuesto_servicio_detalle',
+            'id' => 'id_presupuesto_servicio',
+            'date' => 'fecha_presupuesto'
+        ],
+        'servicio' => [
+            'header' => 'servicio_cabecera',
+            'detail' => 'servicio_detalle',
+            'id' => 'id_servicio',
+            'date' => 'fecha_inicio'
+        ],
+        'entrega' => [
+            'header' => 'servicio_entrega',
+            'detail' => 'servicio_entrega_pago',
+            'id' => 'id_entrega',
+            'date' => 'fecha_entrega'
+        ],
+        'garantia' => [
+            'header' => 'servicio_garantia',
+            'detail' => null,
+            'id' => 'id_garantia',
+            'date' => 'fecha_inicio'
+        ],
+    ],
+];
+
+$headers = [];
+$details = [];
+$error = '';
+
+if (isset($config[$tipo][$modulo])) {
+    $db = new DB();
+    $pdo = $db->conectar();
+    $conf = $config[$tipo][$modulo];
+
+    $sqlCab = "SELECT * FROM {$conf['header']} WHERE {$conf['date']} BETWEEN :desde AND :hasta";
+    $stmt = $pdo->prepare($sqlCab);
+    $stmt->execute(['desde' => $desde, 'hasta' => $hasta]);
+    $headers = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+    if ($conf['detail'] && $headers) {
+        $ids = array_column($headers, $conf['id']);
+        $placeholders = implode(',', array_fill(0, count($ids), '?'));
+        $sqlDet = "SELECT * FROM {$conf['detail']} WHERE {$conf['id']} IN ($placeholders)";
+        $stmt = $pdo->prepare($sqlDet);
+        $stmt->execute($ids);
+        $details = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+} else {
+    $error = 'Módulo no soportado';
+}
 ?>
 <!doctype html>
 <html lang="es">
@@ -13,9 +128,54 @@ $hasta = $_GET['hasta'] ?? '';
 </head>
 <body class="p-4">
     <h3>Reporte generado</h3>
-    <p><strong>Tipo:</strong> <?php echo htmlspecialchars($tipo); ?></p>
-    <p><strong>Módulo:</strong> <?php echo htmlspecialchars($modulo); ?></p>
-    <p><strong>Desde:</strong> <?php echo htmlspecialchars($desde); ?></p>
-    <p><strong>Hasta:</strong> <?php echo htmlspecialchars($hasta); ?></p>
+    <p><strong>Tipo:</strong> <?= htmlspecialchars($tipo) ?></p>
+    <p><strong>Módulo:</strong> <?= htmlspecialchars($modulo) ?></p>
+    <p><strong>Desde:</strong> <?= htmlspecialchars($desde) ?></p>
+    <p><strong>Hasta:</strong> <?= htmlspecialchars($hasta) ?></p>
+
+    <?php if ($error): ?>
+        <p><?= htmlspecialchars($error) ?></p>
+    <?php else: ?>
+        <?php if ($headers): ?>
+            <h4>Cabecera</h4>
+            <table class="table table-bordered">
+                <tr>
+                    <?php foreach (array_keys($headers[0]) as $col): ?>
+                        <th><?= htmlspecialchars($col) ?></th>
+                    <?php endforeach; ?>
+                </tr>
+                <?php foreach ($headers as $row): ?>
+                    <tr>
+                        <?php foreach ($row as $col): ?>
+                            <td><?= htmlspecialchars($col) ?></td>
+                        <?php endforeach; ?>
+                    </tr>
+                <?php endforeach; ?>
+            </table>
+        <?php else: ?>
+            <p>No se encontraron datos de cabecera.</p>
+        <?php endif; ?>
+
+        <?php if ($details): ?>
+            <h4>Detalle</h4>
+            <table class="table table-bordered">
+                <tr>
+                    <?php foreach (array_keys($details[0]) as $col): ?>
+                        <th><?= htmlspecialchars($col) ?></th>
+                    <?php endforeach; ?>
+                </tr>
+                <?php foreach ($details as $row): ?>
+                    <tr>
+                        <?php foreach ($row as $col): ?>
+                            <td><?= htmlspecialchars($col) ?></td>
+                        <?php endforeach; ?>
+                    </tr>
+                <?php endforeach; ?>
+            </table>
+        <?php elseif ($config[$tipo][$modulo]['detail']): ?>
+            <p>No se encontraron datos de detalle.</p>
+        <?php endif; ?>
+    <?php endif; ?>
 </body>
 </html>
+
