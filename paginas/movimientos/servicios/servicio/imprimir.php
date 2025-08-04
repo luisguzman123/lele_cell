@@ -14,6 +14,19 @@ if(!$cab){
 $qdet = $conexion->conectar()->prepare("SELECT tarea, horas_trabajadas, observaciones FROM servicio_detalle WHERE id_servicio=:id");
 $qdet->execute(['id'=>$id]);
 $det = $qdet->fetchAll(PDO::FETCH_OBJ);
+
+$qrep = $conexion->conectar()->prepare("SELECT r.nombre_repuesto, sr.cantidad, r.precio, (r.precio * sr.cantidad) AS subtotal FROM servicio_repuesto sr JOIN repuesto r ON r.id_repuesto = sr.id_repuesto WHERE sr.id_servicio = :id");
+$qrep->execute(['id'=>$id]);
+$reps = $qrep->fetchAll(PDO::FETCH_OBJ);
+
+$qp = $conexion->conectar()->prepare("SELECT COALESCE(SUM(subtotal),0) AS total FROM presupuesto_servicio_detalle WHERE id_presupuesto_servicio = :id");
+$qp->execute(['id'=>$cab->id_presupuesto]);
+$total_presupuesto = $qp->fetch(PDO::FETCH_OBJ)->total ?? 0;
+$total_repuesto = 0;
+foreach ($reps as $r) {
+    $total_repuesto += $r->subtotal;
+}
+$total_general = $total_presupuesto + $total_repuesto;
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -47,6 +60,26 @@ $det = $qdet->fetchAll(PDO::FETCH_OBJ);
         <?php endforeach; ?>
       </tbody>
     </table>
+    <?php if($reps): ?>
+    <table class="table table-bordered mt-4">
+      <thead class="table-light">
+        <tr><th>Repuesto</th><th>Cantidad</th><th>Precio</th><th>Subtotal</th></tr>
+      </thead>
+      <tbody>
+        <?php foreach($reps as $r): ?>
+        <tr>
+          <td><?= htmlspecialchars($r->nombre_repuesto) ?></td>
+          <td class="text-center"><?= intval($r->cantidad) ?></td>
+          <td class="text-end"><?= number_format($r->precio,0,',','.') ?></td>
+          <td class="text-end"><?= number_format($r->subtotal,0,',','.') ?></td>
+        </tr>
+        <?php endforeach; ?>
+      </tbody>
+    </table>
+    <?php endif; ?>
+    <p><strong>Total Presupuesto:</strong> <?= number_format($total_presupuesto,0,',','.') ?></p>
+    <p><strong>Total Repuestos:</strong> <?= number_format($total_repuesto,0,',','.') ?></p>
+    <p><strong>Total General:</strong> <?= number_format($total_general,0,',','.') ?></p>
   </div>
 </body>
 </html>

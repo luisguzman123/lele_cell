@@ -22,7 +22,7 @@ if(isset($_POST['leer'])){
 
 if(isset($_POST['leer_presupuesto'])){
     $conexion = new DB();
-    $query = $conexion->conectar()->prepare("SELECT psc.id_presupuesto_servicio, psc.fecha_presupuesto, CONCAT(c.nombre,' ',c.apellido) as cliente FROM presupuesto_servicio_cabecera psc JOIN diagnostico_cabecera dc ON dc.id_diagnostico = psc.id_diagnostico JOIN recepcion_cabecera rc ON rc.id_recepcion_cabecera = dc.id_recepcion_cabecera JOIN cliente c ON c.id_cliente = rc.id_cliente WHERE psc.estado='Aprobado' AND DATE_ADD(psc.fecha_presupuesto, INTERVAL psc.validez_dias DAY) >= CURDATE()");
+    $query = $conexion->conectar()->prepare("SELECT psc.id_presupuesto_servicio, psc.fecha_presupuesto, CONCAT(c.nombre,' ',c.apellido) as cliente, COALESCE(SUM(psd.subtotal),0) AS total FROM presupuesto_servicio_cabecera psc JOIN diagnostico_cabecera dc ON dc.id_diagnostico = psc.id_diagnostico JOIN recepcion_cabecera rc ON rc.id_recepcion_cabecera = dc.id_recepcion_cabecera JOIN cliente c ON c.id_cliente = rc.id_cliente LEFT JOIN presupuesto_servicio_detalle psd ON psd.id_presupuesto_servicio = psc.id_presupuesto_servicio WHERE psc.estado='Aprobado' AND DATE_ADD(psc.fecha_presupuesto, INTERVAL psc.validez_dias DAY) >= CURDATE() GROUP BY psc.id_presupuesto_servicio, psc.fecha_presupuesto, cliente");
     $query->execute();
     if($query->rowCount()){
         print_r(json_encode($query->fetchAll(PDO::FETCH_OBJ)));
@@ -68,6 +68,13 @@ if(isset($_POST['guardar_detalle'])){
     $json = json_decode($_POST['guardar_detalle'], true);
     $conexion = new DB();
     $query = $conexion->conectar()->prepare("INSERT INTO servicio_detalle(id_servicio, tarea, horas_trabajadas, observaciones) VALUES(:id_servicio, :tarea, :horas_trabajadas, :observaciones)");
+    $query->execute($json);
+}
+
+if(isset($_POST['guardar_repuesto'])){
+    $json = json_decode($_POST['guardar_repuesto'], true);
+    $conexion = new DB();
+    $query = $conexion->conectar()->prepare("INSERT INTO servicio_repuesto(id_servicio, id_repuesto, cantidad) VALUES(:id_servicio, :id_repuesto, :cantidad)");
     $query->execute($json);
 }
 
