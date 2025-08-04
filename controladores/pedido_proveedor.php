@@ -1,4 +1,5 @@
 <?php
+session_start();
 require_once '../conexion/db.php';
 
 if(isset($_POST['leer'])){
@@ -25,8 +26,9 @@ if(isset($_POST['leer_activo'])){
 
 if(isset($_POST['guardar'])){
     $json = json_decode($_POST['guardar'], true);
+    $json['id_usuario'] = $_SESSION['id_usuario'];
     $conexion = new DB();
-    $query = $conexion->conectar()->prepare("INSERT INTO pedido_proveedor_cabecera(fecha, observacion, id_proveedor, estado) VALUES(:fecha,:observacion,:proveedor,:estado)");
+    $query = $conexion->conectar()->prepare("INSERT INTO pedido_proveedor_cabecera(fecha, observacion, id_proveedor, id_usuario, estado) VALUES(:fecha,:observacion,:proveedor,:id_usuario,:estado)");
     $query->execute($json);
 }
 
