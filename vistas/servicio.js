@@ -124,8 +124,7 @@ function guardarServicio(){
         observaciones: $("#observaciones").val()
     };
     console.log(cab);
-    ejecutarAjax("controladores/servicio.php","guardar="+JSON.stringify(cab));
-    let id = ejecutarAjax("controladores/servicio.php","dameUltimoId=1");
+    let id = ejecutarAjax("controladores/servicio.php","guardar="+encodeURIComponent(JSON.stringify(cab)));
     $("#detalle_servicio_tb tr").each(function(){
         let det = {
             id_servicio: id,
@@ -134,7 +133,7 @@ function guardarServicio(){
             observaciones: $(this).find("td:eq(2)").text()
         };
         console.log(det);
-        ejecutarAjax("controladores/servicio.php","guardar_detalle="+JSON.stringify(det));
+        ejecutarAjax("controladores/servicio.php","guardar_detalle="+encodeURIComponent(JSON.stringify(det)));
     });
     mensaje_dialogo_info("Servicio registrado correctamente","REGISTRADO");
     mostrarListarServicio();

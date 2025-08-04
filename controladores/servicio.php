@@ -26,10 +26,21 @@ if(isset($_POST['leer_presupuesto'])){
 if(isset($_POST['guardar'])){
     $json = json_decode($_POST['guardar'], true);
     $conexion = new DB();
-    $query = $conexion->conectar()->prepare("INSERT INTO servicio_cabecera(id_presupuesto, id_tecnico, fecha_inicio, fecha_fin, estado, observaciones) VALUES(:id_presupuesto, :id_tecnico, :fecha_inicio, :fecha_fin, :estado, :observaciones)");
-    $query->execute($json);
-    $upd = $conexion->conectar()->prepare("UPDATE presupuesto_servicio_cabecera SET estado='UTILIZADO' WHERE id_presupuesto_servicio=:id");
-    $upd->execute(['id'=>$json['id_presupuesto']]);
+    $pdo = $conexion->conectar();
+    try{
+        $pdo->beginTransaction();
+        $query = $pdo->prepare("INSERT INTO servicio_cabecera(id_presupuesto, id_tecnico, fecha_inicio, fecha_fin, estado, observaciones) VALUES(:id_presupuesto, :id_tecnico, :fecha_inicio, :fecha_fin, :estado, :observaciones)");
+        $query->execute($json);
+        $id = $pdo->lastInsertId();
+        $upd = $pdo->prepare("UPDATE presupuesto_servicio_cabecera SET estado='UTILIZADO' WHERE id_presupuesto_servicio=:id");
+        $upd->execute(['id'=>$json['id_presupuesto']]);
+        $pdo->commit();
+        echo $id;
+    }catch(PDOException $e){
+        $pdo->rollBack();
+        http_response_code(500);
+        echo $e->getMessage();
+    }
 }
 
 if(isset($_POST['dameUltimoId'])){
