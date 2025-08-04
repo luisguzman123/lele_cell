@@ -19,6 +19,7 @@
         <th>Fecha Inicio</th>
         <th>Fecha Fin</th>
         <th>Estado</th>
+        <th>Total</th>
         <th>Observaciones</th>
         <th>Operaciones</th>
       </tr>

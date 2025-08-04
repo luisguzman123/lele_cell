@@ -825,6 +825,7 @@ CREATE TABLE servicio_cabecera (
   fecha_fin DATETIME NULL,
   estado VARCHAR(20) NOT NULL DEFAULT 'En Proceso',
   observaciones TEXT,
+  total_general INT NOT NULL DEFAULT 0,
   CONSTRAINT fk_srv_presu
     FOREIGN KEY (id_presupuesto)
     REFERENCES presupuesto_servicio_cabecera(id_presupuesto_servicio)

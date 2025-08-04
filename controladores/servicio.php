@@ -3,7 +3,7 @@ require_once '../conexion/db.php';
 
 if(isset($_POST['leer'])){
     $conexion = new DB();
-    $query = $conexion->conectar()->prepare("SELECT sc.id_servicio, sc.id_presupuesto, sc.fecha_inicio, sc.fecha_fin, sc.estado, sc.observaciones, COALESCE(t.nombre_tecnico,'') as tecnico, CONCAT(c.nombre,' ',c.apellido) as cliente FROM servicio_cabecera sc JOIN presupuesto_servicio_cabecera psc ON psc.id_presupuesto_servicio = sc.id_presupuesto LEFT JOIN tecnico t ON t.id_tecnico = sc.id_tecnico JOIN diagnostico_cabecera dc ON dc.id_diagnostico = psc.id_diagnostico JOIN recepcion_cabecera rc ON rc.id_recepcion_cabecera = dc.id_recepcion_cabecera JOIN cliente c ON c.id_cliente = rc.id_cliente ORDER BY sc.id_servicio DESC");
+    $query = $conexion->conectar()->prepare("SELECT sc.id_servicio, sc.id_presupuesto, sc.fecha_inicio, sc.fecha_fin, sc.estado, sc.observaciones, sc.total_general, COALESCE(t.nombre_tecnico,'') as tecnico, CONCAT(c.nombre,' ',c.apellido) as cliente FROM servicio_cabecera sc JOIN presupuesto_servicio_cabecera psc ON psc.id_presupuesto_servicio = sc.id_presupuesto LEFT JOIN tecnico t ON t.id_tecnico = sc.id_tecnico JOIN diagnostico_cabecera dc ON dc.id_diagnostico = psc.id_diagnostico JOIN recepcion_cabecera rc ON rc.id_recepcion_cabecera = dc.id_recepcion_cabecera JOIN cliente c ON c.id_cliente = rc.id_cliente ORDER BY sc.id_servicio DESC");
     $query->execute();
     if($query->rowCount()){
         print_r(json_encode($query->fetchAll(PDO::FETCH_OBJ)));
@@ -33,7 +33,7 @@ if(isset($_POST['leer_presupuesto'])){
 if (isset($_POST['guardar'])) {
     $json_datos = json_decode($_POST['guardar'], true);
     $conexion = new DB();
-    $query = $conexion->conectar()->prepare("INSERT INTO servicio_cabecera(id_presupuesto, id_tecnico, fecha_inicio, fecha_fin, estado, observaciones) VALUES(:id_presupuesto, :id_tecnico, :fecha_inicio, :fecha_fin, :estado, :observaciones)");
+    $query = $conexion->conectar()->prepare("INSERT INTO servicio_cabecera(id_presupuesto, id_tecnico, fecha_inicio, fecha_fin, estado, observaciones, total_general) VALUES(:id_presupuesto, :id_tecnico, :fecha_inicio, :fecha_fin, :estado, :observaciones, :total_general)");
     $query->execute($json_datos);
 }
 //if(isset($_POST['guardar'])){

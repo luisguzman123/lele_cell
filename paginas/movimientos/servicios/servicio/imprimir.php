@@ -5,7 +5,7 @@ $id = isset($_GET['id']) ? intval($_GET['id']) : 0;
 if($id <= 0){
     die('ID no valido');
 }
-$query = $conexion->conectar()->prepare("SELECT sc.id_servicio, sc.fecha_inicio, sc.fecha_fin, sc.estado, sc.observaciones, sc.id_presupuesto, CONCAT(c.nombre,' ',c.apellido) as cliente, t.nombre_tecnico FROM servicio_cabecera sc JOIN presupuesto_servicio_cabecera psc ON psc.id_presupuesto_servicio = sc.id_presupuesto JOIN diagnostico_cabecera dc ON dc.id_diagnostico = psc.id_diagnostico JOIN recepcion_cabecera rc ON rc.id_recepcion_cabecera = dc.id_recepcion_cabecera JOIN cliente c ON c.id_cliente = rc.id_cliente LEFT JOIN tecnico t ON t.id_tecnico = sc.id_tecnico WHERE sc.id_servicio = :id");
+$query = $conexion->conectar()->prepare("SELECT sc.id_servicio, sc.fecha_inicio, sc.fecha_fin, sc.estado, sc.observaciones, sc.id_presupuesto, sc.total_general, CONCAT(c.nombre,' ',c.apellido) as cliente, t.nombre_tecnico FROM servicio_cabecera sc JOIN presupuesto_servicio_cabecera psc ON psc.id_presupuesto_servicio = sc.id_presupuesto JOIN diagnostico_cabecera dc ON dc.id_diagnostico = psc.id_diagnostico JOIN recepcion_cabecera rc ON rc.id_recepcion_cabecera = dc.id_recepcion_cabecera JOIN cliente c ON c.id_cliente = rc.id_cliente LEFT JOIN tecnico t ON t.id_tecnico = sc.id_tecnico WHERE sc.id_servicio = :id");
 $query->execute(['id'=>$id]);
 $cab = $query->fetch(PDO::FETCH_OBJ);
 if(!$cab){
@@ -26,7 +26,7 @@ $total_repuesto = 0;
 foreach ($reps as $r) {
     $total_repuesto += $r->subtotal;
 }
-$total_general = $total_presupuesto + $total_repuesto;
+$total_general = $cab->total_general;
 ?>
 <!DOCTYPE html>
 <html lang="es">
