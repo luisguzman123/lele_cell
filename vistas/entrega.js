@@ -122,7 +122,11 @@ $(document).on("click", ".pagar-entrega", function(){
                 tipo_pago: result.value,
                 monto: quitarDecimalesConvertir(monto)
             };
-            ejecutarAjax("controladores/servicio_entrega.php", "pagar=" + JSON.stringify(data));
+            let res = ejecutarAjax("controladores/servicio_entrega.php", "pagar=" + JSON.stringify(data));
+            if(res === "NO_APERTURA"){
+                mensaje_dialogo_info_ERROR("Debe realizar una apertura de caja", "ATENCION");
+                return;
+            }
             mensaje_dialogo_info("Pago registrado", "Exitoso");
             cargarTablaEntrega();
         }
