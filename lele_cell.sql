@@ -983,6 +983,21 @@ CREATE TABLE servicio_entrega (
       ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+-- Estructura de tabla para la tabla `servicio_entrega_pago`
+-- --------------------------------------------------------
+CREATE TABLE servicio_entrega_pago (
+  id_pago INT AUTO_INCREMENT PRIMARY KEY,
+  id_entrega INT NOT NULL,
+  tipo_pago VARCHAR(50) NOT NULL,
+  monto INT NOT NULL,
+  fecha_pago DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  CONSTRAINT fk_pago_ent
+    FOREIGN KEY (id_entrega)
+    REFERENCES servicio_entrega(id_entrega)
+      ON DELETE CASCADE
+      ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
 --
 -- AUTO_INCREMENT de la tabla `servicio`
 --

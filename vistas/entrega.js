@@ -61,7 +61,7 @@ function cargarTablaEntrega() {
             fila += `<td>${formatearNumero(item.monto_servicio)}</td>`;
             fila += `<td>${item.fecha_entrega}</td>`;
             fila += `<td>${item.usuario || ''}</td>`;
-            fila += `<td><button class='btn btn-danger anular-entrega'>Anular</button> <button class='btn btn-primary imprimir-entrega'>Imprimir</button></td>`;
+            fila += `<td><button class='btn btn-danger anular-entrega'>Anular</button> <button class='btn btn-primary imprimir-entrega'>Imprimir</button> <button class='btn btn-success pagar-entrega'>Pagar</button></td>`;
             fila += `</tr>`;
         });
     }
@@ -91,4 +91,34 @@ $(document).on("click", ".anular-entrega", function(){
 $(document).on("click", ".imprimir-entrega", function(){
     let id = $(this).closest("tr").find("td:eq(0)").text();
     window.open("paginas/movimientos/servicios/entrega/imprimir.php?id=" + id);
+});
+
+$(document).on("click", ".pagar-entrega", function(){
+    let fila = $(this).closest("tr");
+    let id = fila.find("td:eq(0)").text();
+    let monto = fila.find("td:eq(2)").text();
+    Swal.fire({
+        title: 'Registrar pago',
+        html: `<p>Total: <b>${monto}</b></p>` +
+              `<select id="tipo_pago" class="form-select">` +
+              `<option value="Efectivo">Efectivo</option>` +
+              `<option value="Tarjeta">Tarjeta</option>` +
+              `<option value="Transferencia">Transferencia</option>` +
+              `</select>`,
+        showCancelButton: true,
+        focusConfirm: false,
+        preConfirm: () => {
+            return $('#tipo_pago').val();
+        }
+    }).then((result) => {
+        if(result.isConfirmed){
+            let data = {
+                id_entrega: id,
+                tipo_pago: result.value,
+                monto: quitarDecimalesConvertir(monto)
+            };
+            ejecutarAjax("controladores/servicio_entrega.php", "pagar=" + JSON.stringify(data));
+            mensaje_dialogo_info("Pago registrado", "Exitoso");
+        }
+    });
 });
