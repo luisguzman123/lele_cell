@@ -376,6 +376,61 @@ CREATE TABLE `repuesto` (
 -- --------------------------------------------------------
 
 --
+-- Estructura de tabla para la tabla `factura_cabecera`
+--
+
+CREATE TABLE `factura_cabecera` (
+  `id_factura_cabecera` int(11) NOT NULL,
+  `nro_factura` varchar(20) DEFAULT NULL,
+  `fecha` date DEFAULT NULL,
+  `id_cliente` int(11) DEFAULT NULL,
+  `condicion` varchar(20) DEFAULT NULL,
+  `timbrado` varchar(20) DEFAULT NULL,
+  `estado` varchar(20) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Estructura de tabla para la tabla `factura_detalle`
+--
+
+CREATE TABLE `factura_detalle` (
+  `id_factura_detalle` int(11) NOT NULL,
+  `id_factura_cabecera` int(11) NOT NULL,
+  `id_producto` int(11) NOT NULL,
+  `cantidad` int(11) DEFAULT NULL,
+  `precio` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Disparadores `factura_detalle`
+--
+DELIMITER $$
+CREATE TRIGGER `trg_factura_detalle_after_insert` AFTER INSERT ON `factura_detalle` FOR EACH ROW BEGIN
+  UPDATE producto
+    SET stock = stock - NEW.cantidad
+  WHERE id_producto = NEW.id_producto;
+END
+$$
+DELIMITER ;
+
+--
+-- Disparadores `factura_cabecera`
+--
+DELIMITER $$
+CREATE TRIGGER `trg_factura_cabecera_after_update` AFTER UPDATE ON `factura_cabecera` FOR EACH ROW BEGIN
+  IF NEW.estado = 'ANULADO' AND OLD.estado <> 'ANULADO' THEN
+    UPDATE producto p
+      JOIN factura_detalle fd ON fd.id_producto = p.id_producto
+      SET p.stock = p.stock + fd.cantidad
+      WHERE fd.id_factura_cabecera = NEW.id_factura_cabecera;
+  END IF;
+END
+$$
+DELIMITER ;
+
+-- --------------------------------------------------------
+
+--
 -- Estructura de tabla para la tabla `tecnico`
 --
 
@@ -595,6 +650,21 @@ ALTER TABLE `repuesto`
   ADD PRIMARY KEY (`id_repuesto`);
 
 --
+-- Indices de la tabla `factura_cabecera`
+--
+ALTER TABLE `factura_cabecera`
+  ADD PRIMARY KEY (`id_factura_cabecera`),
+  ADD KEY `fk_factura_cabecera_cliente` (`id_cliente`);
+
+--
+-- Indices de la tabla `factura_detalle`
+--
+ALTER TABLE `factura_detalle`
+  ADD PRIMARY KEY (`id_factura_detalle`),
+  ADD KEY `fk_factura_detalle_cabecera` (`id_factura_cabecera`),
+  ADD KEY `fk_factura_detalle_producto` (`id_producto`);
+
+--
 -- Indices de la tabla `tecnico`
 --
 ALTER TABLE `tecnico`
@@ -735,6 +805,18 @@ ALTER TABLE `recepcion_cabecera`
 --
 ALTER TABLE `recepcion_detalle`
   MODIFY `id_recepcion_detalle` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+
+--
+-- AUTO_INCREMENT de la tabla `factura_cabecera`
+--
+ALTER TABLE `factura_cabecera`
+  MODIFY `id_factura_cabecera` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de la tabla `factura_detalle`
+--
+ALTER TABLE `factura_detalle`
+  MODIFY `id_factura_detalle` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- Estructura de tabla para la tabla `diagnostico_cabecera`
