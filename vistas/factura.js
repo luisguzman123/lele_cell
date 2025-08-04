@@ -1,6 +1,12 @@
+function mostrarListarFactura() {
+    let contenido = dameContenido("paginas/movimientos/ventas/facturacion/listar.php");
+    $("#contenido-principal").html(contenido);
+    cargarTablaFacturas();
+}
+
 function mostrarNuevaFactura() {
-    let contenido = dameContenido("nueva-factura.php");
-    $("body").html(contenido);
+    let contenido = dameContenido("paginas/movimientos/ventas/facturacion/agregar.php");
+    $("#contenido-principal").html(contenido);
     dameFechaActual("fecha");
 
     //para la siguiente factura
@@ -197,7 +203,7 @@ function guardarFactura() {
 
     alert("Guardado Correctamente");
 
-    location.reload();
+    mostrarListarFactura();
 
 }
 //-----------------------------------------------------------

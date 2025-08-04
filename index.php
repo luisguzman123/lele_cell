@@ -394,7 +394,25 @@ https://cdn.jsdelivr.net/npm/sweetalert2@11.22.0/dist/sweetalert2.min.css
 
                                     </ul>
                                 </li>
-                                
+
+                                <li class="nav-item">
+                                    <a href="#" class="nav-link">
+                                        <i class="nav-icon bi bi-cash-stack"></i>
+                                        <p>
+                                            Ventas
+                                            <i class="nav-arrow bi bi-chevron-right"></i>
+                                        </p>
+                                    </a>
+                                    <ul class="nav nav-treeview">
+                                        <li class="nav-item">
+                                            <a href="#" onclick="mostrarListarFactura();" class="nav-link">
+                                                <i class="nav-icon bi bi-circle"></i>
+                                                <p>Facturacion</p>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </li>
+
                             <li class="nav-item">
                                 <a href="#" class="nav-link">
                                     <i class="nav-icon bi bi-speedometer"></i>
@@ -767,6 +785,7 @@ https://cdn.jsdelivr.net/npm/sweetalert2@11.22.0/dist/sweetalert2.all.min.js
         <script src="vistas/presupuesto.js"></script>
         <script src="vistas/orden_compra.js"></script>
         <script src="vistas/compra.js"></script>
+        <script src="vistas/factura.js"></script>
         <!--end::Script-->
     </body>
     <!--end::Body-->
