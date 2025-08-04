@@ -69,6 +69,7 @@ function cerrarCaja() {
         "&monto_apertura=" + quitarDecimalesConvertir($("#monto_apertura").val());
     let res = ejecutarAjax("controladores/caja.php", data);
     mensaje_dialogo_info(res, "CORRECTO");
+    window.open("paginas/movimientos/ventas/apertura_cierre/imprimir.php?caja=" + $("#caja").val());
     verificarEstadoCaja();
 }
 
@@ -76,4 +77,5 @@ function generarArqueoCaja() {
     let data = "accion=arqueo&caja=" + $("#caja").val();
     let res = ejecutarAjax("controladores/caja.php", data);
     mensaje_dialogo_info(res, "CORRECTO");
+    window.open("paginas/movimientos/ventas/apertura_cierre/imprimir.php?caja=" + $("#caja").val());
 }
