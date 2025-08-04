@@ -45,6 +45,7 @@ switch ($accion) {
             'transferencia' => $transferencia,
             'total' => $total
         ]);
+        $_SESSION['id_apertura'] = $pdo->lastInsertId();
         echo 'Caja abierta correctamente';
         break;
     case 'cerrar':
@@ -58,6 +59,7 @@ switch ($accion) {
             'transferencia' => $transferencia,
             'total' => $total
         ]);
+        unset($_SESSION['id_apertura']);
         echo 'Caja cerrada correctamente';
         break;
     case 'arqueo':
@@ -70,7 +72,7 @@ switch ($accion) {
         break;
     case 'estado':
         // Obtener el último registro de la caja para conocer su estado
-        $stmt = $pdo->prepare("SELECT fecha, monto_apertura, accion FROM caja_registro WHERE id_caja = :id_caja AND id_usuario = :id_usuario ORDER BY fecha DESC LIMIT 1");
+        $stmt = $pdo->prepare("SELECT id_registro, fecha, monto_apertura, accion FROM caja_registro WHERE id_caja = :id_caja AND id_usuario = :id_usuario ORDER BY fecha DESC LIMIT 1");
         $stmt->execute([
             'id_caja' => $idCaja,
             'id_usuario' => $idUsuario
@@ -78,6 +80,7 @@ switch ($accion) {
         $res = $stmt->fetch(PDO::FETCH_ASSOC);
 
         if ($res && $res['accion'] === 'ABRIR') {
+            $idRegistro = $res['id_registro'];
             // Variables para acumular los montos por tipo de pago
             $efectivo = 0;
             $tarjeta = 0;
@@ -88,10 +91,10 @@ switch ($accion) {
                 "SELECT UPPER(fc.tipo_pago) AS tipo_pago, SUM(fd.cantidad * fd.precio) AS total
                  FROM factura_cabecera fc
                  JOIN factura_detalle fd ON fd.id_factura_cabecera = fc.id_factura_cabecera
-                 WHERE fc.estado <> 'ANULADO' AND fc.fecha = CURDATE()
+                 WHERE fc.estado <> 'ANULADO' AND fc.id_registro = :id_registro
                  GROUP BY fc.tipo_pago"
             );
-            $stmtFact->execute();
+            $stmtFact->execute(['id_registro' => $idRegistro]);
             foreach ($stmtFact->fetchAll(PDO::FETCH_ASSOC) as $row) {
                 switch ($row['tipo_pago']) {
                     case 'EFECTIVO':
@@ -110,10 +113,10 @@ switch ($accion) {
             $stmtServ = $pdo->prepare(
                 "SELECT UPPER(tipo_pago) AS tipo_pago, SUM(monto) AS total
                  FROM servicio_entrega_pago
-                 WHERE DATE(fecha_pago) = CURDATE()
+                 WHERE id_registro = :id_registro
                  GROUP BY tipo_pago"
             );
-            $stmtServ->execute();
+            $stmtServ->execute(['id_registro' => $idRegistro]);
             foreach ($stmtServ->fetchAll(PDO::FETCH_ASSOC) as $row) {
                 switch ($row['tipo_pago']) {
                     case 'EFECTIVO':

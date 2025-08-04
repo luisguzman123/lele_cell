@@ -415,7 +415,8 @@ CREATE TABLE `factura_cabecera` (
   `condicion` varchar(20) DEFAULT NULL,
   `tipo_pago` varchar(50) DEFAULT '0',
   `timbrado` varchar(20) DEFAULT NULL,
-  `estado` varchar(20) DEFAULT NULL
+  `estado` varchar(20) DEFAULT NULL,
+  `id_registro` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
@@ -750,7 +751,8 @@ ALTER TABLE `repuesto`
 --
 ALTER TABLE `factura_cabecera`
   ADD PRIMARY KEY (`id_factura_cabecera`),
-  ADD KEY `fk_factura_cabecera_cliente` (`id_cliente`);
+  ADD KEY `fk_factura_cabecera_cliente` (`id_cliente`),
+  ADD KEY `fk_factura_cabecera_caja` (`id_registro`);
 
 --
 -- Indices de la tabla `factura_detalle`
@@ -1181,9 +1183,15 @@ CREATE TABLE servicio_entrega_pago (
   tipo_pago VARCHAR(50) NOT NULL,
   monto INT NOT NULL,
   fecha_pago DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  id_registro INT NOT NULL,
   CONSTRAINT fk_pago_ent
     FOREIGN KEY (id_entrega)
     REFERENCES servicio_entrega(id_entrega)
+      ON DELETE CASCADE
+      ON UPDATE CASCADE,
+  CONSTRAINT fk_pago_reg
+    FOREIGN KEY (id_registro)
+    REFERENCES caja_registro(id_registro)
       ON DELETE CASCADE
       ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
