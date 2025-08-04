@@ -44,8 +44,12 @@ function mostrarNuevaFactura() {
 //----------------------------------------------------
 $(document).on("change", "#condicion", function () {
     if ($(this).val() === "CREDITO") {
+        $("#tipo_pago_group").hide();
+        $("#tipo_pago").val("0");
         let modal = new bootstrap.Modal(document.getElementById('modal-plan'));
         modal.show();
+    } else {
+        $("#tipo_pago_group").show();
     }
 });
 
@@ -287,12 +291,17 @@ function guardarFactura() {
         mensaje_dialogo_info_ERROR("Debes configurar un plan de pago");
         return;
     }
+    if ($("#condicion").val() === "CONTADO" && $("#tipo_pago").val() === "0") {
+        mensaje_dialogo_info_ERROR("Debes seleccionar un tipo de pago");
+        return;
+    }
     //JSON
     let cabecera = {
         'nro_factura': $("#nro_factura").val(),
         'fecha': $("#fecha").val(),
         'id_cliente': $("#cliente").val(),
         'condicion': $("#condicion").val(),
+        'tipo_pago': $("#condicion").val() === "CONTADO" ? $("#tipo_pago").val() : "0",
         'timbrado': $("#timbrado").val(),
         'estado': 'ACTIVO'
     };
@@ -360,6 +369,7 @@ function cargarTablaFacturas() {
                         <td>${item.fecha}</td>
                         <td>${item.razon_social}</td>
                         <td>${item.condicion}</td>
+                        <td>${item.tipo_pago}</td>
                         <td>${formatearNumero(item.total)}</td>
                         <td>${item.estado}</td>
                         <td>

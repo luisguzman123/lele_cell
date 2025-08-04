@@ -36,6 +36,7 @@
                     <th>Fecha</th>
                     <th>Cliente</th>
                     <th>Condicion</th>
+                    <th>Tipo Pago</th>
                     <th>Total</th>
                     <th>Estado</th>
                     <th>Operaciones</th>
