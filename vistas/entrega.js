@@ -20,11 +20,16 @@ function cargarListaServicios(componente) {
         option = "<option value='0'>-- Seleccione un servicio --</option>";
         let json_datos = JSON.parse(datos);
         json_datos.map(function(item){
-            option += `<option value="${item.id_servicio}">${item.id_servicio} - ${item.cliente}</option>`;
+            option += `<option value="${item.id_servicio}" data-monto="${item.total_general}">${item.id_servicio} - ${item.cliente}</option>`;
         });
     }
     $(componente).html(option);
 }
+
+$(document).on("change", "#servicio_lst", function(){
+    let monto = $(this).find("option:selected").data("monto") || 0;
+    $("#monto_servicio").val(formatearNumero(monto));
+});
 
 function guardarEntrega() {
     if($("#servicio_lst").val() === "0"){
@@ -34,7 +39,8 @@ function guardarEntrega() {
     let data = {
         id_servicio: $("#servicio_lst").val(),
         fecha_entrega: $("#fecha_entrega").val(),
-        firmado_por: $("#firmado_por").val()
+        id_usuario: $("#id_usuario").val(),
+        monto_servicio: quitarDecimalesConvertir($("#monto_servicio").val())
     };
     ejecutarAjax("controladores/servicio_entrega.php", "guardar=" + JSON.stringify(data));
     mensaje_dialogo_info("Guardado Correctamente", "Exitoso");
@@ -52,8 +58,9 @@ function cargarTablaEntrega() {
             fila += `<tr>`;
             fila += `<td>${item.id_entrega}</td>`;
             fila += `<td>${item.id_servicio} - ${item.cliente}</td>`;
+            fila += `<td>${formatearNumero(item.monto_servicio)}</td>`;
             fila += `<td>${item.fecha_entrega}</td>`;
-            fila += `<td>${item.firmado_por || ''}</td>`;
+            fila += `<td>${item.usuario || ''}</td>`;
             fila += `<td><button class='btn btn-danger anular-entrega'>Anular</button> <button class='btn btn-primary imprimir-entrega'>Imprimir</button></td>`;
             fila += `</tr>`;
         });
