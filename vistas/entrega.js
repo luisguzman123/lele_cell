@@ -61,7 +61,12 @@ function cargarTablaEntrega() {
             fila += `<td>${formatearNumero(item.monto_servicio)}</td>`;
             fila += `<td>${item.fecha_entrega}</td>`;
             fila += `<td>${item.usuario || ''}</td>`;
-            fila += `<td><button class='btn btn-danger anular-entrega'>Anular</button> <button class='btn btn-primary imprimir-entrega'>Imprimir</button> <button class='btn btn-success pagar-entrega'>Pagar</button></td>`;
+            fila += `<td>${item.estado}</td>`;
+            let botones = `<button class='btn btn-primary imprimir-entrega'>Imprimir</button>`;
+            if(item.estado !== 'PAGADO'){
+                botones = `<button class='btn btn-danger anular-entrega'>Anular</button> ${botones} <button class='btn btn-success pagar-entrega'>Pagar</button>`;
+            }
+            fila += `<td>${botones}</td>`;
             fila += `</tr>`;
         });
     }
@@ -119,6 +124,7 @@ $(document).on("click", ".pagar-entrega", function(){
             };
             ejecutarAjax("controladores/servicio_entrega.php", "pagar=" + JSON.stringify(data));
             mensaje_dialogo_info("Pago registrado", "Exitoso");
+            cargarTablaEntrega();
         }
     });
 });

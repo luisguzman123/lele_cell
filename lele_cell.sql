@@ -970,6 +970,7 @@ CREATE TABLE servicio_entrega (
   fecha_entrega DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
   id_usuario INT NOT NULL,
   monto_servicio INT NOT NULL DEFAULT 0,
+  estado VARCHAR(20) NOT NULL DEFAULT 'PENDIENTE',
   CONSTRAINT fk_ent_srv
     FOREIGN KEY (id_servicio)
     REFERENCES servicio_cabecera(id_servicio)
