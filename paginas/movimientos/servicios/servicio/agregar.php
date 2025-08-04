@@ -3,17 +3,21 @@
     <h3 class="mb-4 text-primary fw-bold">NUEVO SERVICIO</h3>
     <hr>
     <div class="row g-4 mb-4">
-      <div class="col-md-4">
+      <div class="col-md-6">
         <label for="fecha_inicio" class="form-label fw-semibold text-dark">Fecha Inicio <span class="text-danger">*</span></label>
         <input type="date" id="fecha_inicio" class="form-control" required />
       </div>
-      <div class="col-md-4">
+      <div class="col-md-6">
+        <label for="fecha_fin" class="form-label fw-semibold text-dark">Fecha Fin <span class="text-danger">*</span></label>
+        <input type="date" id="fecha_fin" class="form-control" required />
+      </div>
+      <div class="col-md-6">
         <label for="presupuesto_lst" class="form-label fw-semibold text-dark">Presupuesto <span class="text-danger">*</span></label>
         <select id="presupuesto_lst" class="form-select" required>
           <option value="0">-- Seleccione un presupuesto --</option>
         </select>
       </div>
-      <div class="col-md-4">
+      <div class="col-md-6">
         <label for="tecnico_lst" class="form-label fw-semibold text-dark">Técnico <span class="text-danger">*</span></label>
         <select id="tecnico_lst" class="form-select" required>
           <option value="0">-- Seleccione un técnico --</option>

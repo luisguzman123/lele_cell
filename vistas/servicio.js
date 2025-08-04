@@ -8,6 +8,7 @@ function mostrarAgregarServicio(){
     let contenido = dameContenido("paginas/movimientos/servicios/servicio/agregar.php");
     $("#contenido-principal").html(contenido);
     dameFechaActual("fecha_inicio");
+    dameFechaActual("fecha_fin");
     cargarListaPresupuestoServicio("#presupuesto_lst");
     cargarListaTecnicoServicio("#tecnico_lst");
 }
@@ -103,25 +104,26 @@ $(document).on("click",".remover-item",function(){
 
 function guardarServicio(){
     if($("#presupuesto_lst").val() === "0"){
-        alert("Seleccione un presupuesto");
+        mensaje_dialogo_info_ERROR("Seleccione un presupuesto");
         return;
     }
     if($("#tecnico_lst").val() === "0"){
-        alert("Seleccione un técnico");
+        mensaje_dialogo_info_ERROR("Seleccione un técnico");
         return;
     }
     if($("#detalle_servicio_tb tr").length === 0){
-        alert("Agregue detalle");
+        mensaje_dialogo_info_ERROR("Agregue detalle");
         return;
     }
     let cab = {
         id_presupuesto: $("#presupuesto_lst").val(),
         id_tecnico: $("#tecnico_lst").val(),
         fecha_inicio: $("#fecha_inicio").val(),
-        fecha_fin: null,
+        fecha_fin: $("#fecha_fin").val(),
         estado: 'En Proceso',
         observaciones: $("#observaciones").val()
     };
+    console.log(cab);
     ejecutarAjax("controladores/servicio.php","guardar="+JSON.stringify(cab));
     let id = ejecutarAjax("controladores/servicio.php","dameUltimoId=1");
     $("#detalle_servicio_tb tr").each(function(){
@@ -131,6 +133,7 @@ function guardarServicio(){
             horas_trabajadas: $(this).find("td:eq(1)").text(),
             observaciones: $(this).find("td:eq(2)").text()
         };
+        console.log(det);
         ejecutarAjax("controladores/servicio.php","guardar_detalle="+JSON.stringify(det));
     });
     mensaje_dialogo_info("Servicio registrado correctamente","REGISTRADO");
