@@ -507,6 +507,25 @@ INSERT INTO `tecnico` (`id_tecnico`, `nombre_tecnico`, `cedula`, `telefono`, `es
 -- --------------------------------------------------------
 
 --
+-- Estructura de tabla para la tabla `cargo`
+--
+
+CREATE TABLE `cargo` (
+  `id_cargo` int(11) NOT NULL,
+  `descripcion` varchar(100) DEFAULT NULL,
+  `estado` varchar(45) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+
+--
+-- Volcado de datos para la tabla `cargo`
+--
+
+INSERT INTO `cargo` (`id_cargo`, `descripcion`, `estado`) VALUES
+(1, 'Administrador', 'ACTIVO');
+
+-- --------------------------------------------------------
+
+--
 -- Estructura de tabla para la tabla `recepcion_cabecera`
 --
 
@@ -756,6 +775,12 @@ ALTER TABLE `tecnico`
   ADD PRIMARY KEY (`id_tecnico`);
 
 --
+-- Indices de la tabla `cargo`
+--
+ALTER TABLE `cargo`
+  ADD PRIMARY KEY (`id_cargo`);
+
+--
 -- Indices de la tabla `recepcion_cabecera`
 --
 ALTER TABLE `recepcion_cabecera`
@@ -878,6 +903,12 @@ ALTER TABLE `repuesto`
 --
 ALTER TABLE `tecnico`
   MODIFY `id_tecnico` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT de la tabla `cargo`
+--
+ALTER TABLE `cargo`
+  MODIFY `id_cargo` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT de la tabla `recepcion_cabecera`
