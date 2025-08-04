@@ -23,8 +23,12 @@ limit 1");
 //--------------------------------------------------------------------------------
 //--------------------------------------------------------------------------------
 if (isset($_POST['guardar'])) {
+    if (!isset($_SESSION['id_apertura'])) {
+        echo "NO_APERTURA";
+        exit;
+    }
     $json_datos = json_decode($_POST['guardar'], true);
-    $json_datos['id_registro'] = $_SESSION['id_apertura'] ?? null;
+    $json_datos['id_registro'] = $_SESSION['id_apertura'];
     $conexion = new DB();
     $query = $conexion->conectar()->prepare("INSERT INTO factura_cabecera"
             . "( nro_factura, fecha, id_cliente, condicion, tipo_pago,"
@@ -33,7 +37,7 @@ if (isset($_POST['guardar'])) {
             . " :condicion, :tipo_pago, :timbrado, :estado, :id_registro)");
 
     $query->execute($json_datos);
-
+    echo "OK";
 
 }
 //--------------------------------------------------------------------------------

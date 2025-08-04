@@ -307,6 +307,10 @@ function guardarFactura() {
     };
     let res = ejecutarAjax("controladores/factura_cabecera.php",
             "guardar=" + JSON.stringify(cabecera));
+    if (res === "NO_APERTURA") {
+        mensaje_dialogo_info_ERROR("Debe realizar una apertura de caja", "ATENCION");
+        return;
+    }
     console.log(res);
 
     //detalle

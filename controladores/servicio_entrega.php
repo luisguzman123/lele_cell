@@ -60,8 +60,12 @@ if (isset($_POST['anular'])) {
 }
 
 if (isset($_POST['pagar'])) {
+    if (!isset($_SESSION['id_apertura'])) {
+        echo "NO_APERTURA";
+        exit;
+    }
     $json_datos = json_decode($_POST['pagar'], true);
-    $json_datos['id_registro'] = $_SESSION['id_apertura'] ?? null;
+    $json_datos['id_registro'] = $_SESSION['id_apertura'];
     $conexion = new DB();
     $query = $conexion->conectar()->prepare(
         "INSERT INTO servicio_entrega_pago (id_entrega, tipo_pago, monto, id_registro)
@@ -73,6 +77,7 @@ if (isset($_POST['pagar'])) {
         "UPDATE servicio_entrega SET estado = 'PAGADO' WHERE id_entrega = :id_entrega"
     );
     $query->execute(['id_entrega' => $json_datos['id_entrega']]);
+    echo "OK";
 }
 ?>
 
