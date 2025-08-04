@@ -490,6 +490,12 @@ https://cdn.jsdelivr.net/npm/sweetalert2@11.22.0/dist/sweetalert2.min.css
                                             <p>Cargo</p>
                                         </a>
                                     </li>
+                                    <li class="nav-item">
+                                        <a href="#" onclick="mostrarListarPermiso();" class="nav-link">
+                                            <i class="nav-icon bi bi-circle"></i>
+                                            <p>Permiso</p>
+                                        </a>
+                                    </li>
                                 </ul>
                             </li>
 
@@ -801,6 +807,7 @@ https://cdn.jsdelivr.net/npm/sweetalert2@11.22.0/dist/sweetalert2.all.min.js
         <script src="vistas/producto.js"></script>
         <script src="vistas/proveedor.js"></script>
         <script src="vistas/cargo.js"></script>
+        <script src="vistas/permiso.js"></script>
         <script src="vistas/tecnico.js"></script>
         <script src="vistas/repuesto.js"></script>
         <script src="vistas/recepcion.js"></script>

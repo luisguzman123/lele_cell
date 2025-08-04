@@ -526,6 +526,25 @@ INSERT INTO `cargo` (`id_cargo`, `descripcion`, `estado`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Estructura de tabla para la tabla `permiso`
+--
+
+CREATE TABLE `permiso` (
+  `id_permiso` int(11) NOT NULL,
+  `descripcion` varchar(100) DEFAULT NULL,
+  `estado` varchar(45) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+
+--
+-- Volcado de datos para la tabla `permiso`
+--
+
+INSERT INTO `permiso` (`id_permiso`, `descripcion`, `estado`) VALUES
+(1, 'Acceso total', 'ACTIVO');
+
+-- --------------------------------------------------------
+
+--
 -- Estructura de tabla para la tabla `recepcion_cabecera`
 --
 
@@ -781,6 +800,12 @@ ALTER TABLE `cargo`
   ADD PRIMARY KEY (`id_cargo`);
 
 --
+-- Indices de la tabla `permiso`
+--
+ALTER TABLE `permiso`
+  ADD PRIMARY KEY (`id_permiso`);
+
+--
 -- Indices de la tabla `recepcion_cabecera`
 --
 ALTER TABLE `recepcion_cabecera`
@@ -909,6 +934,12 @@ ALTER TABLE `tecnico`
 --
 ALTER TABLE `cargo`
   MODIFY `id_cargo` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT de la tabla `permiso`
+--
+ALTER TABLE `permiso`
+  MODIFY `id_permiso` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT de la tabla `recepcion_cabecera`
