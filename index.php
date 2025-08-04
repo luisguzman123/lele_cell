@@ -4,7 +4,7 @@ if (!isset($_SESSION['usuario'])) {
     header('Location: login.php');
     exit;
 }
-$idCargo = $_SESSION['id_cargo'] ?? null;
+$idCargo = $_SESSION['id_permiso'] ?? null;
 ?>
 <!doctype html>
 <html lang="en">
