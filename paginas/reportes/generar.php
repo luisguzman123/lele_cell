@@ -12,25 +12,33 @@ $config = [
             'header' => 'pedido_proveedor_cabecera',
             'detail' => 'pedido_proveedor_detalle',
             'id' => 'id_pedido',
-            'date' => 'fecha'
+            'date' => 'fecha',
+            'join' => 'JOIN proveedor p ON cab.id_proveedor = p.id_proveedor',
+            'extra_select' => 'p.nombre_proveedor AS proveedor'
         ],
         'presupuesto' => [
             'header' => 'presupuesto_cabecera',
             'detail' => 'presupuesto_detalle',
             'id' => 'id_presupuesto',
-            'date' => 'fecha'
+            'date' => 'fecha',
+            'join' => 'JOIN proveedor p ON cab.id_proveedor = p.id_proveedor',
+            'extra_select' => 'p.nombre_proveedor AS proveedor'
         ],
         'orden_de_compra' => [
             'header' => 'orden_compra_cabecera',
             'detail' => 'orden_compra_detalle',
             'id' => 'id_orden',
-            'date' => 'fecha'
+            'date' => 'fecha',
+            'join' => 'JOIN proveedor p ON cab.id_proveedor = p.id_proveedor',
+            'extra_select' => 'p.nombre_proveedor AS proveedor'
         ],
         'factura_de_compra' => [
             'header' => 'compra_cabecera',
             'detail' => 'compra_detalle',
             'id' => 'id_compra',
-            'date' => 'fecha'
+            'date' => 'fecha',
+            'join' => 'JOIN proveedor p ON cab.id_proveedor = p.id_proveedor',
+            'extra_select' => 'p.nombre_proveedor AS proveedor'
         ],
     ],
     'ventas' => [
@@ -101,7 +109,10 @@ if (isset($config[$tipo][$modulo])) {
     $pdo = $db->conectar();
     $conf = $config[$tipo][$modulo];
 
-    $sqlCab = "SELECT * FROM {$conf['header']} WHERE {$conf['date']} BETWEEN :desde AND :hasta";
+    $join = $conf['join'] ?? '';
+    $extra = $conf['extra_select'] ?? '';
+    $select = 'cab.*' . ($extra ? ", $extra" : '');
+    $sqlCab = "SELECT $select FROM {$conf['header']} cab $join WHERE cab.{$conf['date']} BETWEEN :desde AND :hasta";
     $stmt = $pdo->prepare($sqlCab);
     $stmt->execute(['desde' => $desde, 'hasta' => $hasta]);
     $headers = $stmt->fetchAll(PDO::FETCH_ASSOC);
