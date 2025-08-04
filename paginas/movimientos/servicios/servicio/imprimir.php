@@ -34,21 +34,71 @@ $total_general = $total_presupuesto + $total_repuesto;
   <meta charset="UTF-8" />
   <title>Servicio #<?= htmlspecialchars($cab->id_servicio) ?></title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <style>
+    body {
+      background-color: #f9f9f9;
+      font-family: 'Segoe UI', sans-serif;
+    }
+    .documento {
+      max-width: 900px;
+      margin: 40px auto;
+      padding: 30px;
+      background: #fff;
+      border-radius: 10px;
+      box-shadow: 0 0 20px rgba(0,0,0,0.1);
+    }
+    h3 {
+      border-bottom: 2px solid #0d6efd;
+      padding-bottom: 10px;
+      margin-bottom: 30px;
+    }
+    .table th, .table td {
+      vertical-align: middle;
+    }
+    .resumen p {
+      margin: 0;
+    }
+    .totales p {
+      font-size: 1.1rem;
+      margin: 5px 0;
+    }
+    .totales p strong {
+      color: #0d6efd;
+    }
+  </style>
 </head>
 <body onload="window.print()">
-  <div class="container mt-4">
-    <h3 class="text-center mb-4">SERVICIO N° <?= htmlspecialchars($cab->id_servicio) ?></h3>
-    <p><strong>Cliente:</strong> <?= htmlspecialchars($cab->cliente) ?></p>
-    <p><strong>Presupuesto:</strong> <?= htmlspecialchars($cab->id_presupuesto) ?></p>
-    <p><strong>Técnico:</strong> <?= htmlspecialchars($cab->nombre_tecnico ?? '') ?></p>
-    <p><strong>Fecha Inicio:</strong> <?= htmlspecialchars($cab->fecha_inicio) ?> - <strong>Fecha Fin:</strong> <?= htmlspecialchars($cab->fecha_fin) ?></p>
-    <p><strong>Estado:</strong> <?= htmlspecialchars($cab->estado) ?></p>
-    <?php if(!empty($cab->observaciones)): ?>
-      <p><strong>Observaciones:</strong> <?= htmlspecialchars($cab->observaciones) ?></p>
-    <?php endif; ?>
-    <table class="table table-bordered mt-4">
+  <div class="documento">
+    <h3 class="text-center">SERVICIO N° <?= htmlspecialchars($cab->id_servicio) ?></h3>
+
+    <div class="mb-4">
+      <div class="row">
+        <div class="col-md-6">
+          <p><strong>Cliente:</strong> <?= htmlspecialchars($cab->cliente) ?></p>
+          <p><strong>Presupuesto:</strong> <?= htmlspecialchars($cab->id_presupuesto) ?></p>
+          <p><strong>Técnico:</strong> <?= htmlspecialchars($cab->nombre_tecnico ?? '') ?></p>
+        </div>
+        <div class="col-md-6">
+          <p><strong>Fecha Inicio:</strong> <?= htmlspecialchars($cab->fecha_inicio) ?></p>
+          <p><strong>Fecha Fin:</strong> <?= htmlspecialchars($cab->fecha_fin) ?></p>
+          <p><strong>Estado:</strong> <?= htmlspecialchars($cab->estado) ?></p>
+        </div>
+      </div>
+      <?php if(!empty($cab->observaciones)): ?>
+        <div class="mt-2">
+          <p><strong>Observaciones:</strong> <?= htmlspecialchars($cab->observaciones) ?></p>
+        </div>
+      <?php endif; ?>
+    </div>
+
+    <h5 class="mt-4 mb-3 text-primary">Tareas Realizadas</h5>
+    <table class="table table-bordered">
       <thead class="table-light">
-        <tr><th>Tarea</th><th>Horas</th><th>Observaciones</th></tr>
+        <tr>
+          <th>Tarea</th>
+          <th class="text-center">Horas</th>
+          <th>Observaciones</th>
+        </tr>
       </thead>
       <tbody>
         <?php foreach($det as $d): ?>
@@ -60,10 +110,17 @@ $total_general = $total_presupuesto + $total_repuesto;
         <?php endforeach; ?>
       </tbody>
     </table>
+
     <?php if($reps): ?>
-    <table class="table table-bordered mt-4">
+    <h5 class="mt-4 mb-3 text-primary">Repuestos Utilizados</h5>
+    <table class="table table-bordered">
       <thead class="table-light">
-        <tr><th>Repuesto</th><th>Cantidad</th><th>Precio</th><th>Subtotal</th></tr>
+        <tr>
+          <th>Repuesto</th>
+          <th class="text-center">Cantidad</th>
+          <th class="text-end">Precio</th>
+          <th class="text-end">Subtotal</th>
+        </tr>
       </thead>
       <tbody>
         <?php foreach($reps as $r): ?>
@@ -77,9 +134,12 @@ $total_general = $total_presupuesto + $total_repuesto;
       </tbody>
     </table>
     <?php endif; ?>
-    <p><strong>Total Presupuesto:</strong> <?= number_format($total_presupuesto,0,',','.') ?></p>
-    <p><strong>Total Repuestos:</strong> <?= number_format($total_repuesto,0,',','.') ?></p>
-    <p><strong>Total General:</strong> <?= number_format($total_general,0,',','.') ?></p>
+
+    <div class="totales mt-4">
+      <p><strong>Total Presupuesto:</strong> Gs. <?= number_format($total_presupuesto,0,',','.') ?></p>
+      <p><strong>Total Repuestos:</strong> Gs. <?= number_format($total_repuesto,0,',','.') ?></p>
+      <p><strong>Total General:</strong> <span class="fw-bold fs-5 text-success">Gs. <?= number_format($total_general,0,',','.') ?></span></p>
+    </div>
   </div>
 </body>
 </html>
