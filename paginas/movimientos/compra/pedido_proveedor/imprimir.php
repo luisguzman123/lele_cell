@@ -1,5 +1,5 @@
 <?php
-require_once '../../../conexion/db.php';
+require_once '../../../../conexion/db.php';
 $conexion = new DB();
 $id = isset($_GET['id']) ? intval($_GET['id']) : 0;
 if($id <= 0){
@@ -17,116 +17,158 @@ $det = $qdet->fetchAll(PDO::FETCH_OBJ);
 ?>
 <!DOCTYPE html>
 <html lang="es">
-<!DOCTYPE html>
-<html lang="es">
 <head>
   <meta charset="UTF-8" />
-  <title>Pedido a Proveedor #<?= $cab->id_pedido ?></title>
+  <title>Pedido a Proveedor #<?= htmlspecialchars($cab->id_pedido) ?></title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
   <style>
+    :root {
+      --primary: #2c3e50;
+      --secondary: #18bc9c;
+      --light: #ecf0f1;
+      --dark: #34495e;
+    }
     body {
-      background-color: #f4f6fa;
-      font-family: Arial, sans-serif;
+      background-color: var(--light);
+      font-family: 'Poppins', sans-serif;
+      color: var(--dark);
+      margin: 0; padding: 0;
     }
     .invoice-card {
       max-width: 800px;
       margin: 40px auto;
-      border-radius: 10px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+      border-radius: 12px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.1);
       overflow: hidden;
       background-color: #fff;
     }
     .invoice-header {
-      background: linear-gradient(90deg, #4e73df, #224abe);
+      background-color: var(--primary);
       color: #fff;
-      padding: 20px;
+      padding: 30px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
     }
     .invoice-header h3 {
+      font-weight: 600;
+      font-size: 1.75rem;
       margin: 0;
+    }
+    .invoice-header .invoice-number {
+      font-size: 1.25rem;
+      opacity: .9;
     }
     .invoice-body {
       padding: 30px;
     }
-    .invoice-meta p {
-      margin-bottom: 6px;
+    .invoice-meta {
+      margin-bottom: 30px;
     }
-    .table thead {
-      background-color: #f1f3f5;
+    .invoice-meta .meta-item {
+      margin-bottom: 10px;
     }
-    .table tbody tr:hover {
-      background-color: #f9fbfd;
+    .invoice-meta .meta-item span {
+      font-weight: 600;
+      color: var(--primary);
     }
     .status-badge {
       text-transform: uppercase;
-      font-size: 0.85rem;
-      padding: 0.4em 0.8em;
+      font-size: 0.8rem;
+      padding: 0.4em 0.9em;
       border-radius: 0.25rem;
+      display: inline-block;
     }
-    .status-Pendiente { background-color: #f6c23e; color: #856404; }
-    .status-Entregado { background-color: #1cc88a; color: #155724; }
-    .status-Anulado   { background-color: #e74a3b; color: #721c24; }
+    .status-Pendiente { background-color: #f39c12; color: #fff; }
+    .status-Entregado { background-color: #27ae60; color: #fff; }
+    .status-Anulado   { background-color: #c0392b; color: #fff; }
+    table.table {
+      border: none;
+    }
+    table.table thead th {
+      background-color: var(--light);
+      border-bottom: 2px solid var(--primary);
+      color: var(--dark);
+      font-weight: 600;
+    }
+    table.table tbody tr:nth-of-type(odd) {
+      background-color: #fafafa;
+    }
+    table.table tbody td,
+    table.table tbody th {
+      border: none;
+      padding: .75rem 1rem;
+    }
+    .no-products {
+      padding: 50px 0;
+      font-style: italic;
+      color: #999;
+    }
+    @media print {
+      .invoice-card { box-shadow: none; margin: 0; }
+      body { background: #fff; }
+    }
   </style>
 </head>
 <body>
   <div class="invoice-card">
-    <div class="invoice-header d-flex justify-content-between align-items-center">
+    <div class="invoice-header">
       <h3>Pedido a Proveedor</h3>
-      <h5>#<?= $cab->id_pedido ?></h5>
+      <div class="invoice-number">#<?= htmlspecialchars($cab->id_pedido) ?></div>
     </div>
     <div class="invoice-body">
       <div class="row invoice-meta">
-        <div class="col-md-4">
-          <p><strong>Fecha:</strong> <?= $cab->fecha ?></p>
+        <div class="col-md-4 meta-item">
+          Fecha: <span><?= htmlspecialchars($cab->fecha) ?></span>
         </div>
-        <div class="col-md-4">
-          <p><strong>Proveedor:</strong> <?= htmlspecialchars($cab->nombre_proveedor) ?></p>
+        <div class="col-md-4 meta-item">
+          Proveedor: <span><?= htmlspecialchars($cab->nombre_proveedor) ?></span>
         </div>
-        <div class="col-md-4">
-          <p>
-            <strong>Estado:</strong>
-            <span class="status-badge status-<?= htmlspecialchars($cab->estado) ?>">
-              <?= htmlspecialchars($cab->estado) ?>
-            </span>
-          </p>
+        <div class="col-md-4 meta-item">
+          Estado:
+          <span class="status-badge status-<?= htmlspecialchars($cab->estado) ?>">
+            <?= htmlspecialchars($cab->estado) ?>
+          </span>
         </div>
       </div>
+
       <?php if (!empty($cab->observacion)): ?>
       <div class="mb-4">
-        <p><strong>Observación:</strong> <?= htmlspecialchars($cab->observacion) ?></p>
+        <strong>Observación:</strong>
+        <p><?= nl2br(htmlspecialchars($cab->observacion)) ?></p>
       </div>
       <?php endif; ?>
 
       <div class="table-responsive">
-        <table class="table table-bordered align-middle mb-0">
+        <table class="table align-middle mb-0">
           <thead>
             <tr>
-              <th class="text-center" style="width: 60px;">#</th>
+              <th class="text-center">#</th>
               <th>Producto</th>
-              <th class="text-center" style="width: 120px;">Cantidad</th>
+              <th class="text-center">Cantidad</th>
             </tr>
           </thead>
           <tbody>
-            <?php if(count($det) === 0): ?>
-              <tr>
-                <td colspan="3" class="text-center py-4">Sin productos</td>
-              </tr>
-            <?php else: ?>
-              <?php foreach($det as $i => $d): ?>
-              <tr>
-                <td class="text-center"><?= $i+1 ?></td>
-                <td><?= htmlspecialchars($d->nombre) ?></td>
-                <td class="text-center"><?= intval($d->cantidad) ?></td>
-              </tr>
-              <?php endforeach; ?>
-            <?php endif; ?>
+            <?php if (count($det) === 0): ?>
+            <tr>
+              <td colspan="3" class="text-center no-products">Sin productos</td>
+            </tr>
+            <?php else: foreach ($det as $i => $d): ?>
+            <tr>
+              <td class="text-center"><?= $i + 1 ?></td>
+              <td><?= htmlspecialchars($d->nombre) ?></td>
+              <td class="text-center"><?= intval($d->cantidad) ?></td>
+            </tr>
+            <?php endforeach; endif; ?>
           </tbody>
         </table>
       </div>
     </div>
   </div>
-<script>
-            window.print();
-        </script>
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+  <script>
+    window.print();
+  </script>
 </body>
 </html>

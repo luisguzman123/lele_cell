@@ -163,7 +163,7 @@ $(document).on("click",".anular-pedido-proveedor",function(){
 });
 
 function imprimirPedidoProveedor(id){
-    window.open("paginas/compra/pedido_proveedor/imprimir.php?id="+id);
+    window.open("paginas/movimientos/compra/pedido_proveedor/imprimir.php?id="+id);
 }
 
 $(document).on("click",".imprimir-pedido-proveedor",function(){

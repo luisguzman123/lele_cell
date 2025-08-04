@@ -244,7 +244,7 @@ function guardarPresupuesto(){
 }
 
 function imprimirPresupuesto(id){
-    window.open("paginas/compra/presupuesto/imprimir.php?id="+id);
+    window.open("paginas/movimientos/compra/presupuesto/imprimir.php?id="+id);
 }
 
 $(document).on("click",".imprimir-presupuesto",function(){

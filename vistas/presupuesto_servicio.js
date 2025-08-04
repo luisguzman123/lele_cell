@@ -148,5 +148,5 @@ function guardarPresupuestoServicio(){
 }
 
 function imprimirPresupuestoServicio(id){
-    window.open("paginas/servicios/presupuesto/imprimir.php?id="+id);
+    window.open("paginas/movimientos/servicios/presupuesto/imprimir.php?id="+id);
 }

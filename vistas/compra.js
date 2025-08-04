@@ -248,7 +248,7 @@ $(document).on("click",".anular-compra",function(){
 });
 
 function imprimirCompra(id){
-    window.open("paginas/compra/registro_compra/imprimir.php?id="+id);
+    window.open("paginas/movimientos/compra/registro_compra/imprimir.php?id="+id);
 }
 
 $(document).on("click",".imprimir-compra",function(){

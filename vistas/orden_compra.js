@@ -245,7 +245,7 @@ $(document).on("click",".anular-orden-compra",function(){
 });
 
 function imprimirOrdenCompra(id){
-    window.open("paginas/compra/orden_compra/imprimir.php?id="+id);
+    window.open("paginas/movimientos/compra/orden_compra/imprimir.php?id="+id);
 }
 
 $(document).on("click",".imprimir-orden-compra",function(){

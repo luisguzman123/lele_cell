@@ -1,5 +1,5 @@
 <?php
-require_once '../../../conexion/db.php';
+require_once '../../../../conexion/db.php';
 $conexion = new DB();
 $id = isset($_GET['id']) ? intval($_GET['id']) : 0;
 if($id <= 0){
@@ -16,106 +16,133 @@ $qdet->execute(['id'=>$id]);
 $det = $qdet->fetchAll(PDO::FETCH_OBJ);
 ?>
 <!DOCTYPE html>
-<!DOCTYPE html>
 <html lang="es">
 <head>
   <meta charset="UTF-8" />
-  <title>Compra #<?= $cab->id_compra ?></title>
+  <title>Compra #<?= htmlspecialchars($cab->id_compra) ?></title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
   <style>
     body {
-      background-color: #f4f6fa;
+      background-color: #fff;
       font-family: 'Segoe UI', sans-serif;
+      color: #000;
+      margin: 0;
+      padding: 0;
     }
     .purchase-card {
       max-width: 900px;
       margin: 40px auto;
-      border-radius: 10px;
-      box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+      border: 1px solid #ccc;
+      border-radius: 6px;
       background-color: #fff;
       overflow: hidden;
     }
     .purchase-header {
-      background: linear-gradient(135deg, #6610f2, #6f42c1);
-      color: #fff;
-      padding: 20px;
+      padding: 16px 24px;
+      border-bottom: 1px solid #ccc;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
     }
-    .purchase-header h3,
-    .purchase-header h5 {
+    .purchase-header h3 {
       margin: 0;
+      font-size: 1.5rem;
+      font-weight: 600;
+    }
+    .purchase-header small {
+      display: block;
+      font-size: 1rem;
+      color: #555;
+      margin-top: 4px;
+    }
+    .status-badge {
+      display: inline-block;
+      padding: 0.25em 0.5em;
+      font-size: 0.85rem;
+      border: 1px solid #333;
+      border-radius: 0.25rem;
+      background-color: #fff;
+      color: #333;
+      text-transform: uppercase;
+      font-weight: 600;
     }
     .purchase-body {
-      padding: 30px;
+      padding: 24px;
     }
     .purchase-meta .col-md-4 {
-      margin-bottom: 15px;
+      margin-bottom: 16px;
     }
     .purchase-meta p {
       margin: 0;
       font-size: 0.95rem;
     }
-    .status-badge {
-      text-transform: uppercase;
-      font-size: 0.85rem;
-      padding: 0.4em 0.8em;
-      border-radius: 0.25rem;
+    .purchase-meta p strong {
+      font-weight: 600;
     }
-    .status-Pendiente { background-color: #ffc107; color: #856404; }
-    .status-Recibida  { background-color: #198754; color: #fff; }
-    .status-Anulada   { background-color: #dc3545; color: #fff; }
-
-    .table thead {
-      background-color: #e9ecef;
+    .table {
+      border-collapse: collapse;
+      width: 100%;
+      margin-top: 16px;
     }
-    .table tbody tr:hover {
-      background-color: #f8f9fa;
+    .table th,
+    .table td {
+      border: 1px solid #ccc !important;
+      padding: 0.6rem;
+    }
+    .table thead th {
+      background-color: #f8f8f8;
+      border-bottom: 2px solid #333 !important;
+      font-weight: 600;
+      color: #000;
     }
     .text-center { text-align: center; }
     .text-right  { text-align: right; }
-
     .purchase-summary {
-      margin-top: 20px;
+      margin-top: 24px;
+      text-align: right;
     }
     .purchase-summary p {
-      margin: .25rem 0;
+      margin: 0.25rem 0;
       font-size: 1rem;
     }
     .purchase-summary .total {
       font-size: 1.25rem;
       font-weight: 600;
     }
+    @media print {
+      body { background: #fff; }
+      .purchase-card { border: none; margin: 0; }
+    }
   </style>
 </head>
 <body>
   <div class="purchase-card">
-    <div class="purchase-header d-flex justify-content-between align-items-center">
+    <div class="purchase-header">
       <div>
         <h3>Compra</h3>
-        <small>#<?= $cab->id_compra ?></small>
+        <small>#<?= htmlspecialchars($cab->id_compra) ?></small>
       </div>
       <div>
-        <span class="status-badge status-<?= htmlspecialchars($cab->estado) ?>">
-          <?= htmlspecialchars($cab->estado) ?>
-        </span>
+        <span class="status-badge"><?= htmlspecialchars($cab->estado) ?></span>
       </div>
     </div>
     <div class="purchase-body">
       <div class="row purchase-meta">
         <div class="col-md-4">
-          <p><strong>Fecha:</strong> <?= $cab->fecha ?></p>
+          <p><strong>Fecha:</strong> <?= htmlspecialchars($cab->fecha) ?></p>
         </div>
         <div class="col-md-4">
           <p><strong>Proveedor:</strong> <?= htmlspecialchars($cab->nombre_proveedor) ?></p>
         </div>
         <?php if (!empty($cab->observacion)): ?>
         <div class="col-md-4">
-          <p><strong>Observación:</strong> <?= htmlspecialchars($cab->observacion) ?></p>
+          <p><strong>Observación:</strong> <?= nl2br(htmlspecialchars($cab->observacion)) ?></p>
         </div>
         <?php endif; ?>
       </div>
 
       <div class="table-responsive">
-        <table class="table table-bordered mb-0 align-middle">
+        <table class="table mb-0 align-middle">
           <thead>
             <tr>
               <th class="text-center" style="width: 50px;">#</th>
@@ -131,33 +158,29 @@ $det = $qdet->fetchAll(PDO::FETCH_OBJ);
             <tr>
               <td colspan="6" class="text-center py-4">Sin productos</td>
             </tr>
-            <?php else: ?>
-            <?php foreach ($det as $i => $d): ?>
+            <?php else: foreach ($det as $i => $d): ?>
             <tr>
               <td class="text-center"><?= $i + 1 ?></td>
               <td><?= htmlspecialchars($d->nombre) ?></td>
               <td class="text-center"><?= intval($d->cantidad) ?></td>
-              <td class="text-right"><?= number_format($d->precio,0,'','.') ?></td>
-              <td class="text-right"><?= number_format($d->precio * $d->cantidad,0,'','.') ?></td>
+              <td class="text-right"><?= number_format($d->precio, 0, '', '.') ?></td>
+              <td class="text-right"><?= number_format($d->precio * $d->cantidad, 0, '', '.') ?></td>
               <td class="text-center"><?= intval($d->iva) ?>%</td>
             </tr>
-            <?php endforeach; ?>
-            <?php endif; ?>
+            <?php endforeach; endif; ?>
           </tbody>
         </table>
       </div>
 
-      <div class="purchase-summary text-end">
-        <p><strong>Exenta:</strong> <?= number_format($cab->total_exenta,0,'','.') ?> Gs.</p>
-        <p><strong>Gravada 5%:</strong> <?= number_format($cab->total_iva5,0,'','.') ?> Gs.</p>
-        <p><strong>Gravada 10%:</strong> <?= number_format($cab->total_iva10,0,'','.') ?> Gs.</p>
-        <p class="total"><strong>Total:</strong> <?= number_format($cab->total,0,'','.') ?> Gs.</p>
+      <div class="purchase-summary">
+        <p><strong>Exenta:</strong> <?= number_format($cab->total_exenta, 0, '', '.') ?> Gs.</p>
+        <p><strong>Gravada 5%:</strong> <?= number_format($cab->total_iva5, 0, '', '.') ?> Gs.</p>
+        <p><strong>Gravada 10%:</strong> <?= number_format($cab->total_iva10, 0, '', '.') ?> Gs.</p>
+        <p class="total"><strong>Total:</strong> <?= number_format($cab->total, 0, '', '.') ?> Gs.</p>
       </div>
     </div>
   </div>
-<script>
-            window.print();
-        </script>
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+  <script>window.print();</script>
 </body>
 </html>
