@@ -405,6 +405,12 @@ https://cdn.jsdelivr.net/npm/sweetalert2@11.22.0/dist/sweetalert2.min.css
                                     </a>
                                     <ul class="nav nav-treeview">
                                         <li class="nav-item">
+                                            <a href="#" onclick="mostrarAperturaCierre();" class="nav-link">
+                                                <i class="nav-icon bi bi-circle"></i>
+                                                <p>Apertura Cierre</p>
+                                            </a>
+                                        </li>
+                                        <li class="nav-item">
                                             <a href="#" onclick="mostrarListarFactura();" class="nav-link">
                                                 <i class="nav-icon bi bi-circle"></i>
                                                 <p>Facturacion</p>
@@ -810,6 +816,7 @@ https://cdn.jsdelivr.net/npm/sweetalert2@11.22.0/dist/sweetalert2.all.min.js
         <script src="vistas/presupuesto.js"></script>
         <script src="vistas/orden_compra.js"></script>
         <script src="vistas/compra.js"></script>
+        <script src="vistas/apertura_cierre.js"></script>
         <script src="vistas/factura.js"></script>
         <script src="vistas/presupuesto_venta.js"></script>
         <!--end::Script-->
