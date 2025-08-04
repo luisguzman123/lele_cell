@@ -26,6 +26,13 @@
     </div>
 
     <div class="row g-4 mb-4">
+      <div class="col-md-6">
+        <label for="precio_presupuesto" class="form-label fw-semibold text-dark">Precio Presupuesto</label>
+        <input type="number" id="precio_presupuesto" class="form-control" value="0" readonly />
+      </div>
+    </div>
+
+    <div class="row g-4 mb-4">
       <div class="col-md-12">
         <label for="observaciones" class="form-label fw-semibold text-dark">Observaciones</label>
         <input type="text" id="observaciones" class="form-control" />
@@ -66,6 +73,61 @@
         </thead>
         <tbody id="detalle_servicio_tb" class="table-group-divider text-dark"></tbody>
       </table>
+    </div>
+
+    <hr class="mb-4">
+
+    <div class="row g-3 align-items-end mb-5">
+      <div class="col-md-6">
+        <label for="repuesto_lst" class="form-label fw-semibold text-dark">Repuesto</label>
+        <select id="repuesto_lst" class="form-select">
+          <option value="0">-- Seleccione un repuesto --</option>
+        </select>
+      </div>
+      <div class="col-md-2">
+        <label for="precio_repuesto" class="form-label fw-semibold text-dark">Precio</label>
+        <input type="number" id="precio_repuesto" class="form-control" value="0" readonly />
+      </div>
+      <div class="col-md-2">
+        <label for="cantidad_repuesto" class="form-label fw-semibold text-dark">Cantidad</label>
+        <input type="number" id="cantidad_repuesto" class="form-control" value="1" min="1" />
+      </div>
+      <div class="col-md-2 text-center">
+        <button type="button" class="btn btn-primary w-100" onclick="agregarRepuestoServicio(); return false;">
+          <i class="bi bi-plus-circle me-2 fs-5"></i>
+        </button>
+      </div>
+    </div>
+
+    <div class="mb-5">
+      <table class="table table-bordered table-hover align-middle text-center">
+        <thead class="table-dark">
+          <tr>
+            <th>Repuesto</th>
+            <th>Precio</th>
+            <th>Cantidad</th>
+            <th>Subtotal</th>
+            <th>Cobrar</th>
+            <th>Acciones</th>
+          </tr>
+        </thead>
+        <tbody id="repuesto_servicio_tb" class="table-group-divider text-dark"></tbody>
+      </table>
+    </div>
+
+    <div class="row mb-5">
+      <div class="col-md-4">
+        <label class="fw-semibold text-dark">Total Presupuesto:</label>
+        <p id="total_presupuesto" class="fw-bold">0</p>
+      </div>
+      <div class="col-md-4">
+        <label class="fw-semibold text-dark">Total Repuestos:</label>
+        <p id="total_repuesto" class="fw-bold">0</p>
+      </div>
+      <div class="col-md-4">
+        <label class="fw-semibold text-dark">Total General:</label>
+        <p id="total_general" class="fw-bold">0</p>
+      </div>
     </div>
 
     <div class="row g-3">
