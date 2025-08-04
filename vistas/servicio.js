@@ -11,6 +11,8 @@ function mostrarAgregarServicio(){
     dameFechaActual("fecha_fin");
     cargarListaPresupuestoServicio("#presupuesto_lst");
     cargarListaTecnicoServicio("#tecnico_lst");
+    cargarListaRepuestoServicio("#repuesto_lst");
+    calcularTotales();
 }
 
 function cargarTablaServicio(){
@@ -82,10 +84,16 @@ function cargarListaPresupuestoServicio(componente){
         let json = JSON.parse(data);
         $(componente).html("<option value='0'>-- Seleccione un presupuesto --</option>");
         json.map(function(item){
-            $(componente).append(`<option value="${item.id_presupuesto_servicio}">${item.id_presupuesto_servicio} - ${item.cliente}</option>`);
+            $(componente).append(`<option value="${item.id_presupuesto_servicio}" data-total="${item.total}">${item.id_presupuesto_servicio} - ${item.cliente}</option>`);
         });
     }
 }
+
+$(document).on("change","#presupuesto_lst",function(){
+    let total = $(this).find("option:selected").data("total") || 0;
+    $("#precio_presupuesto").val(total);
+    calcularTotales();
+});
 
 function cargarListaTecnicoServicio(componente){
     let data = ejecutarAjax("controladores/tecnico.php","leer_activo=1");
@@ -99,6 +107,24 @@ function cargarListaTecnicoServicio(componente){
         });
     }
 }
+
+function cargarListaRepuestoServicio(componente){
+    let data = ejecutarAjax("controladores/repuesto.php","leer=1");
+    if(data === "0"){
+        $(componente).html("<option value='0'>Sin repuestos</option>");
+    }else{
+        let json = JSON.parse(data);
+        $(componente).html("<option value='0'>-- Seleccione un repuesto --</option>");
+        json.map(function(item){
+            $(componente).append(`<option value="${item.id_repuesto}" data-precio="${item.precio}">${item.nombre_repuesto}</option>`);
+        });
+    }
+}
+
+$(document).on("change","#repuesto_lst",function(){
+    let precio = $(this).find("option:selected").data("precio") || 0;
+    $("#precio_repuesto").val(precio);
+});
 
 function agregarDetalleServicio(){
     if($("#tarea").val().trim().length === 0){
@@ -126,6 +152,41 @@ $(document).on("click",".remover-item",function(){
     $(this).closest("tr").remove();
 });
 
+function agregarRepuestoServicio(){
+    if($("#repuesto_lst").val() === "0"){
+        mensaje_dialogo_info_ERROR("Seleccione un repuesto");
+        return;
+    }
+    let precio = parseFloat($("#precio_repuesto").val()) || 0;
+    let cantidad = parseInt($("#cantidad_repuesto").val()) || 1;
+    let subtotal = precio * cantidad;
+    let nombre = $("#repuesto_lst option:selected").text();
+    let id = $("#repuesto_lst").val();
+    $("#repuesto_servicio_tb").append(`
+        <tr data-id_repuesto="${id}" data-precio="${precio}" data-cantidad="${cantidad}">
+            <td>${nombre}</td>
+            <td class="text-end">${formatearNumero(precio)}</td>
+            <td class="text-center">${cantidad}</td>
+            <td class="text-end subtotal">${formatearNumero(subtotal)}</td>
+            <td class="text-center"><input type="checkbox" class="chk-cobrar" checked></td>
+            <td><button class='btn btn-danger remover-repuesto'>Remover</button></td>
+        </tr>
+    `);
+    $("#repuesto_lst").val("0");
+    $("#precio_repuesto").val("0");
+    $("#cantidad_repuesto").val(1);
+    calcularTotales();
+}
+
+$(document).on("click",".remover-repuesto",function(){
+    $(this).closest("tr").remove();
+    calcularTotales();
+});
+
+$(document).on("change",".chk-cobrar",function(){
+    calcularTotales();
+});
+
 function guardarServicio(){
     if($("#presupuesto_lst").val() === "0"){
         mensaje_dialogo_info_ERROR("Seleccione un presupuesto");
@@ -147,10 +208,8 @@ function guardarServicio(){
         estado: 'En Proceso',
         observaciones: $("#observaciones").val()
     };
-    console.log(cab);
-    let g = ejecutarAjax("controladores/servicio.php","guardar="+encodeURIComponent(JSON.stringify(cab)));
-     let id = ejecutarAjax("controladores/servicio.php","dameUltimoId=1");
-     console.log(id);
+    ejecutarAjax("controladores/servicio.php","guardar="+encodeURIComponent(JSON.stringify(cab)));
+    let id = ejecutarAjax("controladores/servicio.php","dameUltimoId=1");
     $("#detalle_servicio_tb tr").each(function(){
         let det = {
             id_servicio: id,
@@ -158,8 +217,15 @@ function guardarServicio(){
             horas_trabajadas: $(this).find("td:eq(1)").text(),
             observaciones: $(this).find("td:eq(2)").text()
         };
-        console.log(det);
         ejecutarAjax("controladores/servicio.php","guardar_detalle="+encodeURIComponent(JSON.stringify(det)));
+    });
+    $("#repuesto_servicio_tb tr").each(function(){
+        let rep = {
+            id_servicio: id,
+            id_repuesto: $(this).data("id_repuesto"),
+            cantidad: $(this).data("cantidad")
+        };
+        ejecutarAjax("controladores/servicio.php","guardar_repuesto="+encodeURIComponent(JSON.stringify(rep)));
     });
     mensaje_dialogo_info("Servicio registrado correctamente","REGISTRADO");
     mostrarListarServicio();
@@ -167,4 +233,19 @@ function guardarServicio(){
 
 function imprimirServicio(id){
     window.open("paginas/movimientos/servicios/servicio/imprimir.php?id="+id);
+}
+
+function calcularTotales(){
+    let total_repuesto = 0;
+    $("#repuesto_servicio_tb tr").each(function(){
+        if($(this).find(".chk-cobrar").is(":checked")){
+            let precio = parseFloat($(this).data("precio")) || 0;
+            let cant = parseInt($(this).data("cantidad")) || 0;
+            total_repuesto += precio * cant;
+        }
+    });
+    let presupuesto = parseFloat($("#precio_presupuesto").val()) || 0;
+    $("#total_presupuesto").text(formatearNumero(presupuesto));
+    $("#total_repuesto").text(formatearNumero(total_repuesto));
+    $("#total_general").text(formatearNumero(total_repuesto + presupuesto));
 }
