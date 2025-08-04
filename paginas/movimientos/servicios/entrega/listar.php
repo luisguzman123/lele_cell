@@ -17,6 +17,7 @@
         <th>Monto</th>
         <th>Fecha Entrega</th>
         <th>Usuario</th>
+        <th>Estado</th>
         <th>Operaciones</th>
       </tr>
     </thead>

@@ -25,8 +25,8 @@ if (isset($_POST['guardar'])) {
     $json_datos = json_decode($_POST['guardar'], true);
     $conexion = new DB();
     $query = $conexion->conectar()->prepare(
-        "INSERT INTO servicio_entrega (id_servicio, fecha_entrega, id_usuario, monto_servicio)
-        VALUES (:id_servicio, :fecha_entrega, :id_usuario, :monto_servicio)"
+        "INSERT INTO servicio_entrega (id_servicio, fecha_entrega, id_usuario, monto_servicio, estado)
+        VALUES (:id_servicio, :fecha_entrega, :id_usuario, :monto_servicio, 'PENDIENTE')"
     );
     $query->execute($json_datos);
 }
@@ -34,7 +34,7 @@ if (isset($_POST['guardar'])) {
 if (isset($_POST['leer'])) {
     $conexion = new DB();
     $query = $conexion->conectar()->prepare(
-        "SELECT se.id_entrega, se.fecha_entrega, se.monto_servicio, u.usuario, sc.id_servicio, CONCAT(c.nombre,' ',c.apellido) AS cliente
+        "SELECT se.id_entrega, se.fecha_entrega, se.monto_servicio, se.estado, u.usuario, sc.id_servicio, CONCAT(c.nombre,' ',c.apellido) AS cliente
         FROM servicio_entrega se
         JOIN usuario u ON u.id_usuario = se.id_usuario
         JOIN servicio_cabecera sc ON se.id_servicio = sc.id_servicio
@@ -66,5 +66,10 @@ if (isset($_POST['pagar'])) {
         VALUES (:id_entrega, :tipo_pago, :monto)"
     );
     $query->execute($json_datos);
+
+    $query = $conexion->conectar()->prepare(
+        "UPDATE servicio_entrega SET estado = 'PAGADO' WHERE id_entrega = :id_entrega"
+    );
+    $query->execute(['id_entrega' => $json_datos['id_entrega']]);
 }
 ?>
