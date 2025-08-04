@@ -747,6 +747,36 @@ ALTER TABLE `diagnostico_cabecera`
 ALTER TABLE `diagnostico_detalle`
   MODIFY `id_diagnostico_detalle` int(11) NOT NULL AUTO_INCREMENT;
 
+-- --------------------------------------------------------
+-- Estructura de tabla para la tabla `presupuesto_servicio_cabecera`
+-- --------------------------------------------------------
+CREATE TABLE `presupuesto_servicio_cabecera` (
+  `id_presupuesto_servicio` int(11) NOT NULL AUTO_INCREMENT,
+  `id_diagnostico` int(11) NOT NULL,
+  `fecha_presupuesto` date NOT NULL DEFAULT curdate(),
+  `validez_dias` int(11) NOT NULL DEFAULT 7,
+  `estado` varchar(20) NOT NULL DEFAULT 'Enviado',
+  `observaciones` text DEFAULT NULL,
+  PRIMARY KEY (`id_presupuesto_servicio`),
+  KEY `fk_presu_diag` (`id_diagnostico`),
+  CONSTRAINT `fk_presu_diag` FOREIGN KEY (`id_diagnostico`) REFERENCES `diagnostico_cabecera` (`id_diagnostico`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+-- Estructura de tabla para la tabla `presupuesto_servicio_detalle`
+-- --------------------------------------------------------
+CREATE TABLE `presupuesto_servicio_detalle` (
+  `id_detalle_presu` int(11) NOT NULL AUTO_INCREMENT,
+  `id_presupuesto_servicio` int(11) NOT NULL,
+  `concepto` varchar(100) NOT NULL,
+  `cantidad` int(11) NOT NULL DEFAULT 1,
+  `precio_unitario` int(11) NOT NULL,
+  `subtotal` int(11) GENERATED ALWAYS AS (`cantidad` * `precio_unitario`) STORED,
+  PRIMARY KEY (`id_detalle_presu`),
+  KEY `fk_detalle_presu_cab` (`id_presupuesto_servicio`),
+  CONSTRAINT `fk_detalle_presu_cab` FOREIGN KEY (`id_presupuesto_servicio`) REFERENCES `presupuesto_servicio_cabecera` (`id_presupuesto_servicio`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
 --
 -- AUTO_INCREMENT de la tabla `servicio`
 --
