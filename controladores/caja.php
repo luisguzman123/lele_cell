@@ -13,11 +13,32 @@ $total = $montoApertura + $efectivo + $tarjeta + $transferencia;
 $db = new DB();
 $pdo = $db->conectar();
 
+if (!isset($_SESSION['id_usuario'])) {
+    if (isset($_SESSION['usuario'])) {
+        $stmt = $pdo->prepare("SELECT id_usuario FROM usuario WHERE usuario = :usuario");
+        $stmt->execute(['usuario' => $_SESSION['usuario']]);
+        $user = $stmt->fetch(PDO::FETCH_ASSOC);
+        if ($user) {
+            $_SESSION['id_usuario'] = $user['id_usuario'];
+        } else {
+            http_response_code(401);
+            echo 'ID de usuario no disponible';
+            exit;
+        }
+    } else {
+        http_response_code(401);
+        echo 'ID de usuario no disponible';
+        exit;
+    }
+}
+$idUsuario = $_SESSION['id_usuario'];
+
 switch ($accion) {
     case 'abrir':
-        $stmt = $pdo->prepare("INSERT INTO caja_registro(id_caja, monto_apertura, efectivo, tarjeta, transferencia, total, accion) VALUES (:id_caja, :monto_apertura, :efectivo, :tarjeta, :transferencia, :total, 'ABRIR')");
+        $stmt = $pdo->prepare("INSERT INTO caja_registro(id_caja, id_usuario, monto_apertura, efectivo, tarjeta, transferencia, total, accion) VALUES (:id_caja, :id_usuario, :monto_apertura, :efectivo, :tarjeta, :transferencia, :total, 'ABRIR')");
         $stmt->execute([
             'id_caja' => $idCaja,
+            'id_usuario' => $idUsuario,
             'monto_apertura' => $montoApertura,
             'efectivo' => $efectivo,
             'tarjeta' => $tarjeta,
@@ -27,9 +48,10 @@ switch ($accion) {
         echo 'Caja abierta correctamente';
         break;
     case 'cerrar':
-        $stmt = $pdo->prepare("INSERT INTO caja_registro(id_caja, monto_apertura, efectivo, tarjeta, transferencia, total, accion) VALUES (:id_caja, :monto_apertura, :efectivo, :tarjeta, :transferencia, :total, 'CERRAR')");
+        $stmt = $pdo->prepare("INSERT INTO caja_registro(id_caja, id_usuario, monto_apertura, efectivo, tarjeta, transferencia, total, accion) VALUES (:id_caja, :id_usuario, :monto_apertura, :efectivo, :tarjeta, :transferencia, :total, 'CERRAR')");
         $stmt->execute([
             'id_caja' => $idCaja,
+            'id_usuario' => $idUsuario,
             'monto_apertura' => $montoApertura,
             'efectivo' => $efectivo,
             'tarjeta' => $tarjeta,
@@ -39,14 +61,20 @@ switch ($accion) {
         echo 'Caja cerrada correctamente';
         break;
     case 'arqueo':
-        $stmt = $pdo->prepare("SELECT fecha, monto_apertura, efectivo, tarjeta, transferencia, total, accion FROM caja_registro WHERE id_caja = :id_caja ORDER BY fecha DESC");
-        $stmt->execute(['id_caja' => $idCaja]);
+        $stmt = $pdo->prepare("SELECT fecha, monto_apertura, efectivo, tarjeta, transferencia, total, accion FROM caja_registro WHERE id_caja = :id_caja AND id_usuario = :id_usuario ORDER BY fecha DESC");
+        $stmt->execute([
+            'id_caja' => $idCaja,
+            'id_usuario' => $idUsuario
+        ]);
         echo json_encode($stmt->fetchAll(PDO::FETCH_OBJ));
         break;
     case 'estado':
         // Obtener el último registro de la caja para conocer su estado
-        $stmt = $pdo->prepare("SELECT fecha, monto_apertura, accion FROM caja_registro WHERE id_caja = :id_caja ORDER BY fecha DESC LIMIT 1");
-        $stmt->execute(['id_caja' => $idCaja]);
+        $stmt = $pdo->prepare("SELECT fecha, monto_apertura, accion FROM caja_registro WHERE id_caja = :id_caja AND id_usuario = :id_usuario ORDER BY fecha DESC LIMIT 1");
+        $stmt->execute([
+            'id_caja' => $idCaja,
+            'id_usuario' => $idUsuario
+        ]);
         $res = $stmt->fetch(PDO::FETCH_ASSOC);
 
         if ($res && $res['accion'] === 'ABRIR') {

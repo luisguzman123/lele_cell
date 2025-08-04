@@ -1195,6 +1195,7 @@ CREATE TABLE servicio_entrega_pago (
 CREATE TABLE `caja_registro` (
   `id_registro` int(11) NOT NULL AUTO_INCREMENT,
   `id_caja` int(11) NOT NULL,
+  `id_usuario` int(11) NOT NULL,
   `fecha` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `monto_apertura` decimal(10,2) NOT NULL DEFAULT 0,
   `efectivo` decimal(10,2) NOT NULL DEFAULT 0,
