@@ -195,7 +195,7 @@ $(document).on("click", ".anular-recepcion", function (evt) {
     let id = $(this).closest("tr").find("td:eq(0)").text();
     let estado = $(this).closest("tr").find("td:eq(4)").text();
 
-    if (estado.trim() === 'ANULADO') {
+    if (estado.trim() === 'ANULADO' || estado.trim() === 'UTILIZADO') {
         mensaje_dialogo_info_ERROR("No puedes anular este registro", "ATENCION");
         return;
     }

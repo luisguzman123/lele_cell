@@ -42,10 +42,31 @@ function cargarTablaServicio(){
 
 $(document).on("click",".anular-servicio",function(){
     let id = $(this).closest("tr").find("td:eq(0)").text();
-    if(confirm("¿Anular servicio?")){
-        ejecutarAjax("controladores/servicio.php","anular="+id);
-        cargarTablaServicio();
+    let estado = $(this).closest("tr").find("td:eq(5)").text();
+    if(estado === "ANULADO"){
+          mensaje_dialogo_info_ERROR("No puedes anular este registro", "ATENCION");
+        return;
     }
+    Swal.fire({
+    title: '¿Anular servicio?',
+    text: "Una vez anulado, no podrás revertir esta acción.",
+    icon: 'warning',
+    showCancelButton: true,
+    confirmButtonColor: '#d33',
+    cancelButtonColor: '#3085d6',
+    confirmButtonText: 'Sí, anular',
+    cancelButtonText: 'Cancelar'
+  }).then((result) => {
+    if (result.isConfirmed) {
+      ejecutarAjax("controladores/servicio.php", "anular=" + id);
+      cargarTablaServicio();
+      Swal.fire(
+        '¡Anulado!',
+        'El servicio ha sido anulado.',
+        'success'
+      );
+    }
+  });
 });
 
 $(document).on("click",".imprimir-servicio",function(){
@@ -81,8 +102,11 @@ function cargarListaTecnicoServicio(componente){
 
 function agregarDetalleServicio(){
     if($("#tarea").val().trim().length === 0){
-        alert("Ingrese tarea");
+        mensaje_dialogo_info_ERROR("Ingrese tarea");
         return;
+    }
+    if($("#obs_detalle").val().trim().length === 0){
+        $("#obs_detalle").val("SIN OBS");
     }
     let horas = parseFloat($("#horas").val()) || 0;
     $("#detalle_servicio_tb").append(`
@@ -124,7 +148,9 @@ function guardarServicio(){
         observaciones: $("#observaciones").val()
     };
     console.log(cab);
-    let id = ejecutarAjax("controladores/servicio.php","guardar="+encodeURIComponent(JSON.stringify(cab)));
+    let g = ejecutarAjax("controladores/servicio.php","guardar="+encodeURIComponent(JSON.stringify(cab)));
+     let id = ejecutarAjax("controladores/servicio.php","dameUltimoId=1");
+     console.log(id);
     $("#detalle_servicio_tb tr").each(function(){
         let det = {
             id_servicio: id,

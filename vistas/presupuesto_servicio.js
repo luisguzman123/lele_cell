@@ -1,24 +1,24 @@
-function mostrarListarPresupuestoServicio(){
+function mostrarListarPresupuestoServicio() {
     let contenido = dameContenido("paginas/movimientos/servicios/presupuesto/listar.php");
     $("#contenido-principal").html(contenido);
     cargarTablaPresupuestoServicio();
 }
 
-function mostrarAgregarPresupuestoServicio(){
+function mostrarAgregarPresupuestoServicio() {
     let contenido = dameContenido("paginas/movimientos/servicios/presupuesto/agregar.php");
     $("#contenido-principal").html(contenido);
     cargarListaDiagnostico("#diagnostico_lst");
     dameFechaActual("fecha");
 }
 
-function cargarTablaPresupuestoServicio(){
-    let data = ejecutarAjax("controladores/presupuesto_servicio.php","leer=1");
+function cargarTablaPresupuestoServicio() {
+    let data = ejecutarAjax("controladores/presupuesto_servicio.php", "leer=1");
     $("#presupuesto_servicio_tb").html("");
-    if(data === "0"){
+    if (data === "0") {
         $("#presupuesto_servicio_tb").html("<tr><td colspan='6'>NO HAY REGISTRO</td></tr>");
-    }else{
+    } else {
         let json_data = JSON.parse(data);
-        json_data.map(function(item){
+        json_data.map(function (item) {
             $("#presupuesto_servicio_tb").append(`
                 <tr>
                     <td>${item.id_presupuesto_servicio}</td>
@@ -29,6 +29,7 @@ function cargarTablaPresupuestoServicio(){
                             <option value="Enviado">Enviado</option>
                             <option value="Aprobado">Aprobado</option>
                             <option value="Rechazado">Rechazado</option>
+                            <option value="ANULADO">ANULADO</option>
                         </select>
                     </td>
                     <td>${item.observaciones || ''}</td>
@@ -43,48 +44,67 @@ function cargarTablaPresupuestoServicio(){
     }
 }
 
-$(document).on("click",".anular-presupuesto-servicio",function(){
+$(document).on("click", ".anular-presupuesto-servicio", function () {
     let id = $(this).closest("tr").find("td:eq(0)").text();
-    if(confirm("¿Anular presupuesto?")){
-        ejecutarAjax("controladores/presupuesto_servicio.php","anular="+id);
-        cargarTablaPresupuestoServicio();
-    }
+    Swal.fire({
+        title: '¿Anular presupuesto?',
+        text: "Una vez anulado, no podrás revertir esta acción.",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#d33',
+        cancelButtonColor: '#3085d6',
+        confirmButtonText: 'Sí, anular',
+        cancelButtonText: 'Cancelar'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            // Ejecuta la petición AJAX para anular
+            ejecutarAjax("controladores/presupuesto_servicio.php", "anular=" + id);
+            // Recarga la tabla
+            cargarTablaPresupuestoServicio();
+            // Feedback al usuario
+            Swal.fire(
+                    '¡Anulado!',
+                    'El presupuesto ha sido anulado.',
+                    'success'
+                    );
+        }
+    });
 });
 
-$(document).on("click", ".imprimir-presupuesto-servicio", function(){
+$(document).on("click", ".imprimir-presupuesto-servicio", function () {
     let id = $(this).closest("tr").find("td:eq(0)").text();
     imprimirPresupuestoServicio(id);
 });
 
-$(document).on("change", ".estado-presupuesto-servicio", function(){
+$(document).on("change", ".estado-presupuesto-servicio", function () {
     let fila = $(this).closest("tr");
     let id = fila.find("td:eq(0)").text();
     let estado = $(this).val();
-    ejecutarAjax("controladores/presupuesto_servicio.php", "cambiar_estado="+id+"&estado="+estado);
+    ejecutarAjax("controladores/presupuesto_servicio.php", "cambiar_estado=" + id + "&estado=" + estado);
 });
 
-function cargarListaDiagnostico(componente){
-    let data = ejecutarAjax("controladores/diagnostico.php","leer_diagnostico_pendiente=1");
-    if(data === "0"){
+function cargarListaDiagnostico(componente) {
+    let data = ejecutarAjax("controladores/diagnostico.php", "leer_diagnostico_pendiente=1");
+    if (data === "0") {
         $(componente).html("<option value='0'>Sin diagnósticos</option>");
-    }else{
+    } else {
         let json_data = JSON.parse(data);
         $(componente).html("<option value='0'>-- Seleccione un diagnóstico --</option>");
-        json_data.map(function(item){
+        json_data.map(function (item) {
             $(componente).append(`<option value="${item.id_diagnostico}">${item.id_diagnostico} - Fecha: ${item.fecha_diagnostico} - Cliente: ${item.cliente} </option>`);
         });
     }
 }
 
-function agregarDetallePresupuestoServicio(){
-    if($("#concepto").val().trim().length === 0){
-        alert("Ingrese concepto");
+function agregarDetallePresupuestoServicio() {
+    if ($("#concepto").val().trim().length === 0) {
+        mensaje_dialogo_info_ERROR("Ingrese concepto");
         return;
     }
     let cantidad = parseInt($("#cantidad").val()) || 0;
     let precio = parseInt($("#precio_unitario").val()) || 0;
-    if(cantidad <= 0 || precio <= 0){
-        alert("Cantidad y precio deben ser mayores a cero");
+    if (cantidad <= 0 || precio <= 0) {
+        mensaje_dialogo_info_ERROR("Cantidad y precio deben ser mayores a cero");
         return;
     }
     let subtotal = cantidad * precio;
@@ -103,25 +123,25 @@ function agregarDetallePresupuestoServicio(){
     $("#precio_unitario").val(0);
 }
 
-$(document).on("click",".remover-item",function(){
+$(document).on("click", ".remover-item", function () {
     $(this).closest("tr").remove();
     calcularTotalPresupuestoServicio();
 });
 
-function calcularTotalPresupuestoServicio(){
+function calcularTotalPresupuestoServicio() {
     let total = 0;
-    $("#detalle_presupuesto_servicio_tb tr").each(function(){
+    $("#detalle_presupuesto_servicio_tb tr").each(function () {
         total += parseInt($(this).data("subtotal")) || 0;
     });
     $("#total_presupuesto_servicio").text(formatearNumero(total));
 }
 
-function guardarPresupuestoServicio(){
-    if($("#diagnostico_lst").val() === "0"){
+function guardarPresupuestoServicio() {
+    if ($("#diagnostico_lst").val() === "0") {
         alert("Seleccione un diagnóstico");
         return;
     }
-    if($("#detalle_presupuesto_servicio_tb tr").length === 0){
+    if ($("#detalle_presupuesto_servicio_tb tr").length === 0) {
         alert("Agregue detalle");
         return;
     }
@@ -132,21 +152,21 @@ function guardarPresupuestoServicio(){
         estado: 'Enviado',
         observaciones: $("#observaciones").val()
     };
-    ejecutarAjax("controladores/presupuesto_servicio.php","guardar="+JSON.stringify(cab));
-    let id = ejecutarAjax("controladores/presupuesto_servicio.php","dameUltimoId=1");
-    $("#detalle_presupuesto_servicio_tb tr").each(function(){
+    ejecutarAjax("controladores/presupuesto_servicio.php", "guardar=" + JSON.stringify(cab));
+    let id = ejecutarAjax("controladores/presupuesto_servicio.php", "dameUltimoId=1");
+    $("#detalle_presupuesto_servicio_tb tr").each(function () {
         let det = {
             id_presupuesto_servicio: id,
             concepto: $(this).find("td:eq(0)").text(),
             cantidad: parseInt($(this).find("td:eq(1)").text()),
             precio_unitario: quitarDecimalesConvertir($(this).find("td:eq(2)").text())
         };
-        ejecutarAjax("controladores/presupuesto_servicio.php","guardar_detalle="+JSON.stringify(det));
+        ejecutarAjax("controladores/presupuesto_servicio.php", "guardar_detalle=" + JSON.stringify(det));
     });
     mensaje_dialogo_info("Diagnostico registrado correctamente", "REGISTRADO");
     mostrarListarPresupuestoServicio();
 }
 
-function imprimirPresupuestoServicio(id){
-    window.open("paginas/movimientos/servicios/presupuesto/imprimir.php?id="+id);
+function imprimirPresupuestoServicio(id) {
+    window.open("paginas/movimientos/servicios/presupuesto/imprimir.php?id=" + id);
 }
