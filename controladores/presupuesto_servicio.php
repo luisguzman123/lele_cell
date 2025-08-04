@@ -3,7 +3,15 @@ require_once '../conexion/db.php';
 
 if(isset($_POST['leer'])){
     $conexion = new DB();
-    $query = $conexion->conectar()->prepare("SELECT id_presupuesto_servicio, id_diagnostico, fecha_presupuesto, validez_dias, estado, observaciones FROM presupuesto_servicio_cabecera ORDER BY id_presupuesto_servicio DESC");
+    $query = $conexion->conectar()->prepare("SELECT psc.id_presupuesto_servicio, psc.id_diagnostico, psc.fecha_presupuesto, 
+psc.validez_dias, psc.estado, psc.observaciones, CONCAT(c.nombre, ' ', c.apellido) as cliente FROM presupuesto_servicio_cabecera psc
+JOIN diagnostico_cabecera dc
+ON dc.id_diagnostico = psc.id_diagnostico
+JOIN recepcion_cabecera rc
+ON rc.id_recepcion_cabecera = dc.id_recepcion_cabecera
+JOIN cliente c
+ON c.id_cliente = rc.id_cliente
+ORDER BY psc.id_presupuesto_servicio DESC");
     $query->execute();
     if($query->rowCount()){
         print_r(json_encode($query->fetchAll(PDO::FETCH_OBJ)));

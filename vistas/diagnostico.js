@@ -113,6 +113,7 @@ function guardarDiagnostico() {
         };
         ejecutarAjax("controladores/diagnostico.php", "guardar_detalle=" + JSON.stringify(detalle));
     });
+    let g = ejecutarAjax("controladores/recepcion.php", "utilizado="+ $("#recepcion_lst").val());
     mensaje_dialogo_info("Guardado Correctamente", "Exitoso");
     mostrarListarDiagnostico();
 }
@@ -127,7 +128,7 @@ function cargarTablaDiagnostico() {
         json_datos.map(function (item) {
             fila += `<tr>`;
             fila += `<td>${item.id_diagnostico}</td>`;
-            fila += `<td>${item.id_recepcion_cabecera}</td>`;
+            fila += `<td>${item.id_recepcion_cabecera} - ${item.cliente}</td>`;
             fila += `<td>${item.fecha_diagnostico}</td>`;
             fila += `<td>${formatearNumero(item.costo_estimado)}</td>`;
             fila += `<td>${item.estado_diagnostico}</td>`;

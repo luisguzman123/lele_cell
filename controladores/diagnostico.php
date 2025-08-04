@@ -3,7 +3,7 @@ require_once '../conexion/db.php';
 
 if (isset($_POST['leer_recepcion'])) {
     $conexion = new DB();
-    $query = $conexion->conectar()->prepare("SELECT rc.id_recepcion_cabecera, rc.fecha, CONCAT(c.nombre, ' ', c.apellido) AS cliente FROM recepcion_cabecera rc JOIN cliente c ON rc.id_cliente = c.id_cliente WHERE rc.estado <> 'ANULADO'");
+    $query = $conexion->conectar()->prepare("SELECT rc.id_recepcion_cabecera, rc.fecha, CONCAT(c.nombre, ' ', c.apellido) AS cliente FROM recepcion_cabecera rc JOIN cliente c ON rc.id_cliente = c.id_cliente WHERE rc.estado NOT IN ('ANULADO', 'UTILIZADO')");
     $query->execute();
     if ($query->rowCount()) {
         print_r(json_encode($query->fetchAll(PDO::FETCH_OBJ)));
@@ -45,7 +45,28 @@ function dameUltimoID() {
 
 if (isset($_POST['leer_diagnostico'])) {
     $conexion = new DB();
-    $query = $conexion->conectar()->prepare("SELECT dc.id_diagnostico, dc.fecha_diagnostico, dc.costo_estimado, dc.estado_diagnostico, rc.id_recepcion_cabecera FROM diagnostico_cabecera dc JOIN recepcion_cabecera rc ON rc.id_recepcion_cabecera = dc.id_recepcion_cabecera");
+    $query = $conexion->conectar()->prepare("SELECT dc.id_diagnostico,CONCAT(c.nombre, ' ', c.apellido) as cliente, dc.fecha_diagnostico, dc.costo_estimado, dc.estado_diagnostico, rc.id_recepcion_cabecera FROM diagnostico_cabecera dc JOIN recepcion_cabecera rc "
+            . "ON rc.id_recepcion_cabecera = dc.id_recepcion_cabecera "
+            . "JOIN cliente c "
+            . "ON c.id_cliente = rc.id_cliente "
+            . "");
+    $query->execute();
+    if ($query->rowCount()) {
+        print_r(json_encode($query->fetchAll(PDO::FETCH_OBJ)));
+    } else {
+        echo "0";
+    }
+}
+
+if (isset($_POST['leer_diagnostico_pendiente'])) {
+    $conexion = new DB();
+    $query = $conexion->conectar()->prepare("SELECT dc.id_diagnostico, CONCAT(c.nombre, ' ', c.apellido) as cliente, dc.fecha_diagnostico, "
+            . "dc.costo_estimado, dc.estado_diagnostico, rc.id_recepcion_cabecera "
+            . "FROM diagnostico_cabecera dc JOIN recepcion_cabecera rc "
+            . "ON rc.id_recepcion_cabecera = dc.id_recepcion_cabecera "
+            . "JOIN cliente c "
+            . "ON c.id_cliente = rc.id_cliente "
+            . "WHERE dc.estado_diagnostico = 'PENDIENTE'");
     $query->execute();
     if ($query->rowCount()) {
         print_r(json_encode($query->fetchAll(PDO::FETCH_OBJ)));
@@ -63,4 +84,5 @@ function anular($id) {
     $query = $base_datos->conectar()->prepare("UPDATE diagnostico_cabecera SET estado_diagnostico = 'ANULADO' WHERE id_diagnostico = $id");
     $query->execute();
 }
+
 ?>

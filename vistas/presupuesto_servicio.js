@@ -22,7 +22,7 @@ function cargarTablaPresupuestoServicio(){
             $("#presupuesto_servicio_tb").append(`
                 <tr>
                     <td>${item.id_presupuesto_servicio}</td>
-                    <td>${item.id_diagnostico}</td>
+                    <td>${item.id_diagnostico} - ${item.cliente}</td>
                     <td>${item.fecha_presupuesto}</td>
                     <td>${item.estado}</td>
                     <td>${item.observaciones || ''}</td>
@@ -42,14 +42,14 @@ $(document).on("click",".anular-presupuesto-servicio",function(){
 });
 
 function cargarListaDiagnostico(componente){
-    let data = ejecutarAjax("controladores/diagnostico.php","leer_diagnostico=1");
+    let data = ejecutarAjax("controladores/diagnostico.php","leer_diagnostico_pendiente=1");
     if(data === "0"){
         $(componente).html("<option value='0'>Sin diagnósticos</option>");
     }else{
         let json_data = JSON.parse(data);
         $(componente).html("<option value='0'>-- Seleccione un diagnóstico --</option>");
         json_data.map(function(item){
-            $(componente).append(`<option value="${item.id_diagnostico}">${item.id_diagnostico}</option>`);
+            $(componente).append(`<option value="${item.id_diagnostico}">${item.id_diagnostico} - Fecha: ${item.fecha_diagnostico} - Cliente: ${item.cliente} </option>`);
         });
     }
 }
@@ -117,9 +117,10 @@ function guardarPresupuestoServicio(){
             id_presupuesto_servicio: id,
             concepto: $(this).find("td:eq(0)").text(),
             cantidad: parseInt($(this).find("td:eq(1)").text()),
-            precio_unitario: quitarFormatoNumero($(this).find("td:eq(2)").text())
+            precio_unitario: quitarDecimalesConvertir($(this).find("td:eq(2)").text())
         };
         ejecutarAjax("controladores/presupuesto_servicio.php","guardar_detalle="+JSON.stringify(det));
     });
+    mensaje_dialogo_info("Diagnostico registrado correctamente", "REGISTRADO");
     mostrarListarPresupuestoServicio();
 }

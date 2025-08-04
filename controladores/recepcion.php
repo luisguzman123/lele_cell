@@ -116,3 +116,18 @@ function anular($id) {
 
     $query->execute();
 }
+
+if (isset($_POST['utilizado'])) {
+    utilizado($_POST['utilizado']);
+}
+
+function utilizado($id) {
+
+    $base_datos = new DB();
+
+    $query = $base_datos->conectar()->prepare("UPDATE recepcion_cabecera SET
+            estado = 'UTILIZADO'
+             WHERE id_recepcion_cabecera = $id");
+
+    $query->execute();
+}
