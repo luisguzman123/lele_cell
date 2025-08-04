@@ -36,9 +36,28 @@ if(isset($_POST['leer_aprobado'])){
 
 if(isset($_POST['guardar'])){
     $json = json_decode($_POST['guardar'], true);
-    $json['id_usuario'] = $_SESSION['id_usuario'];
     $conexion = new DB();
-    $query = $conexion->conectar()->prepare("INSERT INTO presupuesto_cabecera(fecha, observacion, id_proveedor, total, id_usuario, estado) VALUES(:fecha,:observacion,:proveedor,:total,:id_usuario,:estado)");
+    $pdo = $conexion->conectar();
+    if(!isset($_SESSION['id_usuario'])){
+        if(isset($_SESSION['usuario'])){
+            $stmt = $pdo->prepare("SELECT id_usuario FROM usuario WHERE usuario = :usuario");
+            $stmt->execute(['usuario' => $_SESSION['usuario']]);
+            $user = $stmt->fetch(PDO::FETCH_ASSOC);
+            if($user){
+                $_SESSION['id_usuario'] = $user['id_usuario'];
+            }else{
+                http_response_code(401);
+                echo 'ID de usuario no disponible';
+                exit;
+            }
+        }else{
+            http_response_code(401);
+            echo 'ID de usuario no disponible';
+            exit;
+        }
+    }
+    $json['id_usuario'] = $_SESSION['id_usuario'];
+    $query = $pdo->prepare("INSERT INTO presupuesto_cabecera(fecha, observacion, id_proveedor, total, id_usuario, estado) VALUES(:fecha,:observacion,:proveedor,:total,:id_usuario,:estado)");
     $query->execute($json);
 }
 
