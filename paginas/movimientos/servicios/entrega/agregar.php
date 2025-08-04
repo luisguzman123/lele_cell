@@ -1,3 +1,4 @@
+<?php session_start(); ?>
 <div class="container mt-5">
   <div class="card shadow-lg rounded-4 p-5 bg-white">
     <h3 class="mb-4 text-primary fw-bold">NUEVA ENTREGA</h3>
@@ -13,9 +14,14 @@
         <label for="fecha_entrega" class="form-label fw-semibold text-dark">Fecha Entrega <span class="text-danger">*</span></label>
         <input type="date" id="fecha_entrega" class="form-control" required />
       </div>
-      <div class="col-md-12">
-        <label for="firmado_por" class="form-label fw-semibold text-dark">Firmado por</label>
-        <input type="text" id="firmado_por" class="form-control" />
+      <div class="col-md-6">
+        <label for="monto_servicio" class="form-label fw-semibold text-dark">Monto del Servicio</label>
+        <input type="text" id="monto_servicio" class="form-control" readonly />
+      </div>
+      <div class="col-md-6">
+        <label for="usuario" class="form-label fw-semibold text-dark">Usuario</label>
+        <input type="text" id="usuario" class="form-control" value="<?= $_SESSION['usuario'] ?>" readonly />
+        <input type="hidden" id="id_usuario" value="<?= $_SESSION['id_usuario'] ?>" />
       </div>
     </div>
     <div class="row g-3">

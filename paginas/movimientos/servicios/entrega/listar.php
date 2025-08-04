@@ -14,8 +14,9 @@
       <tr>
         <th>#</th>
         <th>Servicio</th>
+        <th>Monto</th>
         <th>Fecha Entrega</th>
-        <th>Firmado Por</th>
+        <th>Usuario</th>
         <th>Operaciones</th>
       </tr>
     </thead>

@@ -886,12 +886,18 @@ CREATE TABLE servicio_entrega (
   id_entrega INT AUTO_INCREMENT PRIMARY KEY,
   id_servicio INT NOT NULL,
   fecha_entrega DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  firmado_por VARCHAR(100) NULL,
+  id_usuario INT NOT NULL,
+  monto_servicio INT NOT NULL DEFAULT 0,
   CONSTRAINT fk_ent_srv
     FOREIGN KEY (id_servicio)
     REFERENCES servicio_cabecera(id_servicio)
       ON DELETE RESTRICT
 
+      ON UPDATE CASCADE,
+  CONSTRAINT fk_ent_usr
+    FOREIGN KEY (id_usuario)
+    REFERENCES usuario(id_usuario)
+      ON DELETE RESTRICT
       ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
