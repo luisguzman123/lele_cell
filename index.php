@@ -418,6 +418,12 @@ https://cdn.jsdelivr.net/npm/sweetalert2@11.22.0/dist/sweetalert2.min.css
                                         </a>
                                     </li>
                                     <li class="nav-item">
+                                        <a href="#" onclick="mostrarListarGarantia();" class="nav-link">
+                                            <i class="nav-icon bi bi-circle"></i>
+                                            <p>Garantia</p>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
                                         <a href="#" onclick="mostrarListarServicio();" class="nav-link">
                                             <i class="nav-icon bi bi-circle"></i>
                                             <p>Servicio</p>
@@ -744,7 +750,11 @@ https://cdn.jsdelivr.net/npm/sweetalert2@11.22.0/dist/sweetalert2.all.min.js
         <script src="vistas/diagnostico.js"></script>
         <script src="vistas/presupuesto_servicio.js"></script>
         <script src="vistas/servicio.js"></script>
+
+        <script src="vistas/servicio_garantia.js"></script>
+
         <script src="vistas/entrega.js"></script>
+
         <script src="vistas/pedido_proveedor.js"></script>
         <script src="vistas/presupuesto.js"></script>
         <script src="vistas/orden_compra.js"></script>

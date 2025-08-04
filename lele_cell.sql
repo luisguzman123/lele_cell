@@ -812,6 +812,20 @@ CREATE TABLE servicio_detalle (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
+
+-- Estructura de tabla para la tabla `servicio_garantia`
+-- --------------------------------------------------------
+CREATE TABLE servicio_garantia (
+  id_garantia INT AUTO_INCREMENT PRIMARY KEY,
+  id_servicio INT NOT NULL,
+  fecha_inicio DATE NOT NULL DEFAULT CURRENT_DATE,
+  duracion_dias INT NOT NULL DEFAULT 30,
+  estado VARCHAR(20) NOT NULL DEFAULT 'Vigente',
+  CONSTRAINT fk_gar_srv
+    FOREIGN KEY (id_servicio)
+    REFERENCES servicio_cabecera(id_servicio)
+      ON DELETE CASCADE
+
 -- Estructura de tabla para la tabla `servicio_entrega`
 -- --------------------------------------------------------
 CREATE TABLE servicio_entrega (
@@ -823,6 +837,7 @@ CREATE TABLE servicio_entrega (
     FOREIGN KEY (id_servicio)
     REFERENCES servicio_cabecera(id_servicio)
       ON DELETE RESTRICT
+
       ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
