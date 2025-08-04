@@ -620,15 +620,17 @@ CREATE TABLE `servicio` (
 CREATE TABLE `usuario` (
   `id_usuario` int(11) NOT NULL,
   `usuario` varchar(50) NOT NULL,
-  `password` varchar(255) NOT NULL
+  `password` varchar(255) NOT NULL,
+  `id_cargo` int(11) NOT NULL,
+  `id_permiso` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Volcado de datos para la tabla `usuario`
 --
 
-INSERT INTO `usuario` (`id_usuario`, `usuario`, `password`) VALUES
-(1, 'admin', '202cb962ac59075b964b07152d234b70');
+INSERT INTO `usuario` (`id_usuario`, `usuario`, `password`, `id_cargo`, `id_permiso`) VALUES
+(1, 'admin', '202cb962ac59075b964b07152d234b70', 1, 1);
 
 --
 -- Índices para tablas volcadas
@@ -806,6 +808,14 @@ ALTER TABLE `permiso`
   ADD PRIMARY KEY (`id_permiso`);
 
 --
+-- Indices de la tabla `usuario`
+--
+ALTER TABLE `usuario`
+  ADD PRIMARY KEY (`id_usuario`),
+  ADD KEY `fk_usuario_cargo` (`id_cargo`),
+  ADD KEY `fk_usuario_permiso` (`id_permiso`);
+
+--
 -- Indices de la tabla `recepcion_cabecera`
 --
 ALTER TABLE `recepcion_cabecera`
@@ -940,6 +950,12 @@ ALTER TABLE `cargo`
 --
 ALTER TABLE `permiso`
   MODIFY `id_permiso` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT de la tabla `usuario`
+--
+ALTER TABLE `usuario`
+  MODIFY `id_usuario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT de la tabla `recepcion_cabecera`
