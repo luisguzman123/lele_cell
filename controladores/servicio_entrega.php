@@ -1,4 +1,5 @@
 <?php
+session_start();
 require_once '../conexion/db.php';
 
 if (isset($_POST['leer_servicio'])) {
@@ -60,10 +61,11 @@ if (isset($_POST['anular'])) {
 
 if (isset($_POST['pagar'])) {
     $json_datos = json_decode($_POST['pagar'], true);
+    $json_datos['id_registro'] = $_SESSION['id_apertura'] ?? null;
     $conexion = new DB();
     $query = $conexion->conectar()->prepare(
-        "INSERT INTO servicio_entrega_pago (id_entrega, tipo_pago, monto)
-        VALUES (:id_entrega, :tipo_pago, :monto)"
+        "INSERT INTO servicio_entrega_pago (id_entrega, tipo_pago, monto, id_registro)
+        VALUES (:id_entrega, :tipo_pago, :monto, :id_registro)"
     );
     $query->execute($json_datos);
 
@@ -73,3 +75,4 @@ if (isset($_POST['pagar'])) {
     $query->execute(['id_entrega' => $json_datos['id_entrega']]);
 }
 ?>
+
