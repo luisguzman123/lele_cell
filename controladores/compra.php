@@ -1,4 +1,5 @@
 <?php
+session_start();
 require_once '../conexion/db.php';
 // Auditoría opcional: si el archivo existe se carga para registrar acciones,
 // de lo contrario se continúa sin interrumpir el flujo de la aplicación.
@@ -19,8 +20,9 @@ if(isset($_POST['leer'])){
 
 if(isset($_POST['guardar'])){
     $json = json_decode($_POST['guardar'], true);
+    $json['id_usuario'] = $_SESSION['id_usuario'];
     $conexion = new DB();
-    $query = $conexion->conectar()->prepare("INSERT INTO compra_cabecera(fecha, observacion, id_proveedor, id_orden, total_exenta, total_iva5, total_iva10, total, estado) VALUES(:fecha,:observacion,:id_proveedor,:id_orden,:total_exenta,:total_iva5,:total_iva10,:total,:estado)");
+    $query = $conexion->conectar()->prepare("INSERT INTO compra_cabecera(fecha, observacion, id_proveedor, id_orden, total_exenta, total_iva5, total_iva10, total, id_usuario, estado) VALUES(:fecha,:observacion,:id_proveedor,:id_orden,:total_exenta,:total_iva5,:total_iva10,:total,:id_usuario,:estado)");
     $query->execute($json);
 //    registrarAuditoria('COMPRA', 'GUARDAR');
 }

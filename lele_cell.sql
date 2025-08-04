@@ -99,6 +99,7 @@ CREATE TABLE `compra_cabecera` (
   `total_iva5` int(11) DEFAULT NULL,
   `total_iva10` int(11) DEFAULT NULL,
   `total` int(11) DEFAULT NULL,
+  `id_usuario` int(11) NOT NULL,
   `estado` varchar(45) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
@@ -193,6 +194,7 @@ CREATE TABLE `orden_compra_cabecera` (
   `id_proveedor` int(11) DEFAULT NULL,
   `total` int(11) DEFAULT NULL,
   `id_presupuesto` int(11) DEFAULT NULL,
+  `id_usuario` int(11) NOT NULL,
   `estado` varchar(45) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
@@ -200,8 +202,8 @@ CREATE TABLE `orden_compra_cabecera` (
 -- Volcado de datos para la tabla `orden_compra_cabecera`
 --
 
-INSERT INTO `orden_compra_cabecera` (`id_orden`, `fecha`, `observacion`, `id_proveedor`, `total`, `id_presupuesto`, `estado`) VALUES
-(7, '2025-08-03', '', 2, 250000, 8, 'APROBADO');
+INSERT INTO `orden_compra_cabecera` (`id_orden`, `fecha`, `observacion`, `id_proveedor`, `total`, `id_presupuesto`, `id_usuario`, `estado`) VALUES
+(7, '2025-08-03', '', 2, 250000, 8, 1, 'APROBADO');
 
 -- --------------------------------------------------------
 
@@ -235,6 +237,7 @@ CREATE TABLE `pedido_proveedor_cabecera` (
   `fecha` date DEFAULT NULL,
   `observacion` varchar(255) DEFAULT NULL,
   `id_proveedor` int(11) DEFAULT NULL,
+  `id_usuario` int(11) NOT NULL,
   `estado` varchar(45) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
@@ -242,8 +245,8 @@ CREATE TABLE `pedido_proveedor_cabecera` (
 -- Volcado de datos para la tabla `pedido_proveedor_cabecera`
 --
 
-INSERT INTO `pedido_proveedor_cabecera` (`id_pedido`, `fecha`, `observacion`, `id_proveedor`, `estado`) VALUES
-(6, '2025-08-03', '', 2, 'UTILIZADO');
+INSERT INTO `pedido_proveedor_cabecera` (`id_pedido`, `fecha`, `observacion`, `id_proveedor`, `id_usuario`, `estado`) VALUES
+(6, '2025-08-03', '', 2, 1, 'UTILIZADO');
 
 -- --------------------------------------------------------
 
@@ -277,6 +280,7 @@ CREATE TABLE `presupuesto_cabecera` (
   `observacion` varchar(255) DEFAULT NULL,
   `id_proveedor` int(11) NOT NULL,
   `total` int(11) NOT NULL,
+  `id_usuario` int(11) NOT NULL,
   `estado` varchar(45) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
@@ -284,8 +288,8 @@ CREATE TABLE `presupuesto_cabecera` (
 -- Volcado de datos para la tabla `presupuesto_cabecera`
 --
 
-INSERT INTO `presupuesto_cabecera` (`id_presupuesto`, `fecha`, `observacion`, `id_proveedor`, `total`, `estado`) VALUES
-(8, '2025-08-03', '', 2, 250000, 'APROBADO');
+INSERT INTO `presupuesto_cabecera` (`id_presupuesto`, `fecha`, `observacion`, `id_proveedor`, `total`, `id_usuario`, `estado`) VALUES
+(8, '2025-08-03', '', 2, 250000, 1, 'APROBADO');
 
 -- --------------------------------------------------------
 
@@ -498,7 +502,8 @@ ALTER TABLE `cliente_equipo`
 -- Indices de la tabla `compra_cabecera`
 --
 ALTER TABLE `compra_cabecera`
-  ADD PRIMARY KEY (`id_compra`);
+  ADD PRIMARY KEY (`id_compra`),
+  ADD KEY `fk_compra_cabecera_usuario` (`id_usuario`);
 
 --
 -- Indices de la tabla `compra_detalle`
@@ -530,7 +535,8 @@ ALTER TABLE `modelo`
 -- Indices de la tabla `orden_compra_cabecera`
 --
 ALTER TABLE `orden_compra_cabecera`
-  ADD PRIMARY KEY (`id_orden`);
+  ADD PRIMARY KEY (`id_orden`),
+  ADD KEY `fk_orden_compra_cabecera_usuario` (`id_usuario`);
 
 --
 -- Indices de la tabla `orden_compra_detalle`
@@ -543,7 +549,8 @@ ALTER TABLE `orden_compra_detalle`
 --
 ALTER TABLE `pedido_proveedor_cabecera`
   ADD PRIMARY KEY (`id_pedido`),
-  ADD KEY `fk_pedido_proveedor_cabecera_proveedor` (`id_proveedor`);
+  ADD KEY `fk_pedido_proveedor_cabecera_proveedor` (`id_proveedor`),
+  ADD KEY `fk_pedido_proveedor_cabecera_usuario` (`id_usuario`);
 
 --
 -- Indices de la tabla `pedido_proveedor_detalle`
@@ -557,7 +564,8 @@ ALTER TABLE `pedido_proveedor_detalle`
 -- Indices de la tabla `presupuesto_cabecera`
 --
 ALTER TABLE `presupuesto_cabecera`
-  ADD PRIMARY KEY (`id_presupuesto`);
+  ADD PRIMARY KEY (`id_presupuesto`),
+  ADD KEY `fk_presupuesto_cabecera_usuario` (`id_usuario`);
 
 --
 -- Indices de la tabla `presupuesto_detalle`

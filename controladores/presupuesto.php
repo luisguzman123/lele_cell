@@ -1,4 +1,5 @@
 <?php
+session_start();
 require_once '../conexion/db.php';
 
 if(isset($_POST['leer'])){
@@ -35,8 +36,9 @@ if(isset($_POST['leer_aprobado'])){
 
 if(isset($_POST['guardar'])){
     $json = json_decode($_POST['guardar'], true);
+    $json['id_usuario'] = $_SESSION['id_usuario'];
     $conexion = new DB();
-    $query = $conexion->conectar()->prepare("INSERT INTO presupuesto_cabecera(fecha, observacion, id_proveedor, total, estado) VALUES(:fecha,:observacion,:proveedor,:total,:estado)");
+    $query = $conexion->conectar()->prepare("INSERT INTO presupuesto_cabecera(fecha, observacion, id_proveedor, total, id_usuario, estado) VALUES(:fecha,:observacion,:proveedor,:total,:id_usuario,:estado)");
     $query->execute($json);
 }
 
