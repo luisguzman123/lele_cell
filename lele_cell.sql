@@ -413,6 +413,7 @@ CREATE TABLE `factura_cabecera` (
   `fecha` date DEFAULT NULL,
   `id_cliente` int(11) DEFAULT NULL,
   `condicion` varchar(20) DEFAULT NULL,
+  `tipo_pago` varchar(50) DEFAULT '0',
   `timbrado` varchar(20) DEFAULT NULL,
   `estado` varchar(20) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;

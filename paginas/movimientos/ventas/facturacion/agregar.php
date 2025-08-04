@@ -24,6 +24,15 @@
             <option value="CREDITO">CREDITO</option>
         </select>
     </div>
+    <div class="col-3" id="tipo_pago_group">
+        <label>Tipo de Pago</label>
+        <select id="tipo_pago" class="form-control">
+            <option value="0">Seleccione</option>
+            <option value="Efectivo">Efectivo</option>
+            <option value="Tarjeta">Tarjeta</option>
+            <option value="Transferencia">Transferencia</option>
+        </select>
+    </div>
     <div class="col-12">
         <label>Cliente</label>
         <select  id="cliente" class="form-control">

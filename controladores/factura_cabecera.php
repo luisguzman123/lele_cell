@@ -26,10 +26,10 @@ if (isset($_POST['guardar'])) {
     $json_datos = json_decode($_POST['guardar'], true);
     $conexion = new DB();
     $query = $conexion->conectar()->prepare("INSERT INTO factura_cabecera"
-            . "( nro_factura, fecha, id_cliente, condicion,"
+            . "( nro_factura, fecha, id_cliente, condicion, tipo_pago,"
             . " timbrado, estado)"
             . " VALUES (:nro_factura, :fecha, :id_cliente,"
-            . " :condicion, :timbrado, :estado)");
+            . " :condicion, :tipo_pago, :timbrado, :estado)");
 
     $query->execute($json_datos);
 
@@ -78,6 +78,7 @@ if (isset($_POST['leer'])) {
         fc.estado,
         CONCAT(c.nombre, ' ', c.apellido) as razon_social,
         fc.condicion,
+        fc.tipo_pago,
         SUM(fd.cantidad * fd.precio) as total
         FROM factura_cabecera fc
         JOIN cliente c 
