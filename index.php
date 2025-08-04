@@ -504,6 +504,12 @@ https://cdn.jsdelivr.net/npm/sweetalert2@11.22.0/dist/sweetalert2.min.css
                                     </li>
                                 </ul>
                             </li>
+                            <li class="nav-item">
+                                <a href="#" onclick="mostrarFormReportes();" class="nav-link">
+                                    <i class="nav-icon bi bi-file-earmark-text"></i>
+                                    <p>Reportes</p>
+                                </a>
+                            </li>
 
 
 
@@ -833,6 +839,7 @@ https://cdn.jsdelivr.net/npm/sweetalert2@11.22.0/dist/sweetalert2.all.min.js
         <script src="vistas/apertura_cierre.js"></script>
         <script src="vistas/factura.js"></script>
         <script src="vistas/presupuesto_venta.js"></script>
+        <script src="vistas/reporte.js"></script>
         <!--end::Script-->
     </body>
     <!--end::Body-->
