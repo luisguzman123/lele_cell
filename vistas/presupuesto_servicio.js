@@ -29,7 +29,8 @@ function cargarTablaPresupuestoServicio() {
                             <option value="Enviado">Enviado</option>
                             <option value="Aprobado">Aprobado</option>
                             <option value="Rechazado">Rechazado</option>
-                            <option value="ANULADO">ANULADO</option>
+                            <option value="ANULADO">Anulado</option>
+                            <option value="UTILIZADO">Utilizado</option>
                         </select>
                     </td>
                     <td>${item.observaciones || ''}</td>

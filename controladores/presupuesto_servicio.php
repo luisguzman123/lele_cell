@@ -66,4 +66,11 @@ if(isset($_POST['cambiar_estado'])){
     $query = $conexion->conectar()->prepare("UPDATE presupuesto_servicio_cabecera SET estado=:estado WHERE id_presupuesto_servicio=:id");
     $query->execute(['estado'=>$_POST['estado'], 'id'=>$_POST['cambiar_estado']]);
 }
+
+
+if(isset($_POST['utilizado'])){
+    $conexion = new DB();
+    $query = $conexion->conectar()->prepare("UPDATE presupuesto_servicio_cabecera SET estado='UTILIZADO' WHERE id_presupuesto_servicio=:id");
+    $query->execute(['id'=>$_POST['utilizado']]);
+}
 ?>

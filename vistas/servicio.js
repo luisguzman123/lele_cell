@@ -230,6 +230,7 @@ function guardarServicio(){
         };
         ejecutarAjax("controladores/servicio.php","guardar_repuesto="+encodeURIComponent(JSON.stringify(rep)));
     });
+    let c = ejecutarAjax("controladores/presupuesto_servicio.php", "utilizado="+ $("#presupuesto_lst").val());
     mensaje_dialogo_info("Servicio registrado correctamente","REGISTRADO");
     mostrarListarServicio();
 }
