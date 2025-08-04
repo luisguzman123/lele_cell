@@ -57,4 +57,14 @@ if (isset($_POST['anular'])) {
     $query = $conexion->conectar()->prepare("DELETE FROM servicio_entrega WHERE id_entrega = :id");
     $query->execute(['id' => $_POST['anular']]);
 }
+
+if (isset($_POST['pagar'])) {
+    $json_datos = json_decode($_POST['pagar'], true);
+    $conexion = new DB();
+    $query = $conexion->conectar()->prepare(
+        "INSERT INTO servicio_entrega_pago (id_entrega, tipo_pago, monto)
+        VALUES (:id_entrega, :tipo_pago, :monto)"
+    );
+    $query->execute($json_datos);
+}
 ?>
