@@ -423,12 +423,7 @@ https://cdn.jsdelivr.net/npm/sweetalert2@11.22.0/dist/sweetalert2.min.css
                                             <p>Presupuesto Servicio</p>
                                         </a>
                                     </li>
-                                    <li class="nav-item">
-                                        <a href="#" onclick="mostrarListarGarantia();" class="nav-link">
-                                            <i class="nav-icon bi bi-circle"></i>
-                                            <p>Garantia</p>
-                                        </a>
-                                    </li>
+                                    
                                     <li class="nav-item">
                                         <a href="#" onclick="mostrarListarServicio();" class="nav-link">
                                             <i class="nav-icon bi bi-circle"></i>
@@ -439,6 +434,12 @@ https://cdn.jsdelivr.net/npm/sweetalert2@11.22.0/dist/sweetalert2.min.css
                                         <a href="#" onclick="mostrarListarEntrega();" class="nav-link">
                                             <i class="nav-icon bi bi-circle"></i>
                                             <p>Entrega</p>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a href="#" onclick="mostrarListarGarantia();" class="nav-link">
+                                            <i class="nav-icon bi bi-circle"></i>
+                                            <p>Garantia</p>
                                         </a>
                                     </li>
                                 </ul>

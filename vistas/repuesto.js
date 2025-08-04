@@ -24,7 +24,7 @@ function guardarRepuesto(){
 
     let data = {
         'nombre_repuesto': $("#nombre_repuesto").val(),
-        'precio': $("#precio").val(),
+        'precio': quitarDecimalesConvertir($("#precio").val()),
         'estado': $("#estado").val()
     };
 
@@ -79,7 +79,7 @@ function cargarTablaRepuesto(){
                 <tr>
                     <td>${item.id_repuesto}</td>
                     <td>${item.nombre_repuesto}</td>
-                    <td>${item.precio}</td>
+                    <td>${formatearNumero(item.precio)}</td>
                     <td>${item.estado}</td>
                     <td>
                         <button class="btn btn-warning editar-repuesto">Editar</button>

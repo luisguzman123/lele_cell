@@ -3,8 +3,11 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/xampp/htdocs/UTCDPOO/vistas/recepcion.js</file>
-            <file>file:/C:/xampp/htdocs/UTCDPOO/vistas/cliente.js</file>
+            <file>file:/C:/xampp/htdocs/lele_cell/controladores/diagnostico.php</file>
+            <file>file:/C:/xampp/htdocs/lele_cell/paginas/movimientos/servicios/servicio/agregar.php</file>
+            <file>file:/C:/xampp/htdocs/lele_cell/vistas/presupuesto_servicio.js</file>
+            <file>file:/C:/xampp/htdocs/lele_cell/vistas/servicio.js</file>
+            <file>file:/C:/xampp/htdocs/lele_cell/controladores/servicio.php</file>
         </group>
     </open-files>
 </project-private>
