@@ -94,7 +94,6 @@ $config = [
 ];
 
 $headers = [];
-$details = [];
 $error = '';
 
 if (isset($config[$tipo][$modulo])) {
@@ -106,15 +105,6 @@ if (isset($config[$tipo][$modulo])) {
     $stmt = $pdo->prepare($sqlCab);
     $stmt->execute(['desde' => $desde, 'hasta' => $hasta]);
     $headers = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
-    if ($conf['detail'] && $headers) {
-        $ids = array_column($headers, $conf['id']);
-        $placeholders = implode(',', array_fill(0, count($ids), '?'));
-        $sqlDet = "SELECT * FROM {$conf['detail']} WHERE {$conf['id']} IN ($placeholders)";
-        $stmt = $pdo->prepare($sqlDet);
-        $stmt->execute($ids);
-        $details = $stmt->fetchAll(PDO::FETCH_ASSOC);
-    }
 } else {
     $error = 'Módulo no soportado';
 }
@@ -156,24 +146,8 @@ if (isset($config[$tipo][$modulo])) {
             <p>No se encontraron datos de cabecera.</p>
         <?php endif; ?>
 
-        <?php if ($details): ?>
-            <h4>Detalle</h4>
-            <table class="table table-bordered">
-                <tr>
-                    <?php foreach (array_keys($details[0]) as $col): ?>
-                        <th><?= htmlspecialchars($col) ?></th>
-                    <?php endforeach; ?>
-                </tr>
-                <?php foreach ($details as $row): ?>
-                    <tr>
-                        <?php foreach ($row as $col): ?>
-                            <td><?= htmlspecialchars($col) ?></td>
-                        <?php endforeach; ?>
-                    </tr>
-                <?php endforeach; ?>
-            </table>
-        <?php elseif ($config[$tipo][$modulo]['detail']): ?>
-            <p>No se encontraron datos de detalle.</p>
+        <?php if ($config[$tipo][$modulo]['detail']): ?>
+            <p>No se mostrará información de detalle en este reporte.</p>
         <?php endif; ?>
     <?php endif; ?>
 </body>
