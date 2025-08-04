@@ -417,6 +417,12 @@ https://cdn.jsdelivr.net/npm/sweetalert2@11.22.0/dist/sweetalert2.min.css
                                             <p>Presupuesto Servicio</p>
                                         </a>
                                     </li>
+                                    <li class="nav-item">
+                                        <a href="#" onclick="mostrarListarServicio();" class="nav-link">
+                                            <i class="nav-icon bi bi-circle"></i>
+                                            <p>Servicio</p>
+                                        </a>
+                                    </li>
                                 </ul>
                             </li>
 
@@ -731,6 +737,7 @@ https://cdn.jsdelivr.net/npm/sweetalert2@11.22.0/dist/sweetalert2.all.min.js
         <script src="vistas/recepcion.js"></script>
         <script src="vistas/diagnostico.js"></script>
         <script src="vistas/presupuesto_servicio.js"></script>
+        <script src="vistas/servicio.js"></script>
         <script src="vistas/pedido_proveedor.js"></script>
         <script src="vistas/presupuesto.js"></script>
         <script src="vistas/orden_compra.js"></script>
