@@ -24,11 +24,21 @@ function cargarTablaPresupuestoServicio(){
                     <td>${item.id_presupuesto_servicio}</td>
                     <td>${item.id_diagnostico} - ${item.cliente}</td>
                     <td>${item.fecha_presupuesto}</td>
-                    <td>${item.estado}</td>
+                    <td>
+                        <select class="form-select form-select-sm estado-presupuesto-servicio">
+                            <option value="Enviado">Enviado</option>
+                            <option value="Aprobado">Aprobado</option>
+                            <option value="Rechazado">Rechazado</option>
+                        </select>
+                    </td>
                     <td>${item.observaciones || ''}</td>
-                    <td><button class='btn btn-danger anular-presupuesto-servicio'>Anular</button></td>
+                    <td>
+                        <button class='btn btn-danger anular-presupuesto-servicio'>Anular</button>
+                        <button class='btn btn-primary imprimir-presupuesto-servicio'>Imprimir</button>
+                    </td>
                 </tr>
             `);
+            $("#presupuesto_servicio_tb").find('tr:last .estado-presupuesto-servicio').val(item.estado);
         });
     }
 }
@@ -39,6 +49,18 @@ $(document).on("click",".anular-presupuesto-servicio",function(){
         ejecutarAjax("controladores/presupuesto_servicio.php","anular="+id);
         cargarTablaPresupuestoServicio();
     }
+});
+
+$(document).on("click", ".imprimir-presupuesto-servicio", function(){
+    let id = $(this).closest("tr").find("td:eq(0)").text();
+    imprimirPresupuestoServicio(id);
+});
+
+$(document).on("change", ".estado-presupuesto-servicio", function(){
+    let fila = $(this).closest("tr");
+    let id = fila.find("td:eq(0)").text();
+    let estado = $(this).val();
+    ejecutarAjax("controladores/presupuesto_servicio.php", "cambiar_estado="+id+"&estado="+estado);
 });
 
 function cargarListaDiagnostico(componente){
@@ -123,4 +145,8 @@ function guardarPresupuestoServicio(){
     });
     mensaje_dialogo_info("Diagnostico registrado correctamente", "REGISTRADO");
     mostrarListarPresupuestoServicio();
+}
+
+function imprimirPresupuestoServicio(id){
+    window.open("paginas/servicios/presupuesto/imprimir.php?id="+id);
 }
