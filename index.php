@@ -469,6 +469,24 @@ https://cdn.jsdelivr.net/npm/sweetalert2@11.22.0/dist/sweetalert2.min.css
                                 </ul>
                             </li>
 
+                            <li class="nav-item">
+                                <a href="#" class="nav-link">
+                                    <i class="nav-icon bi bi-lock"></i>
+                                    <p>
+                                        Seguridad
+                                        <i class="nav-arrow bi bi-chevron-right"></i>
+                                    </p>
+                                </a>
+                                <ul class="nav nav-treeview">
+                                    <li class="nav-item">
+                                        <a href="#" onclick="mostrarListarCargo();" class="nav-link">
+                                            <i class="nav-icon bi bi-circle"></i>
+                                            <p>Cargo</p>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>
+
 
 
 
@@ -776,6 +794,7 @@ https://cdn.jsdelivr.net/npm/sweetalert2@11.22.0/dist/sweetalert2.all.min.js
         <script src="vistas/cliente_equipo.js"></script>
         <script src="vistas/producto.js"></script>
         <script src="vistas/proveedor.js"></script>
+        <script src="vistas/cargo.js"></script>
         <script src="vistas/tecnico.js"></script>
         <script src="vistas/repuesto.js"></script>
         <script src="vistas/recepcion.js"></script>
