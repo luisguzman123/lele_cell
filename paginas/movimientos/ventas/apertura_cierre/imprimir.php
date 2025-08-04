@@ -2,11 +2,33 @@
 require_once '../../../../conexion/db.php';
 
 $caja = isset($_GET['caja']) ? intval($_GET['caja']) : 0;
-$db = new DB();
-$pdo = $db->conectar();
-$stmt = $pdo->prepare("SELECT fecha, accion, monto_apertura, efectivo, tarjeta, transferencia, total FROM caja_registro WHERE id_caja = :id_caja ORDER BY fecha DESC");
-$stmt->execute(['id_caja' => $caja]);
-$registros = $stmt->fetchAll(PDO::FETCH_OBJ);
+$hasInputs = isset(
+    $_GET['monto_apertura'],
+    $_GET['efectivo'],
+    $_GET['tarjeta'],
+    $_GET['transferencia'],
+    $_GET['total']
+);
+
+if ($hasInputs) {
+    $registros = [
+        (object) [
+            'fecha' => date('Y-m-d H:i:s'),
+            'accion' => 'ARQUEO',
+            'monto_apertura' => intval($_GET['monto_apertura']),
+            'efectivo' => intval($_GET['efectivo']),
+            'tarjeta' => intval($_GET['tarjeta']),
+            'transferencia' => intval($_GET['transferencia']),
+            'total' => intval($_GET['total'])
+        ]
+    ];
+} else {
+    $db = new DB();
+    $pdo = $db->conectar();
+    $stmt = $pdo->prepare("SELECT fecha, accion, monto_apertura, efectivo, tarjeta, transferencia, total FROM caja_registro WHERE id_caja = :id_caja ORDER BY fecha DESC");
+    $stmt->execute(['id_caja' => $caja]);
+    $registros = $stmt->fetchAll(PDO::FETCH_OBJ);
+}
 ?>
 <!DOCTYPE html>
 <html lang="es">
