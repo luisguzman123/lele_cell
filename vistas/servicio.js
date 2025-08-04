@@ -9,7 +9,7 @@ function mostrarAgregarServicio(){
     $("#contenido-principal").html(contenido);
     dameFechaActual("fecha_inicio");
     cargarListaPresupuestoServicio("#presupuesto_lst");
-    cargarListaTecnicos("#tecnico_lst");
+    cargarListaTecnicoServicio("#tecnico_lst");
 }
 
 function cargarTablaServicio(){
@@ -65,7 +65,7 @@ function cargarListaPresupuestoServicio(componente){
     }
 }
 
-function cargarListaTecnicos(componente){
+function cargarListaTecnicoServicio(componente){
     let data = ejecutarAjax("controladores/tecnico.php","leer_activo=1");
     if(data === "0"){
         $(componente).html("<option value='0'>Sin técnicos</option>");
