@@ -1,9 +1,9 @@
 function mostrarListarPresupuestoVenta() {
     let contenido = dameContenido("paginas/movimientos/ventas/presupuesto/listar.php");
     $("#contenido-principal").html(contenido);
-    cargarTablaPresupuestoVenta();
     dameFechaActual("desde");
     dameFechaActual("hasta");
+    cargarTablaPresupuestoVenta();
 }
 
 function mostrarNuevoPresupuestoVenta() {
@@ -153,11 +153,15 @@ function guardarPresupuestoVenta() {
     mostrarListarPresupuestoVenta();
 }
 
-function cargarTablaPresupuestoVenta() {
-    let data = ejecutarAjax("controladores/presupuesto_venta_cabecera.php","leer=1");
+function cargarTablaPresupuestoVenta(filtros = {}) {
+    let params = "leer=1";
+    if (filtros.desde) params += "&desde=" + filtros.desde;
+    if (filtros.hasta) params += "&hasta=" + filtros.hasta;
+    if (filtros.nro) params += "&nro=" + filtros.nro;
+    let data = ejecutarAjax("controladores/presupuesto_venta_cabecera.php", params);
+    $("#datos_tb").html("");
     if (data !== "0") {
         let json = JSON.parse(data);
-        $("#datos_tb").html("");
         json.map(function (item) {
             $("#datos_tb").append(`
                 <tr>
@@ -176,8 +180,24 @@ function cargarTablaPresupuestoVenta() {
                 </tr>
             `);
         });
+    } else {
+        $("#datos_tb").html("<tr><td colspan='9'>SIN RESULTADOS</td></tr>");
     }
 }
+
+$(document).on("click", "#btn_buscar_presupuesto_venta", function () {
+    cargarTablaPresupuestoVenta({
+        desde: $("#desde").val(),
+        hasta: $("#hasta").val(),
+        nro: $("#nro_presupuesto_busqueda").val()
+    });
+});
+
+$(document).on("keyup", "#nro_presupuesto_busqueda", function (e) {
+    if (e.keyCode === 13) {
+        $("#btn_buscar_presupuesto_venta").click();
+    }
+});
 
 $(document).on("click", ".anular-presupuesto-venta", function () {
     let id = $(this).closest("tr").find("td:eq(0)").text();

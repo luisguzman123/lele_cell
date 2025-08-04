@@ -33,8 +33,23 @@ if (isset($_POST['activar'])) {
 
 if (isset($_POST['leer'])) {
     $conexion = new DB();
-    $query = $conexion->conectar()->prepare("SELECT pv.id_presupuesto_venta, pv.nro_presupuesto, pv.fecha_emision, pv.fecha_vencimiento, pv.id_cliente, pv.estado, CONCAT(c.nombre, ' ', c.apellido) as razon_social, pv.condicion, SUM(d.cantidad * d.precio) as total FROM presupuesto_venta_cabecera pv JOIN cliente c ON c.id_cliente = pv.id_cliente JOIN presupuesto_venta_detalle d ON d.id_presupuesto_venta = pv.id_presupuesto_venta GROUP BY pv.id_presupuesto_venta ORDER BY pv.id_presupuesto_venta DESC");
-    $query->execute();
+    $sql = "SELECT pv.id_presupuesto_venta, pv.nro_presupuesto, pv.fecha_emision, pv.fecha_vencimiento, pv.id_cliente, pv.estado, CONCAT(c.nombre, ' ', c.apellido) as razon_social, pv.condicion, SUM(d.cantidad * d.precio) as total FROM presupuesto_venta_cabecera pv JOIN cliente c ON c.id_cliente = pv.id_cliente JOIN presupuesto_venta_detalle d ON d.id_presupuesto_venta = pv.id_presupuesto_venta WHERE 1=1";
+    $params = [];
+    if (!empty($_POST['nro'])) {
+        $sql .= " AND pv.nro_presupuesto LIKE :nro";
+        $params['nro'] = "%" . $_POST['nro'] . "%";
+    }
+    if (!empty($_POST['desde'])) {
+        $sql .= " AND pv.fecha_emision >= :desde";
+        $params['desde'] = $_POST['desde'];
+    }
+    if (!empty($_POST['hasta'])) {
+        $sql .= " AND pv.fecha_emision <= :hasta";
+        $params['hasta'] = $_POST['hasta'];
+    }
+    $sql .= " GROUP BY pv.id_presupuesto_venta ORDER BY pv.id_presupuesto_venta DESC";
+    $query = $conexion->conectar()->prepare($sql);
+    $query->execute($params);
     if ($query->rowCount()) {
         print_r(json_encode($query->fetchAll(PDO::FETCH_OBJ)));
     } else {
