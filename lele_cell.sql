@@ -777,6 +777,40 @@ CREATE TABLE `presupuesto_servicio_detalle` (
   CONSTRAINT `fk_detalle_presu_cab` FOREIGN KEY (`id_presupuesto_servicio`) REFERENCES `presupuesto_servicio_cabecera` (`id_presupuesto_servicio`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
+-- --------------------------------------------------------
+-- Estructura de tabla para la tabla `servicio_cabecera`
+-- --------------------------------------------------------
+CREATE TABLE servicio_cabecera (
+  id_servicio INT AUTO_INCREMENT PRIMARY KEY,
+  id_presupuesto INT NOT NULL,
+  id_tecnico INT NULL,
+  fecha_inicio DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  fecha_fin DATETIME NULL,
+  estado VARCHAR(20) NOT NULL DEFAULT 'En Proceso',
+  observaciones TEXT,
+  CONSTRAINT fk_srv_presu
+    FOREIGN KEY (id_presupuesto)
+    REFERENCES presupuesto_servicio_cabecera(id_presupuesto_servicio)
+      ON DELETE RESTRICT
+      ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+-- Estructura de tabla para la tabla `servicio_detalle`
+-- --------------------------------------------------------
+CREATE TABLE servicio_detalle (
+  id_detalle_srv INT AUTO_INCREMENT PRIMARY KEY,
+  id_servicio INT NOT NULL,
+  tarea VARCHAR(100) NOT NULL,
+  horas_trabajadas DECIMAL(5,2) NOT NULL DEFAULT 0,
+  observaciones TEXT,
+  CONSTRAINT fk_det_srv
+    FOREIGN KEY (id_servicio)
+    REFERENCES servicio_cabecera(id_servicio)
+      ON DELETE CASCADE
+      ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
 --
 -- AUTO_INCREMENT de la tabla `servicio`
 --
