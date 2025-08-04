@@ -27,7 +27,7 @@
         <input type="text" class="form-control" id="nro_factura_busqueda">
       </div>
       <div class="col-md-3 d-flex align-items-end">
-        <button class="btn btn-secondary w-100">Buscar</button>
+        <button id="buscar-factura" class="btn btn-secondary w-100">Buscar</button>
       </div>
     </div>
 
