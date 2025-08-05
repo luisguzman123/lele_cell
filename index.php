@@ -432,95 +432,122 @@ $nombre = $_SESSION['usuario'] ?? null;
                                             </ul>
                                         </li>
                                     <?php endif; ?>
-                                         <?php if ($idCargo == 2 || $idCargo == 1): ?>
-                                    <li class="nav-item">
-                                        <a href="#" class="nav-link">
-                                            <i class="nav-icon bi bi-speedometer"></i>
-                                            <p>
-                                                Servicios
-                                                <i class="nav-arrow bi bi-chevron-right"></i>
-                                            </p>
-                                        </a>
+                                    <?php if ($idCargo == 1): ?>
+                                        <li class="nav-item">
+                                            <a href="#" class="nav-link">
+                                                <i class="nav-icon bi bi-cart"></i>
+                                                <p>
+                                                    Stock
+                                                    <i class="nav-arrow bi bi-chevron-right"></i>
+                                                </p>
+                                            </a>
+                                            <ul class="nav nav-treeview">
+                                                <li class="nav-item">
+                                                    <a href="#" onclick="mostrarListarEntradaSalida()" class="nav-link">
+                                                        <i class="nav-icon bi bi-circle"></i>
+                                                        <p>Ajuste de stock</p>
+                                                    </a>
+                                                </li>
+                                                <li class="nav-item">
+                                                    <a href="#" onclick="mostrarListaStock()" class="nav-link">
+                                                        <i class="nav-icon bi bi-circle"></i>
+                                                        <p>Visualización de stock</p>
+                                                    </a>
+                                                </li>
 
-                                        <ul class="nav nav-treeview">
-                                            <li class="nav-item">
-                                                <a href="#" onclick="mostrarListarRecepcion();" class="nav-link">
-                                                    <i class="nav-icon bi bi-circle"></i>
-                                                    <p>Recepción</p>
-                                                </a>
-                                            </li>
-                                            <li class="nav-item">
-                                                <a href="#" onclick="mostrarListarDiagnostico();" class="nav-link">
-                                                    <i class="nav-icon bi bi-circle"></i>
-                                                    <p>Diagnóstico</p>
-                                                </a>
-                                            </li>
-                                            <li class="nav-item">
-                                                <a href="#" onclick="mostrarListarPresupuestoServicio();" class="nav-link">
-                                                    <i class="nav-icon bi bi-circle"></i>
-                                                    <p>Presupuesto Servicio</p>
-                                                </a>
-                                            </li>
 
-                                            <li class="nav-item">
-                                                <a href="#" onclick="mostrarListarServicio();" class="nav-link">
-                                                    <i class="nav-icon bi bi-circle"></i>
-                                                    <p>Servicio</p>
-                                                </a>
-                                            </li>
-                                            <li class="nav-item">
-                                                <a href="#" onclick="mostrarListarEntrega();" class="nav-link">
-                                                    <i class="nav-icon bi bi-circle"></i>
-                                                    <p>Entrega</p>
-                                                </a>
-                                            </li>
-                                            <li class="nav-item">
-                                                <a href="#" onclick="mostrarListarGarantia();" class="nav-link">
-                                                    <i class="nav-icon bi bi-circle"></i>
-                                                    <p>Garantia</p>
-                                                </a>
-                                            </li>
-                                        </ul>
-                                    </li>
-<?php endif; ?>
-                                     <?php if ($idCargo == 1): ?>
-                                    <li class="nav-item">
-                                        <a href="#" class="nav-link">
-                                            <i class="nav-icon bi bi-lock"></i>
-                                            <p>
-                                                Seguridad
-                                                <i class="nav-arrow bi bi-chevron-right"></i>
-                                            </p>
-                                        </a>
-                                        <ul class="nav nav-treeview">
-                                            <li class="nav-item">
-                                                <a href="#" onclick="mostrarListarCargo();" class="nav-link">
-                                                    <i class="nav-icon bi bi-circle"></i>
-                                                    <p>Cargo</p>
-                                                </a>
-                                            </li>
-                                            <li class="nav-item">
-                                                <a href="#" onclick="mostrarListarPermiso();" class="nav-link">
-                                                    <i class="nav-icon bi bi-circle"></i>
-                                                    <p>Permiso</p>
-                                                </a>
-                                            </li>
-                                            <li class="nav-item">
-                                                <a href="#" onclick="mostrarListarUsuario();" class="nav-link">
-                                                    <i class="nav-icon bi bi-circle"></i>
-                                                    <p>Usuario</p>
-                                                </a>
-                                            </li>
-                                        </ul>
-                                    </li>
+                                            </ul>
+                                        </li>
+                                    <?php endif; ?>
+                                    <?php if ($idCargo == 2 || $idCargo == 1): ?>
+                                        <li class="nav-item">
+                                            <a href="#" class="nav-link">
+                                                <i class="nav-icon bi bi-speedometer"></i>
+                                                <p>
+                                                    Servicios
+                                                    <i class="nav-arrow bi bi-chevron-right"></i>
+                                                </p>
+                                            </a>
+
+                                            <ul class="nav nav-treeview">
+                                                <li class="nav-item">
+                                                    <a href="#" onclick="mostrarListarRecepcion();" class="nav-link">
+                                                        <i class="nav-icon bi bi-circle"></i>
+                                                        <p>Recepción</p>
+                                                    </a>
+                                                </li>
+                                                <li class="nav-item">
+                                                    <a href="#" onclick="mostrarListarDiagnostico();" class="nav-link">
+                                                        <i class="nav-icon bi bi-circle"></i>
+                                                        <p>Diagnóstico</p>
+                                                    </a>
+                                                </li>
+                                                <li class="nav-item">
+                                                    <a href="#" onclick="mostrarListarPresupuestoServicio();" class="nav-link">
+                                                        <i class="nav-icon bi bi-circle"></i>
+                                                        <p>Presupuesto Servicio</p>
+                                                    </a>
+                                                </li>
+
+                                                <li class="nav-item">
+                                                    <a href="#" onclick="mostrarListarServicio();" class="nav-link">
+                                                        <i class="nav-icon bi bi-circle"></i>
+                                                        <p>Servicio</p>
+                                                    </a>
+                                                </li>
+                                                <li class="nav-item">
+                                                    <a href="#" onclick="mostrarListarEntrega();" class="nav-link">
+                                                        <i class="nav-icon bi bi-circle"></i>
+                                                        <p>Entrega</p>
+                                                    </a>
+                                                </li>
+                                                <li class="nav-item">
+                                                    <a href="#" onclick="mostrarListarGarantia();" class="nav-link">
+                                                        <i class="nav-icon bi bi-circle"></i>
+                                                        <p>Garantia</p>
+                                                    </a>
+                                                </li>
+                                            </ul>
+                                        </li>
                                     <?php endif; ?>
                                     <?php if ($idCargo == 1): ?>
-                                    <li class="nav-item">
-                                        <a href="#" onclick="mostrarFormReportes();" class="nav-link">
-                                            <i class="nav-icon bi bi-file-earmark-text"></i>
-                                            <p>Reportes</p>
-                                        </a>
-                                    </li>
+                                        <li class="nav-item">
+                                            <a href="#" class="nav-link">
+                                                <i class="nav-icon bi bi-lock"></i>
+                                                <p>
+                                                    Seguridad
+                                                    <i class="nav-arrow bi bi-chevron-right"></i>
+                                                </p>
+                                            </a>
+                                            <ul class="nav nav-treeview">
+                                                <li class="nav-item">
+                                                    <a href="#" onclick="mostrarListarCargo();" class="nav-link">
+                                                        <i class="nav-icon bi bi-circle"></i>
+                                                        <p>Cargo</p>
+                                                    </a>
+                                                </li>
+                                                <li class="nav-item">
+                                                    <a href="#" onclick="mostrarListarPermiso();" class="nav-link">
+                                                        <i class="nav-icon bi bi-circle"></i>
+                                                        <p>Permiso</p>
+                                                    </a>
+                                                </li>
+                                                <li class="nav-item">
+                                                    <a href="#" onclick="mostrarListarUsuario();" class="nav-link">
+                                                        <i class="nav-icon bi bi-circle"></i>
+                                                        <p>Usuario</p>
+                                                    </a>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                    <?php endif; ?>
+                                    <?php if ($idCargo == 1): ?>
+                                        <li class="nav-item">
+                                            <a href="#" onclick="mostrarFormReportes();" class="nav-link">
+                                                <i class="nav-icon bi bi-file-earmark-text"></i>
+                                                <p>Reportes</p>
+                                            </a>
+                                        </li>
                                     <?php endif; ?>
 
 
@@ -606,21 +633,21 @@ $nombre = $_SESSION['usuario'] ?? null;
                 <script>
                                             const SELECTOR_SIDEBAR_WRAPPER = '.sidebar-wrapper';
                                             const Default = {
-                                                scrollbarTheme: 'os-theme-light',
-                                                scrollbarAutoHide: 'leave',
-                                                scrollbarClickScroll: true,
+                                            scrollbarTheme: 'os-theme-light',
+                                                    scrollbarAutoHide: 'leave',
+                                                    scrollbarClickScroll: true,
                                             };
                                             document.addEventListener('DOMContentLoaded', function () {
-                                                const sidebarWrapper = document.querySelector(SELECTOR_SIDEBAR_WRAPPER);
-                                                if (sidebarWrapper && typeof OverlayScrollbarsGlobal?.OverlayScrollbars !== 'undefined') {
-                                                    OverlayScrollbarsGlobal.OverlayScrollbars(sidebarWrapper, {
-                                                        scrollbars: {
-                                                            theme: Default.scrollbarTheme,
-                                                            autoHide: Default.scrollbarAutoHide,
-                                                            clickScroll: Default.scrollbarClickScroll,
-                                                        },
-                                                    });
-                                                }
+                                            const sidebarWrapper = document.querySelector(SELECTOR_SIDEBAR_WRAPPER);
+                                            if (sidebarWrapper && typeof OverlayScrollbarsGlobal?.OverlayScrollbars !== 'undefined') {
+                                            OverlayScrollbarsGlobal.OverlayScrollbars(sidebarWrapper, {
+                                            scrollbars: {
+                                            theme: Default.scrollbarTheme,
+                                                    autoHide: Default.scrollbarAutoHide,
+                                                    clickScroll: Default.scrollbarClickScroll,
+                                            },
+                                            });
+                                            }
                                             });
                 </script>
                 <!--end::OverlayScrollbars Configure-->
@@ -638,14 +665,14 @@ $nombre = $_SESSION['usuario'] ?? null;
                 <script>
                                             const connectedSortables = document.querySelectorAll('.connectedSortable');
                                             connectedSortables.forEach((connectedSortable) => {
-                                                let sortable = new Sortable(connectedSortable, {
-                                                    group: 'shared',
+                                            let sortable = new Sortable(connectedSortable, {
+                                            group: 'shared',
                                                     handle: '.card-header',
-                                                });
+                                            });
                                             });
                                             const cardHeaders = document.querySelectorAll('.connectedSortable .card-header');
                                             cardHeaders.forEach((cardHeader) => {
-                                                cardHeader.style.cursor = 'move';
+                                            cardHeader.style.cursor = 'move';
                                             });
                 </script>
                 <!-- apexcharts -->
@@ -661,50 +688,50 @@ $nombre = $_SESSION['usuario'] ?? null;
                                             // ++++++++++++++++++++++++++++++++++++++++++
 
                                             const sales_chart_options = {
-                                                series: [
-                                                    {
-                                                        name: 'Digital Goods',
-                                                        data: [28, 48, 40, 19, 86, 27, 90],
-                                                    },
-                                                    {
-                                                        name: 'Electronics',
-                                                        data: [65, 59, 80, 81, 56, 55, 40],
-                                                    },
-                                                ],
-                                                chart: {
+                                            series: [
+                                            {
+                                            name: 'Digital Goods',
+                                                    data: [28, 48, 40, 19, 86, 27, 90],
+                                            },
+                                            {
+                                            name: 'Electronics',
+                                                    data: [65, 59, 80, 81, 56, 55, 40],
+                                            },
+                                            ],
+                                                    chart: {
                                                     height: 300,
-                                                    type: 'area',
-                                                    toolbar: {
-                                                        show: false,
+                                                            type: 'area',
+                                                            toolbar: {
+                                                            show: false,
+                                                            },
                                                     },
-                                                },
-                                                legend: {
+                                                    legend: {
                                                     show: false,
-                                                },
-                                                colors: ['#0d6efd', '#20c997'],
-                                                dataLabels: {
-                                                    enabled: false,
-                                                },
-                                                stroke: {
-                                                    curve: 'smooth',
-                                                },
-                                                xaxis: {
-                                                    type: 'datetime',
-                                                    categories: [
-                                                        '2023-01-01',
-                                                        '2023-02-01',
-                                                        '2023-03-01',
-                                                        '2023-04-01',
-                                                        '2023-05-01',
-                                                        '2023-06-01',
-                                                        '2023-07-01',
-                                                    ],
-                                                },
-                                                tooltip: {
-                                                    x: {
-                                                        format: 'MMMM yyyy',
                                                     },
-                                                },
+                                                    colors: ['#0d6efd', '#20c997'],
+                                                    dataLabels: {
+                                                    enabled: false,
+                                                    },
+                                                    stroke: {
+                                                    curve: 'smooth',
+                                                    },
+                                                    xaxis: {
+                                                    type: 'datetime',
+                                                            categories: [
+                                                                    '2023-01-01',
+                                                                    '2023-02-01',
+                                                                    '2023-03-01',
+                                                                    '2023-04-01',
+                                                                    '2023-05-01',
+                                                                    '2023-06-01',
+                                                                    '2023-07-01',
+                                                            ],
+                                                    },
+                                                    tooltip: {
+                                                    x: {
+                                                    format: 'MMMM yyyy',
+                                                    },
+                                                    },
                                             };
                                             const sales_chart = new ApexCharts(
                                                     document.querySelector('#revenue-chart'),
@@ -726,99 +753,99 @@ $nombre = $_SESSION['usuario'] ?? null;
                 <!-- jsvectormap -->
                 <script>
                                             const visitorsData = {
-                                                US: 398, // USA
-                                                SA: 400, // Saudi Arabia
-                                                CA: 1000, // Canada
-                                                DE: 500, // Germany
-                                                FR: 760, // France
-                                                CN: 300, // China
-                                                AU: 700, // Australia
-                                                BR: 600, // Brazil
-                                                IN: 800, // India
-                                                GB: 320, // Great Britain
-                                                RU: 3000, // Russia
+                                            US: 398, // USA
+                                                    SA: 400, // Saudi Arabia
+                                                    CA: 1000, // Canada
+                                                    DE: 500, // Germany
+                                                    FR: 760, // France
+                                                    CN: 300, // China
+                                                    AU: 700, // Australia
+                                                    BR: 600, // Brazil
+                                                    IN: 800, // India
+                                                    GB: 320, // Great Britain
+                                                    RU: 3000, // Russia
                                             };
                                             // World map by jsVectorMap
                                             const map = new jsVectorMap({
-                                                selector: '#world-map',
-                                                map: 'world',
+                                            selector: '#world-map',
+                                                    map: 'world',
                                             });
                                             // Sparkline charts
                                             const option_sparkline1 = {
-                                                series: [
-                                                    {
-                                                        data: [1000, 1200, 920, 927, 931, 1027, 819, 930, 1021],
-                                                    },
-                                                ],
-                                                chart: {
+                                            series: [
+                                            {
+                                            data: [1000, 1200, 920, 927, 931, 1027, 819, 930, 1021],
+                                            },
+                                            ],
+                                                    chart: {
                                                     type: 'area',
-                                                    height: 50,
-                                                    sparkline: {
-                                                        enabled: true,
+                                                            height: 50,
+                                                            sparkline: {
+                                                            enabled: true,
+                                                            },
                                                     },
-                                                },
-                                                stroke: {
+                                                    stroke: {
                                                     curve: 'straight',
-                                                },
-                                                fill: {
+                                                    },
+                                                    fill: {
                                                     opacity: 0.3,
-                                                },
-                                                yaxis: {
+                                                    },
+                                                    yaxis: {
                                                     min: 0,
-                                                },
-                                                colors: ['#DCE6EC'],
+                                                    },
+                                                    colors: ['#DCE6EC'],
                                             };
                                             const sparkline1 = new ApexCharts(document.querySelector('#sparkline-1'), option_sparkline1);
                                             sparkline1.render();
                                             const option_sparkline2 = {
-                                                series: [
-                                                    {
-                                                        data: [515, 519, 520, 522, 652, 810, 370, 627, 319, 630, 921],
-                                                    },
-                                                ],
-                                                chart: {
+                                            series: [
+                                            {
+                                            data: [515, 519, 520, 522, 652, 810, 370, 627, 319, 630, 921],
+                                            },
+                                            ],
+                                                    chart: {
                                                     type: 'area',
-                                                    height: 50,
-                                                    sparkline: {
-                                                        enabled: true,
+                                                            height: 50,
+                                                            sparkline: {
+                                                            enabled: true,
+                                                            },
                                                     },
-                                                },
-                                                stroke: {
+                                                    stroke: {
                                                     curve: 'straight',
-                                                },
-                                                fill: {
+                                                    },
+                                                    fill: {
                                                     opacity: 0.3,
-                                                },
-                                                yaxis: {
+                                                    },
+                                                    yaxis: {
                                                     min: 0,
-                                                },
-                                                colors: ['#DCE6EC'],
+                                                    },
+                                                    colors: ['#DCE6EC'],
                                             };
                                             const sparkline2 = new ApexCharts(document.querySelector('#sparkline-2'), option_sparkline2);
                                             sparkline2.render();
                                             const option_sparkline3 = {
-                                                series: [
-                                                    {
-                                                        data: [15, 19, 20, 22, 33, 27, 31, 27, 19, 30, 21],
-                                                    },
-                                                ],
-                                                chart: {
+                                            series: [
+                                            {
+                                            data: [15, 19, 20, 22, 33, 27, 31, 27, 19, 30, 21],
+                                            },
+                                            ],
+                                                    chart: {
                                                     type: 'area',
-                                                    height: 50,
-                                                    sparkline: {
-                                                        enabled: true,
+                                                            height: 50,
+                                                            sparkline: {
+                                                            enabled: true,
+                                                            },
                                                     },
-                                                },
-                                                stroke: {
+                                                    stroke: {
                                                     curve: 'straight',
-                                                },
-                                                fill: {
+                                                    },
+                                                    fill: {
                                                     opacity: 0.3,
-                                                },
-                                                yaxis: {
+                                                    },
+                                                    yaxis: {
                                                     min: 0,
-                                                },
-                                                colors: ['#DCE6EC'],
+                                                    },
+                                                    colors: ['#DCE6EC'],
                                             };
                                             const sparkline3 = new ApexCharts(document.querySelector('#sparkline-3'), option_sparkline3);
                                             sparkline3.render();
@@ -852,6 +879,8 @@ $nombre = $_SESSION['usuario'] ?? null;
                 <script src="vistas/factura.js"></script>
                 <script src="vistas/presupuesto_venta.js"></script>
                 <script src="vistas/reporte.js"></script>
+                <script src="vistas/entrada_salida.js"></script>
+                <script src="vistas/stock.js"></script>
                 <!--end::Script-->
                 </body>
                 <!--end::Body-->
