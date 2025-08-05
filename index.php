@@ -586,7 +586,35 @@ $nombre = $_SESSION['usuario'] ?? null;
                             <!--begin::App Content-->
                             <div class="app-content" id="contenido-principal">
                                 <!--begin::Container-->
-
+                                <div class="container-fluid">
+                                    <div class="row g-4">
+                                        <div class="col-md-6 col-lg-3">
+                                            <div class="card text-bg-info">
+                                                <div class="card-body">
+                                                    <h5 class="card-title">Recepciones hoy</h5>
+                                                    <p class="card-text fs-2" id="recepciones_hoy">0</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 col-lg-3">
+                                            <div class="card text-bg-success">
+                                                <div class="card-body">
+                                                    <h5 class="card-title">Ventas hoy</h5>
+                                                    <p class="card-text fs-2" id="ventas_hoy">0</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row g-4 mt-1">
+                                        <div class="col-12">
+                                            <div class="card">
+                                                <div class="card-body">
+                                                    <div id="grafico-recepciones-ventas"></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                                 <!--end::Container-->
                             </div>
                             <!--end::App Content-->
@@ -852,6 +880,7 @@ $nombre = $_SESSION['usuario'] ?? null;
                 </script>
                 <script src="jquery-3.7.1.min.js"></script>
                 <script src="vistas/util.js"></script>
+                <script src="vistas/dashboard.js"></script>
                 <script src="vistas/cliente.js"></script>
                 <script src="vistas/equipo.js"></script>
                 <script src="vistas/cliente_equipo.js"></script>
