@@ -102,7 +102,7 @@
       <!-- Botones -->
       <div class="row mt-4">
         <div class="col-md-6">
-          <button class="btn btn-success w-100" onclick="guardarFactura(); return false;">
+          <button class="btn btn-success w-100" onclick="preGuardarFactura(); return false;">
             <i class="bi bi-check-circle me-1"></i>Guardar
           </button>
         </div>
@@ -126,12 +126,20 @@
             </div>
             <div class="modal-body">
                 <div class="row">
+                    <div class="col-12 mb-2">
+                        <label>Total a pagar</label>
+                        <input type="text" id="pp-total" class="form-control" readonly>
+                    </div>
+                    <div class="col-12 mb-2">
+                        <label>Entrega</label>
+                        <input type="number" id="pp-entrega" class="form-control">
+                    </div>
                     <div class="col-6">
                         <label>Fecha Venc.</label>
                         <input type="date" id="pp-fecha" class="form-control">
                     </div>
                     <div class="col-6">
-                        <label>Monto</label>
+                        <label>Monto Cuota</label>
                         <input type="number" id="pp-monto" class="form-control">
                     </div>
                     <div class="col-12 mt-2">

@@ -46,8 +46,6 @@ $(document).on("change", "#condicion", function () {
     if ($(this).val() === "CREDITO") {
         $("#tipo_pago_group").hide();
         $("#tipo_pago").val("0");
-//        let modal = new bootstrap.Modal(document.getElementById('modal-plan'));
-//        modal.show();
     } else {
         $("#tipo_pago_group").show();
     }
@@ -57,6 +55,21 @@ $(document).on("change", "#condicion", function () {
 //----------------------------------------------------
 //----------------------------------------------------
 $(document).on("click", "#pp-confirmar", function () {
+    $(".cuota-entrega").remove();
+    let entrega = quitarDecimalesConvertir($("#pp-entrega").val());
+    if (entrega > 0) {
+        $("#pp-detalle").prepend(`
+            <tr class="cuota-entrega">
+                <td>1</td>
+                <td>${$("#fecha").val()}</td>
+                <td>${formatearNumero(entrega)}</td>
+                <td><button class="btn btn-danger rem-cuota">Remover</button></td>
+            </tr>
+        `);
+    }
+    $("#pp-detalle tr").each(function (index) {
+        $(this).find("td:eq(0)").text(index + 1);
+    });
     guardarFactura();
 });
 
@@ -273,6 +286,25 @@ $(document).on("click", ".rem-item", function (evt) {
     $(this).closest("tr").remove();
     calcularTotalesFactura();
 });
+//-------------------------------------------------------------
+//-------------------------------------------------------------
+//-------------------------------------------------------------
+function preGuardarFactura() {
+    if ($("#condicion").val() === "CREDITO") {
+        const total = quitarDecimalesConvertir($("#t_exenta").text()) +
+                quitarDecimalesConvertir($("#t_iva5").text()) +
+                quitarDecimalesConvertir($("#t_iva10").text());
+        $("#pp-total").val(formatearNumero(total));
+        $("#pp-entrega").val("");
+        $("#pp-fecha").val("");
+        $("#pp-monto").val("");
+        let modal = new bootstrap.Modal(document.getElementById('modal-plan'));
+        modal.show();
+    } else {
+        guardarFactura();
+    }
+}
+
 //-------------------------------------------------------------
 //-------------------------------------------------------------
 //-------------------------------------------------------------
