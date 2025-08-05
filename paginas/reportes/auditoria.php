@@ -1,6 +1,6 @@
 <?php
 ?>
-<div class="container mt-4">
+<div id="auditoria-contenido" class="container mt-4">
     <div class="d-flex justify-content-between align-items-center mb-3">
         <h4 class="mb-0">Reporte de Auditoría</h4>
         <button id="btn-imprimir" class="btn btn-secondary btn-sm">Imprimir</button>
@@ -21,7 +21,7 @@
             <tbody id="auditoria_tb"></tbody>
         </table>
     </div>
-</div>
+ </div>
 <script>
 document.getElementById('btn-imprimir').addEventListener('click', function () {
     window.print();
@@ -29,6 +29,22 @@ document.getElementById('btn-imprimir').addEventListener('click', function () {
 </script>
 <style>
 @media print {
+    body * {
+        visibility: hidden;
+    }
+
+    #auditoria-contenido,
+    #auditoria-contenido * {
+        visibility: visible;
+    }
+
+    #auditoria-contenido {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+    }
+
     #btn-imprimir {
         display: none;
     }
