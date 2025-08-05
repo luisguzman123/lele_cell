@@ -1,7 +1,10 @@
 <?php
 ?>
 <div class="container mt-4">
-    <h4>Reporte de Auditoría</h4>
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h4 class="mb-0">Reporte de Auditoría</h4>
+        <button id="btn-imprimir" class="btn btn-secondary btn-sm">Imprimir</button>
+    </div>
     <div class="table-responsive">
         <table class="table table-striped table-bordered">
             <thead class="table-dark">
@@ -19,3 +22,15 @@
         </table>
     </div>
 </div>
+<script>
+document.getElementById('btn-imprimir').addEventListener('click', function () {
+    window.print();
+});
+</script>
+<style>
+@media print {
+    #btn-imprimir {
+        display: none;
+    }
+}
+</style>
