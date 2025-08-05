@@ -246,7 +246,7 @@ function guardarFactura() {
         'nro_factura': $("#nro_factura").val(),
         'fecha': $("#fecha").val(),
         'id_cliente': $("#cliente").val(),
-        'condicion': 'CONTADO',
+        'condicion': $("#condicion").val(),
         'tipo_pago': $("#tipo_pago").val(),
         'timbrado': $("#timbrado").val(),
         'estado': 'ACTIVO'

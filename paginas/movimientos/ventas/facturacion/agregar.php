@@ -18,6 +18,12 @@
           <label class="form-label">Timbrado</label>
           <input type="text" class="form-control" id="timbrado">
         </div>
+          <div class="col-md-3">
+          <label class="form-label">Tipo de Pago</label>
+          <select id="condicion" class="form-select">
+            <option value="CONTADO">CONTADO</option>
+          </select>
+        </div>
 
         <div class="col-md-6">
           <label class="form-label">Cliente</label>
