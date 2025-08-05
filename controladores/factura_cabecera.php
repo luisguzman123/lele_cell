@@ -23,18 +23,37 @@ limit 1");
 //--------------------------------------------------------------------------------
 //--------------------------------------------------------------------------------
 if (isset($_POST['guardar'])) {
+    $conexion = new DB();
+    $pdo = $conexion->conectar();
+
     if (!isset($_SESSION['id_apertura'])) {
-        echo "NO_APERTURA";
-        exit;
+        if (!isset($_SESSION['id_usuario'])) {
+            echo "NO_APERTURA";
+            exit;
+        }
+
+        $stmt = $pdo->prepare(
+            "SELECT id_registro, accion FROM caja_registro WHERE id_usuario = :id_usuario ORDER BY fecha DESC LIMIT 1"
+        );
+        $stmt->execute(['id_usuario' => $_SESSION['id_usuario']]);
+        $registro = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        if ($registro && $registro['accion'] === 'ABRIR') {
+            $_SESSION['id_apertura'] = $registro['id_registro'];
+        } else {
+            echo "NO_APERTURA";
+            exit;
+        }
     }
+
     $json_datos = json_decode($_POST['guardar'], true);
     $json_datos['id_registro'] = $_SESSION['id_apertura'];
-    $conexion = new DB();
-    $query = $conexion->conectar()->prepare("INSERT INTO factura_cabecera"
-            . "( nro_factura, fecha, id_cliente, condicion, tipo_pago,"
-            . " timbrado, estado, id_registro)"
-            . " VALUES (:nro_factura, :fecha, :id_cliente,"
-            . " :condicion, :tipo_pago, :timbrado, :estado, :id_registro)");
+
+    $query = $pdo->prepare("INSERT INTO factura_cabecera" .
+            "( nro_factura, fecha, id_cliente, condicion, tipo_pago," .
+            " timbrado, estado, id_registro)" .
+            " VALUES (:nro_factura, :fecha, :id_cliente," .
+            " :condicion, :tipo_pago, :timbrado, :estado, :id_registro)");
 
     $query->execute($json_datos);
     echo "OK";
