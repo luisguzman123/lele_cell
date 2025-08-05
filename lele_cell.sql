@@ -1214,11 +1214,31 @@ CREATE TABLE `caja_registro` (
   PRIMARY KEY (`id_registro`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+-- --------------------------------------------------------
+--
+-- Estructura de tabla para la tabla `auditoria`
+--
+CREATE TABLE `auditoria` (
+  `id_auditoria` int(11) NOT NULL,
+  `id_usuario` int(11) DEFAULT NULL,
+  `usuario` varchar(50) DEFAULT NULL,
+  `accion` varchar(20) NOT NULL,
+  `tabla` varchar(50) NOT NULL,
+  `id_registro` int(11) DEFAULT NULL,
+  `detalles` text DEFAULT NULL,
+  `fecha` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
 --
 -- AUTO_INCREMENT de la tabla `servicio`
 --
 ALTER TABLE `servicio`
   MODIFY `id_servicio` int(11) NOT NULL AUTO_INCREMENT;
+
+-- AUTO_INCREMENT de la tabla `auditoria`
+--
+ALTER TABLE `auditoria`
+  MODIFY `id_auditoria` int(11) NOT NULL AUTO_INCREMENT;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

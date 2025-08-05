@@ -1,11 +1,14 @@
 <?php
 require_once '../conexion/db.php';
+require_once 'auditoria.php';
 
 if (isset($_POST['guardar'])) {
     $json_datos = json_decode($_POST['guardar'], true);
     $conexion = new DB();
-    $query = $conexion->conectar()->prepare("INSERT INTO `usuario`(`usuario`,`password`,`id_cargo`,`id_permiso`) VALUES (:usuario,MD5(:password),:id_cargo,:id_permiso)");
+    $pdo = $conexion->conectar();
+    $query = $pdo->prepare("INSERT INTO `usuario`(`usuario`,`password`,`id_cargo`,`id_permiso`) VALUES (:usuario,MD5(:password),:id_cargo,:id_permiso)");
     $query->execute($json_datos);
+    Auditoria::registrar('INSERT', 'usuario', $pdo->lastInsertId(), json_encode($json_datos));
 }
 
 if (isset($_POST['leer_usuario'])) {
@@ -40,16 +43,20 @@ function actualizar($lista)
 {
     $json_datos = json_decode($lista, true);
     $base_datos = new DB();
-    $query = $base_datos->conectar()->prepare("UPDATE usuario SET usuario=:usuario, password=MD5(:password), id_cargo=:id_cargo, id_permiso=:id_permiso WHERE id_usuario=:id_usuario");
+    $pdo = $base_datos->conectar();
+    $query = $pdo->prepare("UPDATE usuario SET usuario=:usuario, password=MD5(:password), id_cargo=:id_cargo, id_permiso=:id_permiso WHERE id_usuario=:id_usuario");
     $query->execute($json_datos);
+    Auditoria::registrar('UPDATE', 'usuario', $json_datos['id_usuario'], json_encode($json_datos));
 }
 
 if (isset($_POST['eliminar'])) {
     $conexion = new DB();
-    $query = $conexion->conectar()->prepare("DELETE FROM usuario WHERE id_usuario= :id");
+    $pdo = $conexion->conectar();
+    $query = $pdo->prepare("DELETE FROM usuario WHERE id_usuario= :id");
     $query->execute([
         "id" => $_POST['eliminar']
     ]);
+    Auditoria::registrar('DELETE', 'usuario', $_POST['eliminar'], null);
 }
 
 if (isset($_POST['leer_cargo'])) {

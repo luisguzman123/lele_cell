@@ -1,12 +1,15 @@
 <?php
 
 require_once '../conexion/db.php';
+require_once 'auditoria.php';
 
 if (isset($_POST['guardar'])) {
     $json_datos = json_decode($_POST['guardar'], true);
     $conexion = new DB();
-    $query = $conexion->conectar()->prepare("INSERT INTO `producto`(`nombre`, `precio`, `stock`, `estado`, `iva`) VALUES (:nombre,:precio,:stock,:estado,:iva)");
+    $pdo = $conexion->conectar();
+    $query = $pdo->prepare("INSERT INTO `producto`(`nombre`, `precio`, `stock`, `estado`, `iva`) VALUES (:nombre,:precio,:stock,:estado,:iva)");
     $query->execute($json_datos);
+    Auditoria::registrar('INSERT', 'producto', $pdo->lastInsertId(), json_encode($json_datos));
 }
 
 if (isset($_POST['leer_producto'])) {
@@ -51,14 +54,18 @@ function actualizar($lista)
 {
     $json_datos = json_decode($lista, true);
     $base_datos = new DB();
-    $query = $base_datos->conectar()->prepare("UPDATE `producto` SET `nombre`=:nombre,`precio`=:precio,`stock`=:stock,`estado`=:estado,`iva`=:iva WHERE `id_producto`=:id_producto");
+    $pdo = $base_datos->conectar();
+    $query = $pdo->prepare("UPDATE `producto` SET `nombre`=:nombre,`precio`=:precio,`stock`=:stock,`estado`=:estado,`iva`=:iva WHERE `id_producto`=:id_producto");
     $query->execute($json_datos);
+    Auditoria::registrar('UPDATE', 'producto', $json_datos['id_producto'], json_encode($json_datos));
 }
 
 if (isset($_POST['eliminar'])) {
     $conexion = new DB();
-    $query = $conexion->conectar()->prepare("DELETE FROM `producto` WHERE `id_producto`= :id");
+    $pdo = $conexion->conectar();
+    $query = $pdo->prepare("DELETE FROM `producto` WHERE `id_producto`= :id");
     $query->execute([
         "id" => $_POST['eliminar']
     ]);
+    Auditoria::registrar('DELETE', 'producto', $_POST['eliminar'], null);
 }
