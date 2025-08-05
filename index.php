@@ -543,10 +543,27 @@ $nombre = $_SESSION['usuario'] ?? null;
                                     <?php endif; ?>
                                     <?php if ($idCargo == 1): ?>
                                         <li class="nav-item">
-                                            <a href="#" onclick="mostrarFormReportes();" class="nav-link">
+                                            <a href="#" class="nav-link">
                                                 <i class="nav-icon bi bi-file-earmark-text"></i>
-                                                <p>Reportes</p>
+                                                <p>
+                                                    Reportes
+                                                    <i class="nav-arrow bi bi-chevron-right"></i>
+                                                </p>
                                             </a>
+                                            <ul class="nav nav-treeview">
+                                                <li class="nav-item">
+                                                    <a href="#" onclick="mostrarFormReportes();" class="nav-link">
+                                                        <i class="nav-icon bi bi-circle"></i>
+                                                        <p>Generar</p>
+                                                    </a>
+                                                </li>
+                                                <li class="nav-item">
+                                                    <a href="#" onclick="mostrarAuditoria();" class="nav-link">
+                                                        <i class="nav-icon bi bi-circle"></i>
+                                                        <p>Auditoría</p>
+                                                    </a>
+                                                </li>
+                                            </ul>
                                         </li>
                                     <?php endif; ?>
 
@@ -908,6 +925,7 @@ $nombre = $_SESSION['usuario'] ?? null;
                 <script src="vistas/factura.js"></script>
                 <script src="vistas/presupuesto_venta.js"></script>
                 <script src="vistas/reporte.js"></script>
+                <script src="vistas/auditoria.js"></script>
                 <script src="vistas/entrada_salida.js"></script>
                 <script src="vistas/stock.js"></script>
                 <!--end::Script-->
