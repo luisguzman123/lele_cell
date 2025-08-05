@@ -1,5 +1,6 @@
 <?php
-require_once '../conexion/db.php';
+require_once __DIR__ . '/../conexion/db.php';
+
 
 class Auditoria {
     public static function registrar($accion, $tabla, $registroId = null, $detalles = null) {
