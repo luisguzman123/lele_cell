@@ -71,6 +71,8 @@ $nombre = $_SESSION['usuario'] ?? null;
         <link href="
               https://cdn.jsdelivr.net/npm/sweetalert2@11.22.0/dist/sweetalert2.min.css
               " rel="stylesheet">
+        <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css">
+        <link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.4.1/css/buttons.bootstrap5.min.css">
     </head>
     <!--end::Head-->
     <!--begin::Body-->
@@ -896,6 +898,11 @@ $nombre = $_SESSION['usuario'] ?? null;
                                             sparkline3.render();
                 </script>
                 <script src="jquery-3.7.1.min.js"></script>
+                <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+                <script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
+                <script src="https://cdn.datatables.net/buttons/2.4.1/js/dataTables.buttons.min.js"></script>
+                <script src="https://cdn.datatables.net/buttons/2.4.1/js/buttons.bootstrap5.min.js"></script>
+                <script src="https://cdn.datatables.net/buttons/2.4.1/js/buttons.print.min.js"></script>
                 <script src="vistas/util.js"></script>
                 <script src="vistas/dashboard.js"></script>
                 <script src="vistas/cliente.js"></script>
