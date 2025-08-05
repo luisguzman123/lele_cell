@@ -60,20 +60,39 @@ if (isset($_POST['anular'])) {
 }
 
 if (isset($_POST['pagar'])) {
+    $conexion = new DB();
+    $pdo = $conexion->conectar();
+
     if (!isset($_SESSION['id_apertura'])) {
-        echo "NO_APERTURA";
-        exit;
+        if (!isset($_SESSION['id_usuario'])) {
+            echo "NO_APERTURA";
+            exit;
+        }
+
+        $stmt = $pdo->prepare(
+            "SELECT id_registro, accion FROM caja_registro WHERE id_usuario = :id_usuario ORDER BY fecha DESC LIMIT 1"
+        );
+        $stmt->execute(['id_usuario' => $_SESSION['id_usuario']]);
+        $registro = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        if ($registro && $registro['accion'] === 'ABRIR') {
+            $_SESSION['id_apertura'] = $registro['id_registro'];
+        } else {
+            echo "NO_APERTURA";
+            exit;
+        }
     }
+
     $json_datos = json_decode($_POST['pagar'], true);
     $json_datos['id_registro'] = $_SESSION['id_apertura'];
-    $conexion = new DB();
-    $query = $conexion->conectar()->prepare(
+
+    $query = $pdo->prepare(
         "INSERT INTO servicio_entrega_pago (id_entrega, tipo_pago, monto, id_registro)
         VALUES (:id_entrega, :tipo_pago, :monto, :id_registro)"
     );
     $query->execute($json_datos);
 
-    $query = $conexion->conectar()->prepare(
+    $query = $pdo->prepare(
         "UPDATE servicio_entrega SET estado = 'PAGADO' WHERE id_entrega = :id_entrega"
     );
     $query->execute(['id_entrega' => $json_datos['id_entrega']]);
