@@ -22,4 +22,17 @@ class Auditoria {
         ]);
     }
 }
+
+if (isset($_POST['listar'])) {
+    $db = new DB();
+    $pdo = $db->conectar();
+    $sql = "SELECT id_auditoria, usuario, accion, tabla, id_registro, detalles, fecha FROM auditoria ORDER BY fecha DESC";
+    $stmt = $pdo->prepare($sql);
+    $stmt->execute();
+    if ($stmt->rowCount()) {
+        print_r(json_encode($stmt->fetchAll(PDO::FETCH_OBJ)));
+    } else {
+        echo "0";
+    }
+}
 ?>
