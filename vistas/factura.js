@@ -46,8 +46,8 @@ $(document).on("change", "#condicion", function () {
     if ($(this).val() === "CREDITO") {
         $("#tipo_pago_group").hide();
         $("#tipo_pago").val("0");
-        let modal = new bootstrap.Modal(document.getElementById('modal-plan'));
-        modal.show();
+//        let modal = new bootstrap.Modal(document.getElementById('modal-plan'));
+//        modal.show();
     } else {
         $("#tipo_pago_group").show();
     }
