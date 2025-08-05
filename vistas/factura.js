@@ -51,6 +51,11 @@ $(document).on("change", "#condicion", function () {
     }
 });
 
+$(document).on("click", "#btn-guardar-factura", function (evt) {
+    evt.preventDefault();
+    preGuardarFactura();
+});
+
 //----------------------------------------------------
 //----------------------------------------------------
 //----------------------------------------------------

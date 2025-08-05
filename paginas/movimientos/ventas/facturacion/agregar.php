@@ -102,7 +102,7 @@
       <!-- Botones -->
       <div class="row mt-4">
         <div class="col-md-6">
-          <button class="btn btn-success w-100" onclick="preGuardarFactura(); return false;">
+          <button id="btn-guardar-factura" type="button" class="btn btn-success w-100">
             <i class="bi bi-check-circle me-1"></i>Guardar
           </button>
         </div>
