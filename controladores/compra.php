@@ -1,11 +1,7 @@
 <?php
 session_start();
 require_once '../conexion/db.php';
-// Auditoría opcional: si el archivo existe se carga para registrar acciones,
-// de lo contrario se continúa sin interrumpir el flujo de la aplicación.
-if (file_exists(__DIR__ . '/auditoria.php')) {
-    require_once __DIR__ . '/auditoria.php';
-}
+require_once 'auditoria.php';
 
 if(isset($_POST['leer'])){
     $conexion = new DB();
@@ -43,7 +39,7 @@ if(isset($_POST['guardar'])){
     $json['id_usuario'] = $_SESSION['id_usuario'];
     $query = $pdo->prepare("INSERT INTO compra_cabecera(fecha, observacion, id_proveedor, id_orden, total_exenta, total_iva5, total_iva10, total, id_usuario, estado) VALUES(:fecha,:observacion,:id_proveedor,:id_orden,:total_exenta,:total_iva5,:total_iva10,:total,:id_usuario,:estado)");
     $query->execute($json);
-//    registrarAuditoria('COMPRA', 'GUARDAR');
+    Auditoria::registrar('INSERT', 'compra_cabecera', $pdo->lastInsertId(), json_encode($json));
 }
 
 if(isset($_POST['dameUltimoId'])){
@@ -57,16 +53,18 @@ if(isset($_POST['dameUltimoId'])){
 if(isset($_POST['guardar_detalle'])){
     $json = json_decode($_POST['guardar_detalle'], true);
     $conexion = new DB();
-    $query = $conexion->conectar()->prepare("INSERT INTO compra_detalle(id_compra, id_producto, cantidad, precio) VALUES(:id_compra,:id_producto,:cantidad,:precio)");
+    $pdo = $conexion->conectar();
+    $query = $pdo->prepare("INSERT INTO compra_detalle(id_compra, id_producto, cantidad, precio) VALUES(:id_compra,:id_producto,:cantidad,:precio)");
     $query->execute($json);
-//    registrarAuditoria('COMPRA', 'DETALLE');
+    Auditoria::registrar('INSERT', 'compra_detalle', null, json_encode($json));
 }
 
 if(isset($_POST['anular'])){
     $conexion = new DB();
-    $query = $conexion->conectar()->prepare("UPDATE compra_cabecera SET estado='ANULADO' WHERE id_compra=:id");
+    $pdo = $conexion->conectar();
+    $query = $pdo->prepare("UPDATE compra_cabecera SET estado='ANULADO' WHERE id_compra=:id");
     $query->execute(['id'=>$_POST['anular']]);
-//    registrarAuditoria('COMPRA', 'ANULAR');
+    Auditoria::registrar('UPDATE', 'compra_cabecera', $_POST['anular'], 'ANULADO');
 }
 
 if(isset($_POST['resumen'])){

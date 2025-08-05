@@ -1,6 +1,7 @@
 <?php
 session_start();
 require_once 'conexion/db.php';
+require_once 'controladores/auditoria.php';
 
 $db = new DB();
 $pdo = $db->conectar();
@@ -19,6 +20,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $_SESSION['usuario'] = $user['usuario'];
         $_SESSION['id_usuario'] = $user['id_usuario'];
         $_SESSION['id_permiso'] = $user['id_permiso'];
+        Auditoria::registrar('LOGIN', 'usuario', $user['id_usuario'], null);
         header('Location: index.php');
         exit;
     } else {
