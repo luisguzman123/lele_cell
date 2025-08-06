@@ -202,11 +202,21 @@ function guardarCompra(){
         mensaje_dialogo_info_ERROR("Debes seleccionar un proveedor","ATENCION");
         return;
     }
+    if($("#nro_factura").val().trim().length === 0){
+        mensaje_dialogo_info_ERROR("Debes ingresar el número de factura","ATENCION");
+        return;
+    }
+    if($("#timbrado").val().trim().length === 0){
+        mensaje_dialogo_info_ERROR("Debes ingresar el timbrado","ATENCION");
+        return;
+    }
     let cabecera = {
         'fecha': $("#fecha").val(),
         'observacion': $("#observacion").val(),
         'id_proveedor': $("#proveedor").val(),
         'id_orden': $("#orden_lst").val(),
+        'nro_factura': $("#nro_factura").val(),
+        'timbrado': $("#timbrado").val(),
         'total_exenta': quitarDecimalesConvertir($("#t_exenta").text()),
         'total_iva5': quitarDecimalesConvertir($("#t_5").text()),
         'total_iva10': quitarDecimalesConvertir($("#t_10").text()),

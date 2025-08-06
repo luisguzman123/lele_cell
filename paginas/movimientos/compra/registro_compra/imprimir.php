@@ -5,7 +5,7 @@ $id = isset($_GET['id']) ? intval($_GET['id']) : 0;
 if($id <= 0){
     die('ID no valido');
 }
-$query = $conexion->conectar()->prepare("SELECT c.id_compra, c.fecha, c.observacion, c.total_exenta, c.total_iva5, c.total_iva10, c.total, c.estado, p.nombre_proveedor FROM compra_cabecera c LEFT JOIN proveedor p ON p.id_proveedor=c.id_proveedor WHERE c.id_compra = :id");
+$query = $conexion->conectar()->prepare("SELECT c.id_compra, c.fecha, c.observacion, c.nro_factura, c.timbrado, c.total_exenta, c.total_iva5, c.total_iva10, c.total, c.estado, p.nombre_proveedor FROM compra_cabecera c LEFT JOIN proveedor p ON p.id_proveedor=c.id_proveedor WHERE c.id_compra = :id");
 $query->execute(['id'=>$id]);
 $cab = $query->fetch(PDO::FETCH_OBJ);
 if(!$cab){
@@ -130,6 +130,12 @@ $det = $qdet->fetchAll(PDO::FETCH_OBJ);
       <div class="row purchase-meta">
         <div class="col-md-4">
           <p><strong>Fecha:</strong> <?= htmlspecialchars($cab->fecha) ?></p>
+        </div>
+        <div class="col-md-4">
+          <p><strong>Nro. Factura:</strong> <?= htmlspecialchars($cab->nro_factura) ?></p>
+        </div>
+        <div class="col-md-4">
+          <p><strong>Timbrado:</strong> <?= htmlspecialchars($cab->timbrado) ?></p>
         </div>
         <div class="col-md-4">
           <p><strong>Proveedor:</strong> <?= htmlspecialchars($cab->nombre_proveedor) ?></p>
