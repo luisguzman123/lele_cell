@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 06-08-2025 a las 18:54:45
+-- Tiempo de generación: 06-08-2025 a las 19:13:56
 -- Versión del servidor: 10.4.27-MariaDB
 -- Versión de PHP: 8.2.0
 
@@ -49,7 +49,11 @@ INSERT INTO `auditoria` (`id_auditoria`, `id_usuario`, `usuario`, `accion`, `tab
 (4, 1, 'admin', 'INSERT', 'compra_cabecera', 1, '{\"fecha\":\"2025-08-06\",\"observacion\":\"\",\"id_proveedor\":\"1\",\"id_orden\":\"1\",\"total_exenta\":0,\"total_iva5\":0,\"total_iva10\":260000,\"total\":260000,\"estado\":\"ACTIVO\",\"id_usuario\":1}', '2025-08-06 16:24:03'),
 (5, 1, 'admin', 'INSERT', 'compra_detalle', NULL, '{\"id_compra\":\"1\",\"id_producto\":\"1\",\"cantidad\":\"1\",\"precio\":30000}', '2025-08-06 16:24:03'),
 (6, 1, 'admin', 'INSERT', 'compra_detalle', NULL, '{\"id_compra\":\"1\",\"id_producto\":\"2\",\"cantidad\":\"2\",\"precio\":25000}', '2025-08-06 16:24:03'),
-(7, 1, 'admin', 'INSERT', 'compra_detalle', NULL, '{\"id_compra\":\"1\",\"id_producto\":\"3\",\"cantidad\":\"3\",\"precio\":60000}', '2025-08-06 16:24:03');
+(7, 1, 'admin', 'INSERT', 'compra_detalle', NULL, '{\"id_compra\":\"1\",\"id_producto\":\"3\",\"cantidad\":\"3\",\"precio\":60000}', '2025-08-06 16:24:03'),
+(8, 1, 'admin', 'LOGOUT', 'usuario', 1, NULL, '2025-08-06 17:04:03'),
+(9, 1, 'admin', 'LOGIN', 'usuario', 1, NULL, '2025-08-06 17:10:00'),
+(10, 1, 'admin', 'INSERT', 'compra_cabecera', 2, '{\"fecha\":\"2025-08-06\",\"observacion\":\"\",\"id_proveedor\":\"2\",\"id_orden\":\"0\",\"nro_factura\":\"001-001-0000006\",\"timbrado\":\"123456\",\"total_exenta\":0,\"total_iva5\":0,\"total_iva10\":40000,\"total\":40000,\"estado\":\"ACTIVO\",\"id_usuario\":1}', '2025-08-06 17:12:06'),
+(11, 1, 'admin', 'INSERT', 'compra_detalle', NULL, '{\"id_compra\":\"2\",\"id_producto\":\"10\",\"cantidad\":\"1\",\"precio\":40000}', '2025-08-06 17:12:06');
 
 -- --------------------------------------------------------
 
@@ -170,7 +174,8 @@ CREATE TABLE `compra_cabecera` (
 --
 
 INSERT INTO `compra_cabecera` (`id_compra`, `fecha`, `observacion`, `id_proveedor`, `id_orden`, `nro_factura`, `timbrado`, `total_exenta`, `total_iva5`, `total_iva10`, `total`, `id_usuario`, `estado`) VALUES
-(1, '2025-08-06', '', 1, 1, '001-001-0000001', '123456', 0, 0, 260000, 260000, 1, 'ACTIVO');
+(1, '2025-08-06', '', 1, 1, '', '', 0, 0, 260000, 260000, 1, 'ACTIVO'),
+(2, '2025-08-06', '', 2, 0, '001-001-0000006', '123456', 0, 0, 40000, 40000, 1, 'ACTIVO');
 
 --
 -- Disparadores `compra_cabecera`
@@ -208,7 +213,8 @@ CREATE TABLE `compra_detalle` (
 INSERT INTO `compra_detalle` (`id_detalle`, `id_compra`, `id_producto`, `cantidad`, `precio`) VALUES
 (1, 1, 1, 1, 30000),
 (2, 1, 2, 2, 25000),
-(3, 1, 3, 3, 60000);
+(3, 1, 3, 3, 60000),
+(4, 2, 10, 1, 40000);
 
 --
 -- Disparadores `compra_detalle`
@@ -789,7 +795,7 @@ INSERT INTO `producto` (`id_producto`, `nombre`, `precio`, `stock`, `estado`, `i
 (7, 'Vidrio templado universal', 20000, 0, 'ACTIVO', 10),
 (8, 'Vidrio templado iPhone', 25000, 0, 'ACTIVO', 10),
 (9, 'Funda silicona Samsung', 35000, 0, 'ACTIVO', 10),
-(10, 'Funda silicona iPhone', 40000, 0, 'ACTIVO', 10),
+(10, 'Funda silicona iPhone', 40000, 1, 'ACTIVO', 10),
 (11, 'Batería Samsung A10', 80000, 0, 'ACTIVO', 10),
 (12, 'Batería iPhone 7', 150000, 0, 'ACTIVO', 10),
 (13, 'Parlante Bluetooth portátil', 180000, 0, 'ACTIVO', 10),
@@ -1374,7 +1380,7 @@ ALTER TABLE `usuario`
 -- AUTO_INCREMENT de la tabla `auditoria`
 --
 ALTER TABLE `auditoria`
-  MODIFY `id_auditoria` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id_auditoria` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT de la tabla `caja_registro`
@@ -1404,13 +1410,13 @@ ALTER TABLE `cliente_equipo`
 -- AUTO_INCREMENT de la tabla `compra_cabecera`
 --
 ALTER TABLE `compra_cabecera`
-  MODIFY `id_compra` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id_compra` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT de la tabla `compra_detalle`
 --
 ALTER TABLE `compra_detalle`
-  MODIFY `id_detalle` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id_detalle` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT de la tabla `diagnostico_cabecera`
