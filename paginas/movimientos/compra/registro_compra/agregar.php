@@ -4,7 +4,7 @@
     <hr>
 
     <!--<form id="formCompra" onsubmit="return false;">-->
-      <!-- Fecha, Observación, Proveedor y Orden de Compra -->
+      <!-- Datos de Cabecera -->
       <div class="row g-4 mb-4">
         <div class="col-md-4">
           <label for="fecha" class="form-label fw-semibold text-dark">
@@ -13,12 +13,24 @@
           <input type="date" id="fecha" class="form-control" required />
         </div>
         <div class="col-md-4">
+          <label for="nro_factura" class="form-label fw-semibold text-dark">
+            Nro. Factura <span class="text-danger">*</span>
+          </label>
+          <input type="text" id="nro_factura" class="form-control" placeholder="000-000-0000000" required />
+        </div>
+        <div class="col-md-4">
+          <label for="timbrado" class="form-label fw-semibold text-dark">
+            Timbrado <span class="text-danger">*</span>
+          </label>
+          <input type="text" id="timbrado" class="form-control" placeholder="Timbrado" required />
+        </div>
+        <div class="col-md-6">
           <label for="observacion" class="form-label fw-semibold text-dark">
             Observación
           </label>
           <input type="text" id="observacion" class="form-control" placeholder="Comentarios adicionales" />
         </div>
-        <div class="col-md-4">
+        <div class="col-md-6">
           <label for="proveedor" class="form-label fw-semibold text-dark">
             Proveedor <span class="text-danger">*</span>
           </label>

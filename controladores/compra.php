@@ -37,7 +37,7 @@ if(isset($_POST['guardar'])){
         }
     }
     $json['id_usuario'] = $_SESSION['id_usuario'];
-    $query = $pdo->prepare("INSERT INTO compra_cabecera(fecha, observacion, id_proveedor, id_orden, total_exenta, total_iva5, total_iva10, total, id_usuario, estado) VALUES(:fecha,:observacion,:id_proveedor,:id_orden,:total_exenta,:total_iva5,:total_iva10,:total,:id_usuario,:estado)");
+    $query = $pdo->prepare("INSERT INTO compra_cabecera(fecha, observacion, id_proveedor, id_orden, nro_factura, timbrado, total_exenta, total_iva5, total_iva10, total, id_usuario, estado) VALUES(:fecha,:observacion,:id_proveedor,:id_orden,:nro_factura,:timbrado,:total_exenta,:total_iva5,:total_iva10,:total,:id_usuario,:estado)");
     $query->execute($json);
     Auditoria::registrar('INSERT', 'compra_cabecera', $pdo->lastInsertId(), json_encode($json));
 }

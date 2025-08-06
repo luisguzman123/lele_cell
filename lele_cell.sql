@@ -155,6 +155,8 @@ CREATE TABLE `compra_cabecera` (
   `observacion` varchar(255) DEFAULT NULL,
   `id_proveedor` int(11) DEFAULT NULL,
   `id_orden` int(11) DEFAULT NULL,
+  `nro_factura` varchar(20) NOT NULL,
+  `timbrado` varchar(20) NOT NULL,
   `total_exenta` int(11) DEFAULT NULL,
   `total_iva5` int(11) DEFAULT NULL,
   `total_iva10` int(11) DEFAULT NULL,
@@ -167,8 +169,8 @@ CREATE TABLE `compra_cabecera` (
 -- Volcado de datos para la tabla `compra_cabecera`
 --
 
-INSERT INTO `compra_cabecera` (`id_compra`, `fecha`, `observacion`, `id_proveedor`, `id_orden`, `total_exenta`, `total_iva5`, `total_iva10`, `total`, `id_usuario`, `estado`) VALUES
-(1, '2025-08-06', '', 1, 1, 0, 0, 260000, 260000, 1, 'ACTIVO');
+INSERT INTO `compra_cabecera` (`id_compra`, `fecha`, `observacion`, `id_proveedor`, `id_orden`, `nro_factura`, `timbrado`, `total_exenta`, `total_iva5`, `total_iva10`, `total`, `id_usuario`, `estado`) VALUES
+(1, '2025-08-06', '', 1, 1, '001-001-0000001', '123456', 0, 0, 260000, 260000, 1, 'ACTIVO');
 
 --
 -- Disparadores `compra_cabecera`
