@@ -1,4 +1,5 @@
 <?php
+session_start();
 require_once '../../../../conexion/db.php';
 $conexion = new DB();
 $id = isset($_GET['id']) ? intval($_GET['id']) : 0;
@@ -18,16 +19,84 @@ if(!$cab){
   <meta charset="UTF-8" />
   <title>Garantía Servicio #<?= htmlspecialchars($cab->id_garantia) ?></title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #f8f9fa;
+    }
+    .garantia-card {
+      max-width: 800px;
+      margin: 40px auto;
+      background: #ffffff;
+      padding: 40px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    .garantia-title {
+      border-bottom: 2px solid #343a40;
+      padding-bottom: 10px;
+      margin-bottom: 30px;
+    }
+    .garantia-info p {
+      font-size: 16px;
+      margin-bottom: 8px;
+    }
+    .firmas {
+      margin-top: 60px;
+      display: flex;
+      justify-content: space-between;
+      padding: 0 20px;
+    }
+    .firma {
+      text-align: center;
+      width: 45%;
+    }
+    .firma .linea {
+      border-top: 1px solid #000;
+      margin-bottom: 5px;
+    }
+    .firma .nombre {
+      font-weight: bold;
+    }
+    .footer-info {
+      font-size: 13px;
+      color: #666;
+      margin-top: 20px;
+      text-align: center;
+    }
+  </style>
 </head>
 <body onload="window.print();">
-  <div class="container mt-4">
-    <h3 class="text-center">Garantía de Servicio</h3>
-    <hr>
-    <p><strong>N° Garantía:</strong> <?= $cab->id_garantia ?></p>
-    <p><strong>Servicio:</strong> <?= $cab->id_servicio ?> - <?= htmlspecialchars($cab->cliente) ?></p>
-    <p><strong>Fecha Inicio:</strong> <?= $cab->fecha_inicio ?></p>
-    <p><strong>Duración:</strong> <?= $cab->duracion_dias ?> días</p>
-    <p><strong>Estado:</strong> <?= $cab->estado ?></p>
+  <div class="garantia-card">
+    <div class="text-center garantia-title">
+      <h3 class="mb-0">GARANTÍA DE SERVICIO</h3>
+      <small>Comprobante N° <?= htmlspecialchars($cab->id_garantia) ?></small>
+    </div>
+
+    <div class="garantia-info">
+      <p><strong>Servicio:</strong> <?= htmlspecialchars($cab->id_servicio) ?> - <?= htmlspecialchars($cab->cliente) ?></p>
+      <p><strong>Fecha de Inicio:</strong> <?= htmlspecialchars($cab->fecha_inicio) ?></p>
+      <p><strong>Duración:</strong> <?= htmlspecialchars($cab->duracion_dias) ?> días</p>
+      <p><strong>Estado:</strong> <?= htmlspecialchars($cab->estado) ?></p>
+    </div>
+
+    <div class="firmas">
+      <div class="firma">
+        <div class="linea"></div>
+        <div class="nombre"><?= htmlspecialchars($cab->cliente) ?></div>
+        <small>Firma del Cliente</small>
+      </div>
+      <div class="firma">
+        <div class="linea"></div>
+        <div class="nombre"><?= htmlspecialchars($_SESSION['usuario']) ?>
+</div>
+        <small>Firma del Usuario</small>
+      </div>
+    </div>
+    
+    <div class="footer-info mt-5">
+      <p>Este documento certifica que el servicio tiene una garantía válida por el período indicado.</p>
+    </div>
   </div>
 </body>
 </html>
